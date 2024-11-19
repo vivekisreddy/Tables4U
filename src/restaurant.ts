@@ -3,26 +3,28 @@ import { Consumer } from "./consumer"
 class TimeSlot {
     time: Number
     availableTables:Table[]
+    reservedTables:Consumer[]
     
-    constructor(t:number, tables:Table[]) {
+    constructor(t:number, available:Table[], reserved:Consumer[]) {
         this.time = t
-        this.availableTables = tables
+        this.availableTables = available
+        this.reservedTables = reserved
     }
 }
 
 class Date {
     year: Number
-    month: Number
+    month: String
     day: Number
 
-    constructor(y:number, m:number, d:number) {
+    constructor(y:number, m:String, d:number) {
         this.year = y
         this.month = m
         this.day = d
     }
 }
 
-class Table {
+export class Table {
     ID: number
     seats: number
     isAvailable: Boolean
@@ -52,21 +54,23 @@ export class Restaurant {
     address: String
     restaurantID: String
     isActive: Boolean
-    openTime:[]
-    closeTime:[]
+    openTime:number[]
+    closeTime:number[]
     tables: Table[]
     dailySchedule: Schedule[]
+    accessRes: Reservation[]
 
 
-    constructor(title:String, add:String, id:String, opens:[], closes:[], table:Table[], schedule:Schedule[]) {
+    constructor(title:String, add:String, id:String, opens:number[], closes:number[], table:Table[], schedule:Schedule[], res:Reservation[]) {
         this.name = title
         this.address = add
         this.restaurantID = id
         this.isActive = false
-        this.openTime = opens
-        this.closeTime = closes
+        this.openTime = Array(7).fill(opens)
+        this.closeTime = Array(7).fill(closes)
         this.tables = table
         this.dailySchedule = schedule
+        this.accessRes = res
 
     }
 }
@@ -74,16 +78,14 @@ export class Restaurant {
 export class Reservation {
     confirmationCode:String
     consumer:Consumer
-    restaurant:Restaurant
     table:Table
     reservationDate:Date
-    reservationTime:Number
+    reservationTime:TimeSlot
     partySize:Number
 
-    constructor(code:String, client:Consumer, rest:Restaurant, table:Table, date:Date, time:Number, party:Number) {
+    constructor(code:String, client:Consumer, table:Table, date:Date, time:TimeSlot, party:Number) {
         this.confirmationCode = code
         this.consumer = client
-        this.restaurant = rest
         this.table = table
         this.reservationDate = date
         this.reservationTime = time

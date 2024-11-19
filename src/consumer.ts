@@ -5,13 +5,13 @@ export class Consumer {
     name:String
     email:String
     reservation:Reservation[]
-    viewRestaurants: Restaurant[]
+    ifActive: Restaurant[]
 
     constructor(id:String, title:String, mail:String) {
         this.consumerID = id
         this.name = title
         this.email = mail
         this.reservation = completeReservation()
-        this.viewRestaurants = findActive()
+        this.ifActive = findActive()
     }
 }
