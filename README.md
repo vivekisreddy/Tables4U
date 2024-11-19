@@ -1,7 +1,4 @@
 
-Here's a simplified version that’s easy to copy directly into your `README.md` file:
-
-```markdown
 # Tables4U Repository
 
 ## Overview
