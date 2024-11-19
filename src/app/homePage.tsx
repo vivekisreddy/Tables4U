@@ -2,7 +2,7 @@
 import React from 'react'
 
 export default function Home() {
-    // initial instantiation
+    // initial instantiation of landing home page
     const [redraw, forceRedraw] = React.useState(0)
 
     // helper function that forces React app to redraw whenever this is called.
@@ -10,7 +10,7 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
-  // below is where the GUI is drawn
+  // below is where the GUI for the landing home page is drawn
   return (
     <div>
       <button className="admin log in" onClick={(e) => /*brings user to admin log in page*/} >Admin Log In</button>
@@ -20,9 +20,9 @@ export default function Home() {
       // figure out how to do textbox
       <label className="date">{"Date:"}</label>
       <label className="time">{"Start Time:"}</label>
-      <label className="message">{"Already have a reservation? Find details here!"}</label>
-      <label className="confirm">{"Confirmation Code"}</label>
+      <label className="confirm">{"Confirmation Code:"}</label>
 
+      <label className="message">{"Already have a reservation? Find details here!"}</label>
     </div>
   )
 }
