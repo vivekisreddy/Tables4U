@@ -31,3 +31,21 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
 }
+
+.admin {
+  position: absolute;
+  left: 575px;
+  top: 200px;
+}
+
+.enter {
+  position: absolute;
+  left: 600px;
+  top: 400px;
+}
+
+.manager {
+  position: absolute;
+  left: 575px;
+  top: 400px;
+}
