@@ -7,10 +7,10 @@ export class Consumer {
     reservation:Reservation[]
     ifActive: Restaurant[]
 
-    constructor(id:String, title:String, mail:String) {
-        this.consumerID = id
-        this.name = title
-        this.email = mail
+    constructor(consumerID:String, name:String, email:String) {
+        this.consumerID = consumerID
+        this.name = name
+        this.email = email
         this.reservation = completeReservation()
         this.ifActive = findActive()
     }

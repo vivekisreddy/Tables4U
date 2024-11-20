@@ -8,10 +8,10 @@ export class Manager {
     email : String
     restaurant : Restaurant
 
-    constructor(title:String, mail:String, rest:Restaurant) {
-        this.name = title
-        this.email = mail
-        this.restaurant = rest
+    constructor(name:String, email:String, restaurant:Restaurant) {
+        this.name = name
+        this.email = email
+        this.restaurant = restaurant
         managerList.push(this)
     }
 }

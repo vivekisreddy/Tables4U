@@ -1,14 +1,15 @@
+import { time } from "console"
 import { Consumer } from "./consumer"
 
 class TimeSlot {
     time: Number
     availableTables:Table[]
-    reservedTables:Consumer[]
+    reservedTables:Table[]
     
-    constructor(t:number, available:Table[], reserved:Consumer[]) {
-        this.time = t
-        this.availableTables = available
-        this.reservedTables = reserved
+    constructor(time:number, availableTables:Table[], reservedTables:Table[]) {
+        this.time = time
+        this.availableTables = availableTables
+        this.reservedTables = reservedTables
     }
 }
 
@@ -17,10 +18,10 @@ class Date {
     month: String
     day: Number
 
-    constructor(y:number, m:String, d:number) {
-        this.year = y
-        this.month = m
-        this.day = d
+    constructor(year:number, month:String, day:number) {
+        this.year = year
+        this.month = month
+        this.day = day
     }
 }
 
@@ -28,9 +29,9 @@ export class Table {
     ID: number
     seats: number
 
-    constructor(id:number, seat:number) {
-        this.ID = id
-        this.seats = seat
+    constructor(ID:number, seats:number) {
+        this.ID = ID
+        this.seats = seats
     }
 }
 
@@ -39,9 +40,9 @@ class Schedule {
     timeSlots: TimeSlot[]
     isClosed: Boolean
     
-    constructor(calendar:Date[], times:TimeSlot[]) {
-        this.date = calendar
-        this.timeSlots = times
+    constructor(date:Date[], timeSlots:TimeSlot[]) {
+        this.date = date
+        this.timeSlots = timeSlots
         this.isClosed = false
     }
 }
@@ -59,16 +60,16 @@ export class Restaurant {
     accessRes: Reservation[]
 
 
-    constructor(title:String, add:String, id:String, opens:number[], closes:number[], table:Table[], schedule:Schedule[], res:Reservation[]) {
-        this.name = title
-        this.address = add
-        this.restaurantID = id
+    constructor(name:String, address:String, restaurantID:String, openTime:number[], closeTime:number[], tables:Table[], dailySchedule:Schedule[], accessRes:Reservation[]) {
+        this.name = name
+        this.address = address
+        this.restaurantID = restaurantID
         this.isActive = false
-        this.openTime = Array(7).fill(opens)
-        this.closeTime = Array(7).fill(closes)
-        this.tables = table
-        this.dailySchedule = schedule
-        this.accessRes = res
+        this.openTime = Array(7).fill(openTime)
+        this.closeTime = Array(7).fill(closeTime)
+        this.tables = tables
+        this.dailySchedule = dailySchedule
+        this.accessRes = accessRes
 
     }
 }
@@ -81,12 +82,12 @@ export class Reservation {
     reservationTime:TimeSlot
     partySize:Number
 
-    constructor(code:String, client:Consumer, table:Table, date:Date, time:TimeSlot, party:Number) {
-        this.confirmationCode = code
-        this.consumer = client
+    constructor(confirmationCode:String, consumer:Consumer, table:Table, reservationDate:Date, reservationTime:TimeSlot, partySize:Number) {
+        this.confirmationCode = confirmationCode
+        this.consumer = consumer
         this.table = table
-        this.reservationDate = date
-        this.reservationTime = time
-        this.partySize = party
+        this.reservationDate = reservationDate
+        this.reservationTime = reservationTime
+        this.partySize = partySize
     }
 }
