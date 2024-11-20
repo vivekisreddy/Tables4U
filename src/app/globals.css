@@ -46,22 +46,24 @@ body {
   top: 25px;
 }
 
-.code {
+.confirm {
   position: absolute;
   left: 460px;
-  top: 200px;
-}
-
-.date {
-  position: absolute;
-  left: 460px;
-  top: 200px;
+  top: 465px;
 }
 
 .enter {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 600px;
-  top: 400px;
+  left: 745px;
+  top: 500px;
 }
 
 .manager {
@@ -78,20 +80,16 @@ body {
   top: 60px;
 }
 
-.message {
-  position: absolute;
-  left: 460px;
-  top: 200px;
-}
-
 .search {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 460px;
-  top: 200px;
-}
-
-.time {
-  position: absolute;
-  left: 460px;
-  top: 200px;
+  left: 600px;
+  top: 400px;
 }

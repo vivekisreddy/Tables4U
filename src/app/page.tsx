@@ -38,11 +38,6 @@ export default function Home() {
     andRefreshDisplay()
   }
 
-  // confirms reservation when given a confirmation code
-  function confirmRes(code:number) {
-    andRefreshDisplay()
-  }
-
   // below is where the GUI for the landing home page is drawn
   return (
     <div>
@@ -57,7 +52,7 @@ export default function Home() {
         <button className="search">Search</button>
       </form>
 
-      <label className="message">{"Already have a reservation? Find details here!"}</label>
+      <label className="confirm">{"Already have a reservation? Find details here!"}</label>
 
       <form onSubmit={handleConfirm}>
         <label htmlFor="code">Confirmation Code:</label>
