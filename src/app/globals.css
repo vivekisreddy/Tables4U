@@ -33,8 +33,22 @@ body {
 }
 
 .admin {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 575px;
+  left: 1375px;
+  top: 25px;
+}
+
+.date {
+  position: absolute;
+  left: 460px;
   top: 200px;
 }
 
@@ -45,7 +59,21 @@ body {
 }
 
 .manager {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 575px;
-  top: 400px;
+  left: 1375px;
+  top: 60px;
+}
+
+.search {
+  position: absolute;
+  left: 460px;
+  top: 200px;
 }
