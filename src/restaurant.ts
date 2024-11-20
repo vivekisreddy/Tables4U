@@ -27,12 +27,10 @@ class Date {
 export class Table {
     ID: number
     seats: number
-    isAvailable: Boolean
 
     constructor(id:number, seat:number) {
         this.ID = id
         this.seats = seat
-        this.isAvailable = true
     }
 }
 
