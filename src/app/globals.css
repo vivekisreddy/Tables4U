@@ -46,6 +46,12 @@ body {
   top: 25px;
 }
 
+.code {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
 .date {
   position: absolute;
   left: 460px;
@@ -72,7 +78,19 @@ body {
   top: 60px;
 }
 
+.message {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
 .search {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
+.time {
   position: absolute;
   left: 460px;
   top: 200px;

@@ -7,10 +7,23 @@ export default function Home() {
 
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
+  const [code, setCode] = useState('')
   
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
     forceRedraw(redraw + 1)
+  }
+
+  const handleSearch = (and) => {
+    and.preventDefault();
+    // bring to new page
+    andRefreshDisplay()
+  }
+
+  const handleConfirm = (and) => {
+    and.preventDefault();
+    // confirm reservation
+    andRefreshDisplay()
   }
 
   // brings admin to the admin log in page
@@ -25,12 +38,6 @@ export default function Home() {
     andRefreshDisplay()
   }
 
-  const handleSubmit = (and) => {
-    and.preventDefault();
-    // bring to new page
-    andRefreshDisplay()
-  }
-
   // confirms reservation when given a confirmation code
   function confirmRes(code:number) {
     andRefreshDisplay()
@@ -42,17 +49,21 @@ export default function Home() {
       <button className="admin log in" onClick={(e) => adminLogIn()} >Admin Log In</button>
       <button className="manager log in" onClick={(e) => managerLogIn()} >Manager Log In</button>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSearch}>
         <label htmlFor="date">Date:</label>
         <input type="text" id="date" name="date" value={date} onChange={(and) => setDate(and.target.value)}/>
         <label htmlFor="time"></label>
         <input type="text" id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
-        <input type="submit"/>
+        <button className="search">Search</button>
       </form>
 
       <label className="message">{"Already have a reservation? Find details here!"}</label>
-      <label className="confirm">{"Confirmation Code:"}</label>
-      <button className="enter" onClick={(e) => confirmRes(code)} >Enter</button>
+
+      <form onSubmit={handleConfirm}>
+        <label htmlFor="code">Confirmation Code:</label>
+        <input type="text" id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
+        <button className="enter">Enter</button>
+      </form>
     </div>
   )
 }
