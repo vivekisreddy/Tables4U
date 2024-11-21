@@ -82,7 +82,16 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 745px;
+  left: 275px;
+  top: -3px;
+}
+
+.handleConfirm {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
   top: 500px;
 }
 

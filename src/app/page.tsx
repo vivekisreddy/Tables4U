@@ -78,10 +78,10 @@ export default function Home() {
 
       <label className="confirm">{"Already have a reservation? Find details here!"}</label>
 
-      <form onSubmit={handleConfirm}>
+      <form className="handleConfirm" onSubmit={handleConfirm}>
         <label htmlFor="code">Confirmation Code:</label>
         <input type="text" id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
-        <button className="enter">Enter</button>
+        <button type="submit" className="enter">Enter</button>
       </form>
     </div>
   )
