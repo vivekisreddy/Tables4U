@@ -24,6 +24,8 @@ export default function Home() {
   // below is where the GUI for the admin log in page is drawn
   return (
     <div>
+      <label className="managerCreateAccountMessage">{"Create a Manager Account"}</label>
+
       <form className="handleCreate" onSubmit={handleCreate}>
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" name="name" value={name} onChange={(and) => setName(and.target.value)}/>
@@ -35,7 +37,7 @@ export default function Home() {
         <br></br>
         <label htmlFor="pin">Pin:</label>
         <input type="text" id="pin" name="pin" value={pin} onChange={(and) => setPin(and.target.value)}/>
-        <button className="createMA">Create</button>
+        <button className="createManagerAccount">Create</button>
       </form>
     </div>
   )

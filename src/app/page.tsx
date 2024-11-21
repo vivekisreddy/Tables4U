@@ -63,8 +63,10 @@ export default function Home() {
   // below is where the GUI for the landing home page is drawn
   return (
     <div>
-      <button className="admin log in" onClick={(e) => adminLogIn()} >Admin Log In</button>
-      <button className="manager log in" onClick={(e) => managerLogIn()} >Manager Log In</button>
+      <button className="adminLogInButton" onClick={(e) => adminLogIn()} >Admin Log In</button>
+      <button className="managerLogInButton" onClick={(e) => managerLogIn()} >Manager Log In</button>
+
+      <label className="welcomeMessage">{"Welcome to Tables4U!"}</label>
 
       <form className="handleSearch" onSubmit={handleSearch}>
         <label htmlFor="date">Date:</label>
@@ -76,7 +78,7 @@ export default function Home() {
         <button type="submit" className="search">Search</button>
       </form>
 
-      <label className="confirm">{"Already have a reservation? Find details here!"}</label>
+      <label className="confirmMessage">{"Already have a reservation? Find details here!"}</label>
 
       <form className="handleConfirm" onSubmit={handleConfirm}>
         <label htmlFor="code">Confirmation Code:</label>

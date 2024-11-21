@@ -29,6 +29,8 @@ export default function Home() {
   // below is where the GUI for the admin log in page is drawn
   return (
     <div>
+      <label className="adminLogInMessage">{"Admin Log In"}</label>
+
       <form className="handleLogIn" onSubmit={handleLogIn}>
         <label htmlFor="email">Email:</label>
         <input type="text" id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
@@ -36,11 +38,11 @@ export default function Home() {
         <br></br>
         <label htmlFor="password">Password:</label>
         <input type="text" id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
-        <button type="submit" className="logIn">Log In</button>
+        <button type="submit" className="adminLogIn">Log In</button>
       </form>
 
       <label className="account">{"Don't have an account? Create one now!"}</label>
-      <button className="createLI" onClick={(e) => createAccount()}>Create Account</button>
+      <button className="createAdminLogIn" onClick={(e) => createAccount()}>Create Account</button>
     </div>
   )
 }

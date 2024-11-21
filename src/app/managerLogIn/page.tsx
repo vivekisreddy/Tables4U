@@ -29,6 +29,8 @@ export default function Home() {
   // below is where the GUI for the admin log in page is drawn
   return (
     <div>
+      <label className="managerLogInMessage">{"Manager Log In"}</label>
+
       <form className="handleLogIn" onSubmit={handleLogIn}>
         <label htmlFor="name">Manager Name:</label>
         <input type="text" id="name" name="name" value={name} onChange={(and) => setName(and.target.value)}/>
@@ -36,11 +38,11 @@ export default function Home() {
         <br></br>
         <label htmlFor="pin">Restaurant Pin Code:</label>
         <input type="text" id="pin" name="pin" value={pin} onChange={(and) => setPin(and.target.value)}/>
-        <button type="submit" className="logIn">Log In</button>
+        <button type="submit" className="managerLogIn">Log In</button>
       </form>
 
       <label className="account">{"Don't have an account? Create one now!"}</label>
-      <button className="createLI" onClick={(e) => createAccount()}>Create Account</button>
+      <button className="createManagerLogIn" onClick={(e) => createAccount()}>Create Account</button>
     </div>
   )
 }
