@@ -1,4 +1,3 @@
-import { table } from "console";
 import { Restaurant, Table } from "./restaurant";
 
 

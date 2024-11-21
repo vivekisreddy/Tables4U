@@ -1,4 +1,3 @@
-import { time } from "console"
 import { Consumer } from "./consumer"
 
 class TimeSlot {
@@ -13,7 +12,7 @@ class TimeSlot {
     }
 }
 
-class Date {
+class ourDate {
     year: Number
     month: String
     day: Number
@@ -26,21 +25,19 @@ class Date {
 }
 
 export class Table {
-    ID: number
     seats: number
 
-    constructor(ID:number, seats:number) {
-        this.ID = ID
+    constructor(seats:number) {
         this.seats = seats
     }
 }
 
 class Schedule {
-    date: Date[]
+    date: ourDate[]
     timeSlots: TimeSlot[]
     isClosed: Boolean
     
-    constructor(date:Date[], timeSlots:TimeSlot[]) {
+    constructor(date:ourDate[], timeSlots:TimeSlot[]) {
         this.date = date
         this.timeSlots = timeSlots
         this.isClosed = false

@@ -30,49 +30,11 @@ export default function homePage() {
          <text className="textField">{"Enter Name Here"}</text>
          <label className="Address">{"Restaurant Address:"}</label>
          <text className="textField">{"Enter Address Here"}</text>
-         <div className = "Weekly Hours">
-            <div className = "DayofWeek">
-                 <label className="Sunday">{"Open Time:"}</label>
+         <div className = "Hours">
+                 <label className="openTime">{"Open Time:"}</label>
                  <text className="textField">{"Enter Time Here"}</text>
-                 <label className="Sunday">{"Close Time:"}</label>
+                 <label className="closeTime">{"Close Time:"}</label>
                  <text className="textField">{"Enter Time Here"}</text>
-            </div>
-            <div className = "DayofWeek">
-                 <label className="Monday">{"Open Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-                 <label className="Monday">{"Close Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-            </div>
-            <div className = "DayofWeek">
-                 <label className="Tuesday">{"Open Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-                 <label className="Tuesday">{"Close Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-            </div>
-            <div className = "DayofWeek">
-                 <label className="Wednesday">{"Open Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-                 <label className="Wednesday">{"Close Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-            </div>
-            <div className = "DayofWeek">
-                 <label className="Thursday">{"Open Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-                 <label className="Thursday">{"Close Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-            </div>
-            <div className = "DayofWeek">
-                 <label className="Friday">{"Open Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-                 <label className="Friday">{"Close Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-            </div>
-            <div className = "DayofWeek">
-                 <label className="Saturday">{"Open Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-                 <label className="Saturday">{"Close Time:"}</label>
-                 <text className="textField">{"Enter Time Here"}</text>
-            </div>
          </div>
          <div className = "TablesAndSeats">
             <div className = "SeatPerTable">
