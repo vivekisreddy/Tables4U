@@ -4,17 +4,16 @@ import {Consumer} from './consumer'
 export class Restaurant{
     name : string;
     address : string;
-    restaurantID : string; //pincode
+    restaurantID : string; // Unique ID for the restaurant 
     isActive : boolean
-    openTime: number[];
-    closeTime: number[];
+    openTime: number;
+    closeTime: number;
     closedDays: number[];
     tables: Table[];
-    dailySchedule: Schedule[];
-    weeklyOpenSchedulePerDay:WeeklyOpenSchedule[]
+    
 
 
-    constructor(name:string, address:string, restaurantID:string, isActive:boolean, openTime:number[], closeTime:number[], closedDays:number[], tables:Table[], dailySchedule:Schedule[], weeklyOpenSchedulePerDay:WeeklyOpenSchedule[]){
+    constructor(name:string, address:string, restaurantID:string, openTime:number, closeTime:number, closedDays:number[], tables:Table[] = []){
         this.name = name;
         this.address = address;
         this.restaurantID = restaurantID;
@@ -23,8 +22,6 @@ export class Restaurant{
         this.closeTime = closeTime;
         this.closedDays = closedDays;
         this.tables = tables;
-        this.dailySchedule = dailySchedule;
-        this.weeklyOpenSchedulePerDay = weeklyOpenSchedulePerDay; 
     }
 
 }
@@ -55,7 +52,10 @@ export class Table{
     seats:number;
     isAvailable:boolean;
 
-    constructor(tableID:string, seats:number, isAvailable:boolean){
+    constructor(tableID:string, seats:number, isAvailable:boolean = true){
+        if (seats < 1 || seats > 8) {
+            throw new Error("Seats must be between 1 and 8.");
+          }
         this.tableID = tableID;
         this.seats = seats;
         this.isAvailable = isAvailable;
