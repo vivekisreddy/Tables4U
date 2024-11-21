@@ -4,16 +4,16 @@ import {Consumer} from './consumer'
 export class Restaurant{
     name : string;
     address : string;
-    restaurantID : string; // Unique ID for the restaurant 
-    isActive : boolean
-    openTime: number;
-    closeTime: number;
+    restaurantID : string; //pincode
+    isActive : boolean;
+    openTime: number[];
+    closeTime: number[];
     closedDays: number[];
     tables: Table[];
-    
+    dailySchedule: Schedule[];
 
 
-    constructor(name:string, address:string, restaurantID:string, openTime:number, closeTime:number, closedDays:number[], tables:Table[] = []){
+    constructor(name:string, address:string, restaurantID:string, isActive:boolean, openTime:number[], closeTime:number[], closedDays:number[], tables:Table[], dailySchedule:Schedule[]){
         this.name = name;
         this.address = address;
         this.restaurantID = restaurantID;
@@ -22,6 +22,7 @@ export class Restaurant{
         this.closeTime = closeTime;
         this.closedDays = closedDays;
         this.tables = tables;
+        this.dailySchedule = dailySchedule;
     }
 
 }
@@ -52,10 +53,7 @@ export class Table{
     seats:number;
     isAvailable:boolean;
 
-    constructor(tableID:string, seats:number, isAvailable:boolean = true){
-        if (seats < 1 || seats > 8) {
-            throw new Error("Seats must be between 1 and 8.");
-          }
+    constructor(tableID:string, seats:number, isAvailable:boolean){
         this.tableID = tableID;
         this.seats = seats;
         this.isAvailable = isAvailable;
@@ -97,17 +95,5 @@ class TimeSlot{
         this.time = time;
         this.availableTables = availableTables;
         this.reservedTables = reservedTables;
-    }
-}
-
-export class WeeklyOpenSchedule{
-    openTime:number;
-    closeTime:number;
-    ifClosed:boolean;
-
-    constructor(openTime:number, closeTime:number, ifClosed:boolean){
-        this.openTime;
-        this.closeTime;
-        this.ifClosed = ifClosed;
     }
 }

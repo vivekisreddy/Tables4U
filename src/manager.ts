@@ -1,57 +1,79 @@
+import { table } from 'console';
 import { Restaurant } from './restaurant';
-import {Table} from './restaurant'
+import { Table } from './restaurant';
+import { Schedule } from './restaurant';
 
+class Manager {
+    name: string;
+    email: string;
+    restaurant: Restaurant[];
 
-class Manager{
-    name:string;
-    email:string;
-    restaurants:Restaurant[];
-
-    constructor(name:string, email:string, restaurant:Restaurant[]){
+    constructor(name: string, email: string, restaurant: Restaurant[]) {
         this.name = name;
         this.email = email;
-        this.restaurants = [];
+        this.restaurant = restaurant;
     }
 
+    createRestaurant(
+        name: string,
+        address: string,
+        restaurantID: string,
+        isActive: boolean,
+        openTime: number[],
+        closeTime: number[],
+        closedDays: number[],
+        tables: number,
+        dailySchedule: Schedule[],
+        seats: number[],
+    ): Restaurant {
+        const allTables: Table[] = [];
 
-    createRestaurant(name:string, address:string, restaurantID:string, openTime:number, closeTime:number, closedDays:number[], tableCount:number, seats: number[], ifClosed:boolean[]) : Restaurant {
-        // Validate table count and seat configuration
-    if (tableCount <= 0 || tableCount !== seats.length) {
-        throw new Error("Number of tables must match the number of seat configurations.");
-      }
-  
-      // Validate restaurant times
-      if (openTime >= closeTime) {
-        throw new Error("Opening time must be earlier than closing time.");
-      }
-  
-      // Create tables
-      const tables: Table[] = [];
-      for (let i = 0; i < tableCount; i++) {
-        const tableID = `T${i + 1}`; // Unique table ID
-        const table = new Table(tableID, seats[i]); // Seats are validated in Table constructor
-        tables.push(table);
-      }
+        if (tables <= 0 || tables !== seats.length || tables >= 8) {
+            throw new Error("Number of tables must match the number of seat configurations.");
+        }
 
-      const newRestaurant = new Restaurant (name, address, restaurantID, openTime, closeTime, closedDays, tables)
-  
-     
-      // Add to manager's list of restaurants
-      this.restaurants.push(newRestaurant);
-  
-      return newRestaurant;
+        for (let i = 0; i < openTime.length; i++) {
+            if (openTime[i] >= closeTime[i]) {
+                throw new Error(`Opening time must be earlier than closing time for day ${i}.`);
+            }
+        }
+
+
+        for (let i = 0; i < seats.length; i++) {
+            const tableID = `T${i + 1}`; 
+            const seatsPerTable = seats[i];  
+            const table = new Table(tableID, seatsPerTable, true);  
+            allTables.push(table);  
+        }
+
+        // Create the restaurant without weeklySchedule
+        const newRestaurant = new Restaurant(
+            name,
+            address,
+            restaurantID,
+            isActive,
+            openTime,
+            closeTime,
+            closedDays,
+            allTables,
+            dailySchedule
+        );
+
+        this.restaurant.push(newRestaurant);
+        return newRestaurant;
     }
+
 
     activateRestaurant(restaurantID: string) : string { 
-    const restaurant = this.restaurants.find((res) => res.restaurantID === restaurantID);
-    if (!restaurant) {
-      return "Restaurant not found.";
-    }
-    if (restaurant.isActive) {
-      return "Restaurant is already active.";
-    }
-    restaurant.isActive = true;
-    return `${restaurant.name} has been activated and is now visible to consumers.`;
-    }
-   
-  }
+        const restaurant = this.restaurant.find((res) => res.restaurantID === restaurantID);
+        if (!restaurant) {
+          return "Restaurant not found.";
+        }
+        if (restaurant.isActive) {
+          return "Restaurant is already active.";
+        }
+        restaurant.isActive = true;
+        return `${restaurant.name} has been activated and is now visible to consumers.`;
+        }
+       
+}
