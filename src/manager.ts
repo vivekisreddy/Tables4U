@@ -62,4 +62,18 @@ class Manager {
         this.restaurant.push(newRestaurant);
         return newRestaurant;
     }
+
+
+    activateRestaurant(restaurantID: string) : string { 
+        const restaurant = this.restaurant.find((res) => res.restaurantID === restaurantID);
+        if (!restaurant) {
+          return "Restaurant not found.";
+        }
+        if (restaurant.isActive) {
+          return "Restaurant is already active.";
+        }
+        restaurant.isActive = true;
+        return `${restaurant.name} has been activated and is now visible to consumers.`;
+        }
+       
 }
