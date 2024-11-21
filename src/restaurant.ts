@@ -5,16 +5,15 @@ export class Restaurant{
     name : string;
     address : string;
     restaurantID : string; //pincode
-    isActive : boolean
+    isActive : boolean;
     openTime: number[];
     closeTime: number[];
     closedDays: number[];
     tables: Table[];
     dailySchedule: Schedule[];
-    weeklyOpenSchedulePerDay:WeeklyOpenSchedule[]
 
 
-    constructor(name:string, address:string, restaurantID:string, isActive:boolean, openTime:number[], closeTime:number[], closedDays:number[], tables:Table[], dailySchedule:Schedule[], weeklyOpenSchedulePerDay:WeeklyOpenSchedule[]){
+    constructor(name:string, address:string, restaurantID:string, isActive:boolean, openTime:number[], closeTime:number[], closedDays:number[], tables:Table[], dailySchedule:Schedule[]){
         this.name = name;
         this.address = address;
         this.restaurantID = restaurantID;
@@ -24,7 +23,6 @@ export class Restaurant{
         this.closedDays = closedDays;
         this.tables = tables;
         this.dailySchedule = dailySchedule;
-        this.weeklyOpenSchedulePerDay = weeklyOpenSchedulePerDay; 
     }
 
 }
@@ -97,17 +95,5 @@ class TimeSlot{
         this.time = time;
         this.availableTables = availableTables;
         this.reservedTables = reservedTables;
-    }
-}
-
-export class WeeklyOpenSchedule{
-    openTime:number;
-    closeTime:number;
-    ifClosed:boolean;
-
-    constructor(openTime:number, closeTime:number, ifClosed:boolean){
-        this.openTime;
-        this.closeTime;
-        this.ifClosed = ifClosed;
     }
 }

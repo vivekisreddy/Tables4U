@@ -1,23 +1,43 @@
+import { table } from 'console';
 import { Restaurant } from './restaurant';
-import {Table} from './restaurant'
-import { Schedule } from './restaurant'
-import {WeeklyOpenSchedule} from './restaurant'
+import { Table } from './restaurant';
+import { Schedule } from './restaurant';
 
-class Manager{
-    name:string;
-    email:string;
-    restaurant:Restaurant[];
+class Manager {
+    name: string;
+    email: string;
+    restaurant: Restaurant[];
 
-    constructor(name:string, email:string, restaurant:Restaurant[]){
+    constructor(name: string, email: string, restaurant: Restaurant[]) {
         this.name = name;
         this.email = email;
         this.restaurant = restaurant;
     }
 
-
-    createRestaurant(name:string, address:string, restaurantID:string, isActive:boolean, openTime:number[], closeTime:number[], closedDays:number[], tables:number, dailySchedule: Schedule[], seats: number[], ifClosed:boolean[]){
+    createRestaurant(
+        name: string,
+        address: string,
+        restaurantID: string,
+        isActive: boolean,
+        openTime: number[],
+        closeTime: number[],
+        closedDays: number[],
+        tables: number,
+        dailySchedule: Schedule[],
+        seats: number[],
+    ): Restaurant {
         const allTables: Table[] = [];
-        const weeklySchedule:WeeklyOpenSchedule[] = [];
+
+        if (tables <= 0 || tables !== seats.length || tables >= 8) {
+            throw new Error("Number of tables must match the number of seat configurations.");
+        }
+
+        for (let i = 0; i < openTime.length; i++) {
+            if (openTime[i] >= closeTime[i]) {
+                throw new Error(`Opening time must be earlier than closing time for day ${i}.`);
+            }
+        }
+
 
         for (let i = 0; i < seats.length; i++) {
             const tableID = `T${i + 1}`; 
@@ -26,15 +46,7 @@ class Manager{
             allTables.push(table);  
         }
 
-        //mon = 0; sun = 6
-        for(let i = 0; i < 7; i++){
-            const openTimePerDay = openTime[i];
-            const closeTimePerDay = closeTime[i];
-            const ifClosedPerDay = ifClosed[i];
-            const weeklySchPerDay = new WeeklyOpenSchedule(openTimePerDay, closeTimePerDay, ifClosedPerDay);
-            weeklySchedule.push(weeklySchPerDay)
-        }
-
+        // Create the restaurant without weeklySchedule
         const newRestaurant = new Restaurant(
             name,
             address,
@@ -43,14 +55,11 @@ class Manager{
             openTime,
             closeTime,
             closedDays,
-            allTables,  
-            dailySchedule,
-            weeklySchedule,
+            allTables,
+            dailySchedule
         );
 
         this.restaurant.push(newRestaurant);
         return newRestaurant;
-
-
     }
 }
