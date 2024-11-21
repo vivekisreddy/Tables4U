@@ -1,4 +1,3 @@
-import { table } from 'console';
 import { Restaurant } from './restaurant';
 import { Table } from './restaurant';
 import { Schedule } from './restaurant';
@@ -46,7 +45,6 @@ class Manager {
             allTables.push(table);  
         }
 
-        // Create the restaurant without weeklySchedule
         const newRestaurant = new Restaurant(
             name,
             address,
@@ -63,7 +61,6 @@ class Manager {
         return newRestaurant;
     }
 
-
     activateRestaurant(restaurantID: string) : string { 
         const restaurant = this.restaurant.find((res) => res.restaurantID === restaurantID);
         if (!restaurant) {
@@ -74,6 +71,5 @@ class Manager {
         }
         restaurant.isActive = true;
         return `${restaurant.name} has been activated and is now visible to consumers.`;
-        }
-       
+    }
 }

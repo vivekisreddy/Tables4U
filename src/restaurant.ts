@@ -1,17 +1,15 @@
-import { NapiMiddleware } from "next/dist/build/swc/generated-native";
 import {Consumer} from './consumer'
 
 export class Restaurant{
     name : string;
     address : string;
-    restaurantID : string; //pincode
+    restaurantID : string;
     isActive : boolean;
     openTime: number[];
     closeTime: number[];
     closedDays: number[];
     tables: Table[];
     dailySchedule: Schedule[];
-
 
     constructor(name:string, address:string, restaurantID:string, isActive:boolean, openTime:number[], closeTime:number[], closedDays:number[], tables:Table[], dailySchedule:Schedule[]){
         this.name = name;
@@ -24,7 +22,6 @@ export class Restaurant{
         this.tables = tables;
         this.dailySchedule = dailySchedule;
     }
-
 }
 
 export class Reservation{
@@ -35,7 +32,6 @@ export class Reservation{
     reservationDate:number;
     reservationTime:number;
     partySize:number;
-
 
     constructor(confirmationCode:string, consumer:Consumer[], restaurant:Restaurant[], table:Table[], reservationDate:number, reservationTime:number, partySize:number){
         this.confirmationCode = confirmationCode;
@@ -75,7 +71,7 @@ export class Schedule{
 
 class ourDate{
     year:number;
-    month:string; //should we change this to number?
+    month:string;
     day:number;
 
     constructor(year:number, month:string, day:number){
