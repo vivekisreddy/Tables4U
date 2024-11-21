@@ -13,30 +13,22 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
-  const handleLogIn = (and) => {
+  const handleCreate = (and) => {
     and.preventDefault()
-    //validate log in
-    andRefreshDisplay()
-  }
-
-  function createAccount() {
-    window.location.replace("/adminCreateAccount")
+    // bring to admin log in page
     andRefreshDisplay()
   }
 
   // below is where the GUI for the admin log in page is drawn
   return (
     <div>
-      <form onSubmit={handleLogIn}>
+      <form onSubmit={handleCreate}>
         <label htmlFor="email">Email:</label>
         <input type="text" id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password"></label>
         <input type="text" id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
-        <button className="log in">Log In</button>
+        <button className="create">Create</button>
       </form>
-
-      <label className="account">{"Don't have an account? Create one now!"}</label>
-      <button className="create" onClick={(e) => createAccount()}>Create Account</button>
     </div>
   )
 }
