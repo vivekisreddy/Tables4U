@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { RestaurantController } from "./restaurantController";
+import { RestaurantController } from "../restaurantController";
 
 
 export default function CreateRestaurant() {
