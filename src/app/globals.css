@@ -58,7 +58,7 @@ body {
   top: 465px;
 }
 
-.create {
+.createLI {
   font: bold 11px Arial;
   background-color: #EEEEEE;
   color: #333333;
@@ -68,8 +68,36 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 565px;
+  left: 550px;
   top: 500px;
+}
+
+.createCA {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 75px;
+  top: 60px;
+}
+
+.createMA {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 75px;
+  top: 90px;
 }
 
 .enter {
@@ -95,6 +123,24 @@ body {
   top: 500px;
 }
 
+.handleCreate {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
+}
+
+.handleLogIn {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
+}
+
 .handleSearch {
   font: bold 11px Arial;
   color: #f9f9f9;
@@ -102,6 +148,20 @@ body {
   position: absolute;
   left: 460px;
   top: 300px;
+}
+
+.logIn {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 80px;
+  top: 60px;
 }
 
 .manager {
