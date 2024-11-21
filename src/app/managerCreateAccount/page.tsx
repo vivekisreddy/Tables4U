@@ -16,7 +16,8 @@ export default function Home() {
 
   const handleCreate = (and) => {
     and.preventDefault()
-    // bring to manager log in page
+    // TO DO: manager create account lambda function
+    window.location.replace("/managerLogIn")
     andRefreshDisplay()
   }
 

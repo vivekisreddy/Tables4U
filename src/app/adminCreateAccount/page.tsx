@@ -15,7 +15,8 @@ export default function Home() {
 
   const handleCreate = (and) => {
     and.preventDefault()
-    // bring to admin log in page
+    // TO DO: admin create account lambda function
+    window.location.replace("/adminLogIn")
     andRefreshDisplay()
   }
 

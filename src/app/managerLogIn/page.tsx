@@ -15,7 +15,9 @@ export default function Home() {
 
   const handleLogIn = (and) => {
     and.preventDefault()
-    //validate log in
+    // TO DO: manager log in lambda function
+    console.log('Manager Name:', name)
+    console.log('Restaurant Pin Code:', pin)
     andRefreshDisplay()
   }
 

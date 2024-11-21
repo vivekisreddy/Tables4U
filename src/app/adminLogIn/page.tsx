@@ -15,7 +15,9 @@ export default function Home() {
 
   const handleLogIn = (and) => {
     and.preventDefault()
-    //validate log in
+    // TO DO: admin log in lambda function
+    console.log('Admin Email:', email)
+    console.log('Admin Password:', password)
     andRefreshDisplay()
   }
 
