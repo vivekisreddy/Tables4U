@@ -92,4 +92,5 @@ class TimeSlot{
         this.availableTables = availableTables;
         this.reservedTables = reservedTables;
     }
+
 }
