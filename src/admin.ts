@@ -1,36 +1,31 @@
-
 import { Restaurant } from './restaurant';
-import {Reservation} from './restaurant';
+import { Reservation } from './restaurant';
 
-class Admin{
-    adminID:string;
-    name:string;
-    email:string;
-    restaurant:Restaurant[];
-    trackReservation:Reservation[];
+class Admin {
+    adminID: string;
+    name: string;
+    email: string;
+    restaurants: Restaurant[];
+    reservations: Reservation[];
 
-    constructor(adminID:string, name:string, email:string, restaurant:Restaurant[], trackReservation:Reservation[]){
+    constructor(adminID: string, name: string, email: string, restaurants: Restaurant[], reservations: Reservation[]) {
         this.adminID = adminID;
         this.name = name;
         this.email = email;
-        this.restaurant = restaurant;
-        this.trackReservation = trackReservation;
+        this.restaurants = restaurants;
+        this.reservations = reservations;
     }
-    
-}
 
-    // can there be more than one admin or are we assuming there can only be one?
-    logIn(email:String, pass:String) {
-        if (email == this.email) {
-            if (pass == this.adminID) {
-                // bring user to admin home page
+    // Method to log in the admin
+    logIn(email: string, pass: string): string {
+        if (email === this.email) {
+            if (pass === this.adminID) {
+                return 'Login successful! Redirecting to admin home page.';
+            } else {
+                return 'Error: Password is incorrect.';
             }
-            else {
-                // error = password is incorrect
-            }
-        }
-        else {
-            // an admin account with this email does not exist
+        } else {
+            return 'Error: An admin account with this email does not exist.';
         }
     }
 }

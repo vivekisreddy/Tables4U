@@ -3,7 +3,7 @@ import { Restaurant } from './restaurant';
 import { Table } from './restaurant';
 import { Schedule } from './restaurant';
 
-class Manager {
+export class Manager {
     name: string;
     email: string;
     restaurant: Restaurant[];

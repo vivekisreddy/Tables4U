@@ -17,3 +17,5 @@ export class Consumer{
         this.reservations = reservations;
         this.ifActive = ifActive;
     }
+
+}
