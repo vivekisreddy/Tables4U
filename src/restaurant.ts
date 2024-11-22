@@ -1,90 +1,97 @@
-import { Consumer } from "./consumer"
 
-class TimeSlot {
-    time: Number
-    availableTables:Table[]
-    reservedTables:Table[]
-    
-    constructor(time:number, availableTables:Table[], reservedTables:Table[]) {
-        this.time = time
-        this.availableTables = availableTables
-        this.reservedTables = reservedTables
+import {Consumer} from './consumer'
+
+export class Restaurant{
+    name : string;
+    address : string;
+    restaurantID : string;
+    isActive : boolean;
+    openTime: number[];
+    closeTime: number[];
+    closedDays: number[];
+    tables: Table[];
+    dailySchedule: Schedule[];
+
+    constructor(name:string, address:string, restaurantID:string, isActive:boolean, openTime:number[], closeTime:number[], closedDays:number[], tables:Table[], dailySchedule:Schedule[]){
+        this.name = name;
+        this.address = address;
+        this.restaurantID = restaurantID;
+        this.isActive = false;
+        this.openTime = openTime;   //how to do this correctly. how do i make it so each restaurant date as a different number.
+        this.closeTime = closeTime;
+        this.closedDays = closedDays;
+        this.tables = tables;
+        this.dailySchedule = dailySchedule;
     }
 }
 
-class ourDate {
-    year: Number
-    month: String
-    day: Number
+export class Reservation{
+    confirmationCode:string;
+    consumer:Consumer[];
+    restaurant:Restaurant[];
+    table:Table[];
+    reservationDate:number;
+    reservationTime:number;
+    partySize:number;
 
-    constructor(year:number, month:String, day:number) {
-        this.year = year
-        this.month = month
-        this.day = day
+    constructor(confirmationCode:string, consumer:Consumer[], restaurant:Restaurant[], table:Table[], reservationDate:number, reservationTime:number, partySize:number){
+        this.confirmationCode = confirmationCode;
+        this.consumer = consumer;
+        this.restaurant = restaurant;
+        this.table = table;
+        this.reservationDate = reservationDate;
+        this.reservationTime = reservationTime;
+        this.partySize = partySize;
     }
 }
 
-export class Table {
-    seats: number
+export class Table{
+    tableID:string;
+    seats:number;
+    isAvailable:boolean;
 
-    constructor(seats:number) {
-        this.seats = seats
-    }
-}
-
-class Schedule {
-    date: ourDate[]
-    timeSlots: TimeSlot[]
-    isClosed: Boolean
-    
-    constructor(date:ourDate[], timeSlots:TimeSlot[]) {
-        this.date = date
-        this.timeSlots = timeSlots
-        this.isClosed = false
+    constructor(tableID:string, seats:number, isAvailable:boolean){
+        this.tableID = tableID;
+        this.seats = seats;
+        this.isAvailable = isAvailable;
     }
 }
 
 
-export class Restaurant {
-    name: String
-    address: String
-    restaurantID: String
-    isActive: Boolean
-    openTime:number[]
-    closeTime:number[]
-    tables: Table[]
-    dailySchedule: Schedule[]
-    accessRes: Reservation[]
+export class Schedule{
+    date:ourDate[];
+    timeSlots:TimeSlot[];
+    isClosed:boolean;
 
-
-    constructor(name:String, address:String, restaurantID:String, openTime:number[], closeTime:number[], tables:Table[], dailySchedule:Schedule[], accessRes:Reservation[]) {
-        this.name = name
-        this.address = address
-        this.restaurantID = restaurantID
-        this.isActive = false
-        this.openTime = Array(7).fill(openTime)
-        this.closeTime = Array(7).fill(closeTime)
-        this.tables = tables
-        this.dailySchedule = dailySchedule
-        this.accessRes = accessRes
-
+    constructor(date:ourDate[], timeSlots:TimeSlot[], isClosed:boolean){
+        this.date = date;
+        this.timeSlots = timeSlots;
+        this.isClosed = isClosed;
     }
 }
 
-export class Reservation {
-    confirmationCode:String
-    consumer:Consumer
-    table:Table
-    reservationDate:Date
-    reservationTime:TimeSlot
-    partySize:Number
+class ourDate{
+    year:number;
+    month:string;
+    day:number;
 
-    constructor(confirmationCode:String, consumer:Consumer, table:Table, reservationDate:Date, reservationTime:TimeSlot, partySize:Number) {
-        this.confirmationCode = confirmationCode
-        this.consumer = consumer
-        this.table = table
-        this.reservationDate = reservationDate
-        this.reservationTime = reservationTime
-        this.partySize = partySize
+    constructor(year:number, month:string, day:number){
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
+}
+
+
+class TimeSlot{
+    time:number;
+    availableTables:Table[];
+    reservedTables:Consumer[];
+
+    constructor(time:number, availableTables:Table[], reservedTables:Consumer[]){
+        this.time = time;
+        this.availableTables = availableTables;
+        this.reservedTables = reservedTables;
+    }
+
 }

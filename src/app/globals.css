@@ -14,6 +14,7 @@
   }
 }
 
+
 body {
   font-family: Arial, sans-serif;
   background-color: #ececec;
@@ -21,6 +22,13 @@ body {
   justify-content: center;
   align-items: center;
   height: 500px;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
 }
 
 .button {
@@ -34,6 +42,7 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
 }
+
 
 .account {
   position: absolute;
@@ -61,6 +70,7 @@ body {
   top: 60px;
 }
 
+
 .adminLogInButton {
   font: bold 11px Arial;
   background-color: #EEEEEE;
@@ -86,6 +96,7 @@ body {
   left: 460px;
   top: 465px;
 }
+
 
 .createAdminLogIn {
   font: bold 11px Arial;
@@ -115,6 +126,7 @@ body {
   top: 60px;
 }
 
+
 .createManagerAccount {
   font: bold 11px Arial;
   background-color: #EEEEEE;
@@ -143,6 +155,7 @@ body {
   top: 500px;
 }
 
+
 .enter {
   font: bold 11px Arial;
   background-color: #EEEEEE;
@@ -165,6 +178,7 @@ body {
   left: 460px;
   top: 500px;
 }
+
 
 .handleCreate {
   font: bold 11px Arial;
@@ -192,6 +206,7 @@ body {
   left: 460px;
   top: 300px;
 }
+
 
 .managerCreateAccountMessage {
   position: absolute;
@@ -233,6 +248,8 @@ body {
   top: 200px;
 }
 
+
+
 .search {
   font: bold 11px Arial;
   background-color: #EEEEEE;
@@ -251,4 +268,22 @@ body {
   position: absolute;
   left: 460px;
   top: 200px;
+
+
+.label {
+  font-size: 1rem;
+  color: #555;
 }
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+
+.message {
+  text-align: center;
+  color: #f96f6f;
+  margin-top: 10px;
+

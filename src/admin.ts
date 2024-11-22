@@ -1,19 +1,23 @@
-import { Restaurant, Reservation } from "./restaurant"
 
-export class Admin {
-    adminID:String
-    name:String
-    email:String
-    restaurants:Restaurant[]
-    trackReservation:Reservation[]
+import { Restaurant } from './restaurant';
+import {Reservation} from './restaurant';
 
-    constructor(adminID:String, name:String, email:String) {
-        this.adminID = adminID
-        this.name = name
-        this.email = email
-        this.restaurants = findRestaraunts()
-        this.trackReservation = findReservations()
+class Admin{
+    adminID:string;
+    name:string;
+    email:string;
+    restaurant:Restaurant[];
+    trackReservation:Reservation[];
+
+    constructor(adminID:string, name:string, email:string, restaurant:Restaurant[], trackReservation:Reservation[]){
+        this.adminID = adminID;
+        this.name = name;
+        this.email = email;
+        this.restaurant = restaurant;
+        this.trackReservation = trackReservation;
     }
+    
+}
 
     // can there be more than one admin or are we assuming there can only be one?
     logIn(email:String, pass:String) {
