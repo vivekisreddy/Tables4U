@@ -67,13 +67,14 @@ export default function Home() {
       <button className="managerLogInButton" onClick={(e) => managerLogIn()} >Manager Log In</button>
 
       <label className="welcomeMessage">{"Welcome to Tables4U!"}</label>
+      <label className="reservationMessage">{"Make a reservation below:"}</label>
 
       <form className="handleSearch" onSubmit={handleSearch}>
-        <label htmlFor="date">Date:</label>
+        <label className="label" htmlFor="date">Date:</label>
         <input type="text" id="date" name="date" value={date} onChange={(and) => setDate(and.target.value)}/>
         <br></br>
         <br></br>
-        <label htmlFor="time">Start Time:</label>
+        <label className="label" htmlFor="time">Start Time:</label>
         <input type="text" id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
         <button type="submit" className="search">Search</button>
       </form>
@@ -81,7 +82,7 @@ export default function Home() {
       <label className="confirmMessage">{"Already have a reservation? Find details here!"}</label>
 
       <form className="handleConfirm" onSubmit={handleConfirm}>
-        <label htmlFor="code">Confirmation Code:</label>
+        <label className="label" htmlFor="code">Confirmation Code:</label>
         <input type="text" id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
         <button type="submit" className="enter">Enter</button>
       </form>

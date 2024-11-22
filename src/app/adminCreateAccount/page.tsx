@@ -23,7 +23,7 @@ export default function Home() {
   // below is where the GUI for the admin log in page is drawn
   return (
     <div>
-      <label className="adminCreateAccountMessage">{"Create an Admin Account"}</label>
+      <label className="adminCreateAccountMessage">{"Create an Admin Account:"}</label>
 
       <form className="handleCreate" onSubmit={handleCreate}>
         <label htmlFor="email">Email:</label>
