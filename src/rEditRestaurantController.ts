@@ -1,28 +1,32 @@
 import { Restaurant, Table } from "./restaurant";
 
 
-function editName(r:Restaurant, text:String): Restaurant {
-    let restaurant = new Restaurant(text, r.address, r.restaurantID, r.openTime, r.closeTime, r.tables, r.dailySchedule, r.accessRes);
+function editName(r:Restaurant, text:string): Restaurant {
+    let restaurant = new Restaurant(text, r.address, r.restaurantID, false, r.openTime, r.closeTime, r.closedDays, r.tables, r.dailySchedule);
     return restaurant
 }
 
-function editAddress(r:Restaurant, text:String): Restaurant {
-    let restaurant = new Restaurant(r.name, text, r.restaurantID, r.openTime, r.closeTime, r.tables, r.dailySchedule, r.accessRes);
+function editAddress(r:Restaurant, text:string): Restaurant {
+    let restaurant = new Restaurant(r.name, text, r.restaurantID, false, r.openTime, r.closeTime, r.closedDays, r.tables, r.dailySchedule);
     return restaurant
 }
 
 function editHours(r:Restaurant, day:number, newHour:number, open:Boolean): Restaurant {
-    let restaurant = new Restaurant(r.name, r.address, r.restaurantID, r.openTime, r.closeTime, r.tables, r.dailySchedule, r.accessRes);
     if (open) {
-        restaurant.openTime[day] = newHour
-    } else if (!open) {
-        restaurant.closeTime[day] = newHour
+        let hours = r.openTime
+        hours[day] = newHour
+        let restaurant = new Restaurant(r.name, r.address, r.restaurantID, false, hours, r.closeTime, r.closedDays, r.tables, r.dailySchedule);
+        return restaurant
+    } else  {
+        let hours = r.closeTime
+        hours[day] = newHour
+        let restaurant = new Restaurant(r.name, r.address, r.restaurantID, false, r.openTime, hours, r.closedDays, r.tables, r.dailySchedule);
+        return restaurant
     }
-    return restaurant
 }
 
 function editTables(r:Restaurant, tableAmount:Table[], newSeat:number[]): Restaurant {
-    let restaurant = new Restaurant(r.name, r.address, r.restaurantID, r.openTime, r.closeTime, tableAmount, r.dailySchedule, r.accessRes);
+    let restaurant = new Restaurant(r.name, r.address, r.restaurantID, false, r.openTime, r.closeTime, r.closedDays, r.tables, r.dailySchedule);
     for (let i = 0; i < newSeat.length; i ++) {
         for (let seatNum = 0; seatNum < newSeat[i]; seatNum ++) {
             restaurant.tables[seatNum].seats = newSeat[i]
@@ -32,7 +36,7 @@ function editTables(r:Restaurant, tableAmount:Table[], newSeat:number[]): Restau
 }
 
 export function controlEdits(which:number, restaurant:Restaurant) {
-    let input:String = "" //from button
+    let input:string = "" //from button
     let inputID:number = 0 //button ID
     let inputBoolean:Boolean = false// from button name
     if (which == 1) { // if name is edited

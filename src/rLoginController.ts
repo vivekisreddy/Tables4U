@@ -1,6 +1,6 @@
 import { Manager, managerList } from "./manager";
 
-function LogIn(name: String, inputID: String) : Boolean {
+function LogIn(name: string, inputID: String) : Boolean {
     for (let i = 0; i < managerList.length; i ++) {
         let manager: Manager = managerList[i]
         if (manager.name = name) {
