@@ -1,17 +1,17 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 
-import React, { useState } from "react";
+import React from "react";
 import { RestaurantController } from "../restaurantController";
 
 export default function Home() {
     const controller = new RestaurantController();
 
     const[redraw, forceRedraw] = React.useState(0)
-    const[resName, setResName] = useState('')
-    const[resAddress, setResAddress] = useState('')
-    const[resNumTables, setResNumTables] = useState(0)
-    const[resSeatsPerTable, setResSeatsPerTable] = useState<number[]>([]);
-    const[message, setMessage] = useState('');
+    const[resName, setResName] = React.useState('')
+    const[resAddress, setResAddress] = React.useState('')
+    const[resNumTables, setResNumTables] = React.useState(0)
+    const[resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
+    const[message, setMessage] = React.useState('');
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {

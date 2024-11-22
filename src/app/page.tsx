@@ -1,13 +1,13 @@
-
-import React, {useState} from 'react';
+'use client'
+import React from 'react';
 
 export default function Home() {
   // initial instantiation of landing home page
   const [redraw, forceRedraw] = React.useState(0)
 
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
-  const [code, setCode] = useState('')
+  const [date, setDate] = React.useState('')
+  const [time, setTime] = React.useState('')
+  const [code, setCode] = React.useState('')
   
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
