@@ -1,3 +1,4 @@
+
 import { Restaurant } from './restaurant';
 import {Reservation} from './restaurant';
 
@@ -16,5 +17,3 @@ export class Consumer{
         this.reservations = reservations;
         this.ifActive = ifActive;
     }
-
-}

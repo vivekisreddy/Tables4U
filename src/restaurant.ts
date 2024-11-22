@@ -1,3 +1,4 @@
+
 import {Consumer} from './consumer'
 
 export class Restaurant{

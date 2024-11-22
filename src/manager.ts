@@ -1,3 +1,4 @@
+
 import { Restaurant } from './restaurant';
 import { Table } from './restaurant';
 import { Schedule } from './restaurant';
@@ -73,3 +74,4 @@ class Manager {
         return `${restaurant.name} has been activated and is now visible to consumers.`;
     }
 }
+

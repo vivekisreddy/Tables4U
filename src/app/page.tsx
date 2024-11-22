@@ -1,86 +1,90 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
-import React, { useState } from "react";
-import { RestaurantController } from "./restaurantController";
+
+import React, {useState} from 'react';
 
 export default function Home() {
-    const controller = new RestaurantController();
+  // initial instantiation of landing home page
+  const [redraw, forceRedraw] = React.useState(0)
 
-    const[redraw, forceRedraw] = React.useState(0)
-    const[resName, setResName] = useState('')
-    const[resAddress, setResAddress] = useState('')
-    const[resNumTables, setResNumTables] = useState(0)
-    const[resSeatsPerTable, setResSeatsPerTable] = useState<number[]>([]);
-    const[message, setMessage] = useState('');
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
+  const [code, setCode] = useState('')
+  
+  // helper function that forces React app to redraw whenever this is called.
+  function andRefreshDisplay() {
+    forceRedraw(redraw + 1)
+  }
 
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1)
+  function confirmRes(code:String) {
+    let payload = {
+      "confirmationCode":code,
     }
+    // TO DO: confirmRes lambda function
+    fetch("url", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+  }
 
-  const handleAddSeats = (index: number, value: number) => {
-    const updatedSeats = [...resSeatsPerTable];
-    updatedSeats[index] = value;
-    setResSeatsPerTable(updatedSeats);
-};
+  const handleSearch = (and) => {
+    and.preventDefault();
+    // TO DO: if date is in the past
+    if (date == '') {
+      alert('please select a date in the future')
+    }
+    // TO DO: if time is outside general range
+    if (time == '') {
+      alert('please select a valid start time')
+    }
+    console.log('Date:', date)
+    console.log('Start Time:', time)
+    // bring to consumer home page with this date and time
+    andRefreshDisplay()
+  }
 
-  const handleCreateRestaurant = () => {
-    const result = controller.createRestaurant(resName, resAddress, resNumTables, resSeatsPerTable);
-    setMessage(result); 
-    setResName('');
-    setResAddress('');
-    setResNumTables(0);
-    setResSeatsPerTable([]);
-};
+  const handleConfirm = (and) => {
+    and.preventDefault();
+    console.log("Confirmation Code:", code)
+    confirmRes(code)
+    andRefreshDisplay()
+  }
 
-return (
-    <div className="container">
-        <h1 className="title">Create Restaurant</h1>
-        <label className="label">
-            Restaurant Name:
-            <input
-                type="text"
-                value={resName}
-                onChange={(e) => setResName(e.target.value)}
-                className="input"
-            />
-        </label>
-        <label className="label">
-            Restaurant Address:
-            <input
-                type="text"
-                value={resAddress}
-                onChange={(e) => setResAddress(e.target.value)}
-                className="input"
-            />
-        </label>
-        <label className="label">
-            Number of Tables:
-            <input
-                type="number"
-                value={resNumTables}
-                onChange={(e) => setResNumTables(Number(e.target.value))}
-                className="input"
-            />
-        </label>
+  // brings admin to the admin log in page
+  function adminLogIn() {
+    window.location.replace("/adminLogIn")
+    andRefreshDisplay()
+  }
 
-        {[...Array(resNumTables)].map((_, index) => (
-                <div key={index}>
-                    <label className="label">
-                        Seats at Table {index + 1}:
-                        <input
-                            type="number"
-                            value={resSeatsPerTable[index] || 0}
-                            onChange={(e) => handleAddSeats(index, Number(e.target.value))}
-                            className="input"
-                        />
-                    </label>
-                </div>
-            ))}
+  // brings manager to the manager log in page
+  function managerLogIn() {
+    window.location.replace("/managerLogIn")
+    andRefreshDisplay()
+  }
 
-        <button onClick={handleCreateRestaurant} className="button-createRes">
-            Create Restaurant
-        </button>
-        {message && <p className="message">{message}</p>}
+  // below is where the GUI for the landing home page is drawn
+  return (
+    <div>
+      <button className="adminLogInButton" onClick={(e) => adminLogIn()} >Admin Log In</button>
+      <button className="managerLogInButton" onClick={(e) => managerLogIn()} >Manager Log In</button>
+
+      <label className="welcomeMessage">{"Welcome to Tables4U!"}</label>
+
+      <form className="handleSearch" onSubmit={handleSearch}>
+        <label htmlFor="date">Date:</label>
+        <input type="text" id="date" name="date" value={date} onChange={(and) => setDate(and.target.value)}/>
+        <br></br>
+        <br></br>
+        <label htmlFor="time">Start Time:</label>
+        <input type="text" id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
+        <button type="submit" className="search">Search</button>
+      </form>
+
+      <label className="confirmMessage">{"Already have a reservation? Find details here!"}</label>
+
+      <form className="handleConfirm" onSubmit={handleConfirm}>
+        <label htmlFor="code">Confirmation Code:</label>
+        <input type="text" id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
+        <button type="submit" className="enter">Enter</button>
+      </form>
     </div>
-);
+  )
 }
