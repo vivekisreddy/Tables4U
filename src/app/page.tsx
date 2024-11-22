@@ -1,101 +1,90 @@
-import Image from "next/image";
+
+import React, {useState} from 'react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  // initial instantiation of landing home page
+  const [redraw, forceRedraw] = React.useState(0)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
+  const [code, setCode] = useState('')
+  
+  // helper function that forces React app to redraw whenever this is called.
+  function andRefreshDisplay() {
+    forceRedraw(redraw + 1)
+  }
+
+  function confirmRes(code:String) {
+    let payload = {
+      "confirmationCode":code,
+    }
+    // TO DO: confirmRes lambda function
+    fetch("url", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+  }
+
+  const handleSearch = (and) => {
+    and.preventDefault();
+    // TO DO: if date is in the past
+    if (date == '') {
+      alert('please select a date in the future')
+    }
+    // TO DO: if time is outside general range
+    if (time == '') {
+      alert('please select a valid start time')
+    }
+    console.log('Date:', date)
+    console.log('Start Time:', time)
+    // bring to consumer home page with this date and time
+    andRefreshDisplay()
+  }
+
+  const handleConfirm = (and) => {
+    and.preventDefault();
+    console.log("Confirmation Code:", code)
+    confirmRes(code)
+    andRefreshDisplay()
+  }
+
+  // brings admin to the admin log in page
+  function adminLogIn() {
+    window.location.replace("/adminLogIn")
+    andRefreshDisplay()
+  }
+
+  // brings manager to the manager log in page
+  function managerLogIn() {
+    window.location.replace("/managerLogIn")
+    andRefreshDisplay()
+  }
+
+  // below is where the GUI for the landing home page is drawn
+  return (
+    <div>
+      <button className="adminLogInButton" onClick={(e) => adminLogIn()} >Admin Log In</button>
+      <button className="managerLogInButton" onClick={(e) => managerLogIn()} >Manager Log In</button>
+
+      <label className="welcomeMessage">{"Welcome to Tables4U!"}</label>
+
+      <form className="handleSearch" onSubmit={handleSearch}>
+        <label htmlFor="date">Date:</label>
+        <input type="text" id="date" name="date" value={date} onChange={(and) => setDate(and.target.value)}/>
+        <br></br>
+        <br></br>
+        <label htmlFor="time">Start Time:</label>
+        <input type="text" id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
+        <button type="submit" className="search">Search</button>
+      </form>
+
+      <label className="confirmMessage">{"Already have a reservation? Find details here!"}</label>
+
+      <form className="handleConfirm" onSubmit={handleConfirm}>
+        <label htmlFor="code">Confirmation Code:</label>
+        <input type="text" id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
+        <button type="submit" className="enter">Enter</button>
+      </form>
     </div>
-  );
+  )
 }

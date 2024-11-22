@@ -14,8 +14,276 @@
   }
 }
 
+
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #ececec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
 }
+
+.title {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
+}
+
+.button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+
+
+.account {
+  position: absolute;
+  left: 460px;
+  top: 465px;
+}
+
+.adminCreateAccountMessage {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
+.adminLogIn {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 80px;
+  top: 60px;
+}
+
+
+.adminLogInButton {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 1375px;
+  top: 25px;
+}
+
+.adminLogInMessage {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
+.confirmMessage {
+  position: absolute;
+  left: 460px;
+  top: 465px;
+}
+
+
+.createAdminLogIn {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 550px;
+  top: 500px;
+}
+
+.createAdminAccount {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 75px;
+  top: 60px;
+}
+
+
+.createManagerAccount {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 75px;
+  top: 90px;
+}
+
+.createManagerLogIn {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 550px;
+  top: 500px;
+}
+
+
+.enter {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 275px;
+  top: -3px;
+}
+
+.handleConfirm {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 500px;
+}
+
+
+.handleCreate {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
+}
+
+.handleLogIn {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
+}
+
+.handleSearch {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
+}
+
+
+.managerCreateAccountMessage {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
+.managerLogIn {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 80px;
+  top: 60px;
+}
+
+.managerLogInButton {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 1375px;
+  top: 60px;
+}
+
+.managerLogInMessage {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
+
+
+.search {
+  font: bold 11px Arial;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 80px;
+  top: 60px;
+}
+
+.welcomeMessage {
+  position: absolute;
+  left: 460px;
+  top: 200px;
+
+
+.label {
+  font-size: 1rem;
+  color: #555;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+
+.message {
+  text-align: center;
+  color: #f96f6f;
+  margin-top: 10px;
+
