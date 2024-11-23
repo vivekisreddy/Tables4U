@@ -44,6 +44,6 @@ export function controlEdits(which:number, restaurant:Restaurant) {
         editHours(restaurant, inputID, day, inputBoolean)
     } else if (which == 4) { // if tables are edited
         let seats = Number(input)
-        editTables(restaurant, restaurant.tables, [)
+        editTables(restaurant, restaurant.tables, )
     }
 }

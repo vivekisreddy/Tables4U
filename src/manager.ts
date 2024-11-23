@@ -21,34 +21,30 @@ export class Manager {
         address: string,
         restaurantID: string,
         isActive: boolean,
-        openTime: number,  // Single open time for all days
-        closeTime: number, // Single close time for all days
-        closedDays: ourDate[],  // Array of closed days as ourDate[]
+        openTime: number,  
+        closeTime: number, 
+        closedDays: ourDate[], 
         tables: number,
-        dailySchedule: Schedule[],  // Daily schedules with time slots
-        seats: number[]  // Seats configuration for each table
+        dailySchedule: Schedule[],  
+        seats: number[]  
     ): Restaurant {
         const allTables: Table[] = [];
 
-        // Validate the number of tables and seat configurations
         if (tables <= 0 || tables !== seats.length || tables >= 8) {
             throw new Error("Number of tables must match the number of seat configurations.");
         }
 
-        // Create tables based on seat configurations
-        for (let i = 0; i < seats.length; i++) {
-            const tableID = `T${i + 1}`;
-            const seatsPerTable = seats[i];
-            const table = new Table(tableID, seatsPerTable, true);  // Initially all tables are available
-            allTables.push(table);
-        }
-
-        // Validate that opening time is earlier than closing time
         if (openTime >= closeTime) {
             throw new Error("Opening time must be earlier than closing time.");
         }
 
-        // Create a new Restaurant instance
+         for (let i = 0; i < seats.length; i++) {
+            const tableID = `T${i + 1}`;
+            const seatsPerTable = seats[i];
+            const table = new Table(tableID, seatsPerTable, true);  
+            allTables.push(table);
+        }
+
         const newRestaurant = new Restaurant(
             name,
             address,
@@ -56,16 +52,15 @@ export class Manager {
             isActive,
             openTime,
             closeTime,
-            closedDays,  // Use closedDays (ourDate[])
+            closedDays,  
             allTables,
             dailySchedule
         );
 
-        this.restaurant = newRestaurant;  // Set the manager's restaurant
-        return newRestaurant;  // Return the newly created restaurant
+        this.restaurant = newRestaurant;  
+        return newRestaurant;  
     }
 
-    // Activate the restaurant
     activateRestaurant(): string {
         if (!this.restaurant) {
             return "Restaurant not found.";
@@ -75,5 +70,7 @@ export class Manager {
         }
         this.restaurant.isActive = true;
         return `${this.restaurant.name} has been activated and is now visible to consumers.`;
+    }
+    editRestaurant(){
     }
 }
