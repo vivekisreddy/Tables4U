@@ -16,6 +16,8 @@ export default function Home() {
   const handleCreate = (and) => {
     and.preventDefault()
     // TO DO: admin create account lambda function
+    console.log('Admin Email:', email)
+    console.log('Admin Password:', password)
     window.location.replace("/adminLogIn")
     andRefreshDisplay()
   }
@@ -23,14 +25,14 @@ export default function Home() {
   // below is where the GUI for the admin log in page is drawn
   return (
     <div>
-      <label className="adminCreateAccountMessage">{"Create an Admin Account"}</label>
+      <label className="adminCreateAccountMessage">{"Create an Admin Account:"}</label>
 
       <form className="handleCreate" onSubmit={handleCreate}>
-        <label htmlFor="email">Email:</label>
+        <label className="label" htmlFor="email">Email:</label>
         <input type="text" id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
         <br></br>
         <br></br>
-        <label htmlFor="password">Password:</label>
+        <label className="label" htmlFor="password">Password:</label>
         <input type="text" id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
         <button type="submit" className="createAdminAccount">Create</button>
       </form>

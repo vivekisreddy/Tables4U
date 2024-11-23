@@ -18,6 +18,10 @@ export default function Home() {
     // TO DO: admin log in lambda function
     console.log('Admin Email:', email)
     console.log('Admin Password:', password)
+    // if valid log in
+      window.location.replace("/adminHomePage")
+    // else
+      // alert("incorrect email or password")
     andRefreshDisplay()
   }
 
@@ -32,11 +36,11 @@ export default function Home() {
       <label className="adminLogInMessage">{"Admin Log In"}</label>
 
       <form className="handleLogIn" onSubmit={handleLogIn}>
-        <label htmlFor="email">Email:</label>
+        <label className="label" htmlFor="email">Email:</label>
         <input type="text" id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
         <br></br>
         <br></br>
-        <label htmlFor="password">Password:</label>
+        <label className="label" htmlFor="password">Password:</label>
         <input type="text" id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
         <button type="submit" className="adminLogIn">Log In</button>
       </form>

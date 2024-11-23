@@ -24,7 +24,7 @@ export default function Home() {
   }
 
   function createAccount() {
-    window.location.replace("/managerCreateAccount")
+    window.location.replace("/createRes")
     andRefreshDisplay()
   }
 
@@ -34,17 +34,17 @@ export default function Home() {
       <label className="managerLogInMessage">{"Manager Log In"}</label>
 
       <form className="handleLogIn" onSubmit={handleLogIn}>
-        <label htmlFor="name">Manager Name:</label>
+        <label className="label" htmlFor="name">Restaurant Name:</label>
         <input type="text" id="name" name="name" value={name} onChange={(and) => setName(and.target.value)}/>
         <br></br>
         <br></br>
-        <label htmlFor="pin">Restaurant Pin Code:</label>
+        <label className="label" htmlFor="pin">Pin Code:</label>
         <input type="text" id="pin" name="pin" value={pin} onChange={(and) => setPin(and.target.value)}/>
         <button type="submit" className="managerLogIn">Log In</button>
       </form>
 
       <label className="account">{"Don't have an account? Create one now!"}</label>
-      <button className="createManagerLogIn" onClick={(e) => createAccount()}>Create Account</button>
+      <button className="createManagerLogIn" onClick={(e) => createAccount()}>Create Restaurant</button>
     </div>
   )
 }
