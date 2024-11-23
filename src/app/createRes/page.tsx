@@ -37,11 +37,6 @@ export default function Home() {
     setResSeatsPerTable([]);
 };
 
-const handleEditRestaurant = () => {
-    const result = controller.editRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable);
-    setMessage(result);
-};
-
 return (
     <div className="container">
         <h1 className="title">Create Restaurant</h1>

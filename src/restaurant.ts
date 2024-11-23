@@ -102,7 +102,6 @@ export class ourDate {
     }
 }
 
-// Define the TimeSlot class
 class TimeSlot {
     time: number;
     availableTables: Table[];

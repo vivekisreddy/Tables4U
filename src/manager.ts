@@ -86,7 +86,7 @@ export class Manager {
             this.restaurant.name = updatedName;
             changesMade = true;
         }
-
+        
         return changesMade
             ? `${this.restaurant.name} has been successfully updated.`
             : "No changes were made to the restaurant.";
