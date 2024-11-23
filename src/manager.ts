@@ -16,6 +16,18 @@ export class Manager {
         this.restaurant = restaurant;
         managerList.push(this);
     }
+
+    createTables(seats:number[]):Table[] {
+        const allTables: Table[] = [];
+        for (let i = 0; i < seats.length; i++) {
+            const tableID = `T${i + 1}`;
+            const seatsPerTable = seats[i];
+            const table = new Table(tableID, seatsPerTable, true);  
+            allTables.push(table);
+        }
+        return allTables
+    }
+    
     createRestaurant(
         name: string,
         address: string,
@@ -28,7 +40,6 @@ export class Manager {
         dailySchedule: Schedule[],  
         seats: number[]  
     ): Restaurant {
-        const allTables: Table[] = [];
 
         if (tables <= 0 || tables !== seats.length || tables >= 8) {
             throw new Error("Number of tables must match the number of seat configurations.");
@@ -36,13 +47,6 @@ export class Manager {
 
         if (openTime >= closeTime) {
             throw new Error("Opening time must be earlier than closing time.");
-        }
-
-         for (let i = 0; i < seats.length; i++) {
-            const tableID = `T${i + 1}`;
-            const seatsPerTable = seats[i];
-            const table = new Table(tableID, seatsPerTable, true);  
-            allTables.push(table);
         }
 
         const newRestaurant = new Restaurant(
@@ -53,7 +57,7 @@ export class Manager {
             openTime,
             closeTime,
             closedDays,  
-            allTables,
+            this.createTables(seats),
             dailySchedule
         );
 
@@ -73,22 +77,26 @@ export class Manager {
     }
 
     editRestaurant(
-        updatedName?: string,
-        updatedAddress?: string,
-        updatedOpenTime?: number,
-        updatedCloseTime?: number,
-        updatedClosedDays?: ourDate[],
-        updatedTables?: Table[],
-        updatedSchedule?: Schedule[]
-    ): string {
-        let changesMade = false; 
-            if (updatedName) {
-            this.restaurant.name = updatedName;
-            changesMade = true;
+        updatedName: string,
+        updatedAddress: string,
+        updatedOpenTime: number,
+        updatedCloseTime: number,
+        tables:number,
+        SeatsPerTable:number[]
+    ): Restaurant {
+        if (tables <= 0 || tables !== SeatsPerTable.length || tables >= 8) {
+            throw new Error("Number of tables must match the number of seat configurations.");
         }
-        
-        return changesMade
-            ? `${this.restaurant.name} has been successfully updated.`
-            : "No changes were made to the restaurant.";
+        let changesMade = false; 
+        if (!changesMade) {
+            this.restaurant.name = updatedName;
+            this.restaurant.address = updatedAddress;
+            this.restaurant.openTime = updatedOpenTime;
+            this.restaurant.closeTime = updatedCloseTime;
+            this.restaurant.tables = this.createTables(SeatsPerTable);
+            changesMade = true;
+            return this.restaurant
+        }
+        return this.restaurant
     }
 }

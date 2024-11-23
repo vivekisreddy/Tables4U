@@ -1,3 +1,4 @@
+import { table } from 'console';
 import { Manager } from '../manager';
 import { ourDate } from '../restaurant';
 import { Schedule, Table } from '../restaurant';
@@ -81,6 +82,26 @@ export class RestaurantController {
 
 
         // test test test
+    }
+
+    editRestaurant(name: string, address: string, openTime: number, closeTime: number, numTables: number, seatsPerTable: number[]) : string {
+        if (!this.manager) {
+            return 'No manager is assigned to create a restaurant.';
+        }
+
+        try {
+            const restaurant = this.manager.editRestaurant(
+                name,
+                address,
+                openTime,
+                closeTime,
+                numTables,
+                seatsPerTable
+            );
+            return `Restaurant "${restaurant.name}" edited successfully.`;
+        } catch (error) {
+            return `Error editing restaurant: ${(error as Error).message}`;
+        }
     }
 }
 

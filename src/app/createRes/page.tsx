@@ -53,6 +53,11 @@ const handleEditRestaurant = () => {
     setMessage(result);
 };
 
+const handleEditRestaurant = () => {
+    const result = controller.editRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable)
+    setMessage(result);
+}
+
 return (
     <div className="container">
         <h1 className="title">Create Restaurant</h1>
@@ -136,6 +141,9 @@ return (
 
         <button onClick={handleCreateRestaurant} className="button-createRes">
             Create Restaurant
+        </button>
+        <button onClick={handleEditRestaurant} className="button-editRes">
+            Edit Restaurant
         </button>
         {message && <p className="message">{message}</p>}
     </div>
