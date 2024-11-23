@@ -36,6 +36,8 @@ body {
 }
 
 .account {
+  font-size: 1rem;
+  color: #555;
   position: absolute;
   left: 460px;
   top: 465px;
@@ -52,9 +54,9 @@ body {
 }
 
 .adminLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
   background-color: #EEEEEE;
-  color: #333333;
+  color: #555;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -98,9 +100,9 @@ body {
 }
 
 .createAdminLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -112,9 +114,9 @@ body {
 }
 
 .createAdminAccount {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
