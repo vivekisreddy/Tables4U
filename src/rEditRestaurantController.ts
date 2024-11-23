@@ -25,13 +25,9 @@ function editHours(r:Restaurant, day:number, newHour:number, open:Boolean): Rest
     }
 }
 
-function editTables(r:Restaurant, tableAmount:Table[], newSeat:number[]): Restaurant {
+function editTables(r:Restaurant, table:Table, newSeat:number): Restaurant {
     let restaurant = new Restaurant(r.name, r.address, r.restaurantID, false, r.openTime, r.closeTime, r.closedDays, r.tables, r.dailySchedule);
-    for (let i = 0; i < newSeat.length; i ++) {
-        for (let seatNum = 0; seatNum < newSeat[i]; seatNum ++) {
-            restaurant.tables[seatNum].seats = newSeat[i]
-        }
-    }
+    table.seats = newSeat
     return restaurant
 }
 
@@ -48,6 +44,6 @@ export function controlEdits(which:number, restaurant:Restaurant) {
         editHours(restaurant, inputID, day, inputBoolean)
     } else if (which == 4) { // if tables are edited
         let seats = Number(input)
-        editTables(restaurant, restaurant.tables, [3, 2, 1])
+        editTables(restaurant, restaurant.tables, [)
     }
 }
