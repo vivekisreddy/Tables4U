@@ -59,6 +59,8 @@ export class RestaurantController {
         const closedDays: ourDate[] = []; 
         const dailySchedule: Schedule[] = [];
 
+        //comment comment comment
+
         try {
             const restaurant = this.manager.createRestaurant(
                 name,
