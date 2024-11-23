@@ -1,4 +1,4 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
+
 import React, {useState} from 'react';
 
 export default function Home() {

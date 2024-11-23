@@ -1,17 +1,21 @@
-import { Reservation, Restaurant } from "./restaurant"
 
-export class Consumer {
-    consumerID:String
-    name:String
-    email:String
-    reservation:Reservation[]
-    ifActive: Restaurant[]
+import { Restaurant } from './restaurant';
+import {Reservation} from './restaurant';
 
-    constructor(id:String, title:String, mail:String) {
-        this.consumerID = id
-        this.name = title
-        this.email = mail
-        this.reservation = completeReservation()
-        this.ifActive = findActive()
+
+export class Consumer{
+    consumerID:string;
+    name:string;
+    email:string;
+    reservations:Reservation[];
+    ifActive:Restaurant[];
+
+    constructor(consumerID:string, name:string, email:string, reservations:Reservation[], ifActive:Restaurant[]){
+        this.consumerID = consumerID;
+        this.name = name;
+        this.email = email;
+        this.reservations = reservations;
+        this.ifActive = ifActive;
     }
+
 }
