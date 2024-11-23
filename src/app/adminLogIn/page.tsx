@@ -18,7 +18,10 @@ export default function Home() {
     // TO DO: admin log in lambda function
     console.log('Admin Email:', email)
     console.log('Admin Password:', password)
-    // bring to admin home page
+    // if valid log in
+      window.location.replace("/adminHomePage")
+    // else
+      // alert("incorrect email or password")
     andRefreshDisplay()
   }
 

@@ -8,6 +8,7 @@ export default function Home() {
 
   const [month, setMonth] = useState('')
   const [day, setDay] = useState('')
+  const [year, setYear] = useState('')
   const [time, setTime] = useState('')
   const [code, setCode] = useState('')
   
@@ -71,6 +72,10 @@ export default function Home() {
         <input type="text" id="month" name="month" value={month} onChange={(and) => setMonth(and.target.value)}/>
         <label className="label" htmlFor="day">Day:</label>
         <input type="text" id="day" name="day" value={day} onChange={(and) => setDay(and.target.value)}/>
+        <label className="label" htmlFor="year">Year:</label>
+        <input type="text" id="year" name="year" value={year} onChange={(and) => setYear(and.target.value)}/>
+        <br></br>
+        <label className="dateFormat">{"Format: MM/DD/YYYY"}</label>
         <br></br>
         <br></br>
         <label className="label" htmlFor="time">Start Time:</label>
