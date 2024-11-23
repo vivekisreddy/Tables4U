@@ -45,21 +45,41 @@ body {
 
 
 .account {
+  font-size: 1rem;
+  color: #555;
   position: absolute;
   left: 460px;
   top: 465px;
 }
 
+.adminAccountButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 1325px;
+  top: 25px;
+}
+
 .adminCreateAccountMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
   position: absolute;
   left: 460px;
   top: 200px;
 }
 
 .adminLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
   background-color: #EEEEEE;
-  color: #333333;
+  color: #555;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -72,9 +92,9 @@ body {
 
 
 .adminLogInButton {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -86,22 +106,27 @@ body {
 }
 
 .adminLogInMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
   position: absolute;
   left: 460px;
   top: 200px;
 }
 
 .confirmMessage {
+  font-size: 1rem;
+  color: #555;
   position: absolute;
   left: 460px;
   top: 465px;
 }
 
-
 .createAdminLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -113,9 +138,9 @@ body {
 }
 
 .createAdminAccount {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -142,9 +167,9 @@ body {
 }
 
 .createManagerLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -155,19 +180,24 @@ body {
   top: 500px;
 }
 
+.dateFormat {
+  font-size: 0.7rem;
+  color: #555;
+}
+
 
 .enter {
-  font: bold 11px Arial;
+  font-size: 1rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 275px;
-  top: -3px;
+  left: 320px;
+  top: 0px;
 }
 
 .handleConfirm {
@@ -207,6 +237,30 @@ body {
   top: 300px;
 }
 
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.label {
+  font-size: 1rem;
+  color: #555;
+}
+
+.listRestaurantsButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 600px;
+  top: 25px;
+}
 
 .managerCreateAccountMessage {
   position: absolute;
@@ -215,9 +269,9 @@ body {
 }
 
 .managerLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -229,9 +283,9 @@ body {
 }
 
 .managerLogInButton {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -243,17 +297,35 @@ body {
 }
 
 .managerLogInMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
   position: absolute;
   left: 460px;
   top: 200px;
 }
 
+.message {
+  text-align: center;
+  color: #f96f6f;
+  margin-top: 10px;
+}
 
+.reservationMessage {
+  text-align: center;
+  font-size: 1.25em;
+  color: #555;
+  margin-bottom: 20px;
+  position: absolute;
+  left: 460px;
+  top: 235px;
+}
 
 .search {
-  font: bold 11px Arial;
+  font-size: 1rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -261,10 +333,21 @@ body {
   border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 80px;
-  top: 60px;
+  top: 80px;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
 }
 
 .welcomeMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
   position: absolute;
   left: 460px;
   top: 200px;

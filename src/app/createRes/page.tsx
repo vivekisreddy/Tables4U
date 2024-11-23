@@ -1,12 +1,20 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 
 import React from "react";
-import { RestaurantController } from "../restaurantController";
+import { RestaurantController } from "../../restaurantController.ts";
 
 export default function Home() {
     const controller = new RestaurantController();
 
     const[redraw, forceRedraw] = React.useState(0)
+    const[resName, setResName] = React.useState('')
+    const[resAddress, setResAddress] = React.useState('')
+    const[resNumTables, setResNumTables] = React.useState(0)
+    const[resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
+    const[message, setMessage] = React.useState('');
+    const[resOpenTime, setResOpenTime] = React.useState(0);
+    const[resCloseTime, setResCloseTime] = React.useState(0);
+
     const[resName, setResName] = React.useState('')
     const[resAddress, setResAddress] = React.useState('')
     const[resNumTables, setResNumTables] = React.useState(0)
@@ -27,14 +35,22 @@ export default function Home() {
     setResSeatsPerTable(updatedSeats);
 };
 
-  const handleCreateRestaurant = () => {
+  const handleCreateRestaurant = (and) => {
     const result = controller.createRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable);
     setMessage(result); 
     setResName('');
     setResAddress('');
     setResNumTables(0);
     setResOpenTime(0);
+    setResOpenTime(0);
     setResSeatsPerTable([]);
+    // TO DO: create restaurant lambda functions
+    // display credentials then log in button to bring user back to manager log in page
+};
+
+const handleEditRestaurant = () => {
+    const result = controller.editRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable);
+    setMessage(result);
 };
 
 return (
@@ -55,6 +71,24 @@ return (
                 type="text"
                 value={resAddress}
                 onChange={(e) => setResAddress(e.target.value)}
+                className="input"
+            />
+        </label>
+        <label className="label">
+            Open Time:
+            <input
+                type="number"
+                value={resOpenTime}
+                onChange={(e) => setResOpenTime(Number(e.target.value))}
+                className="input"
+            />
+        </label>
+        <label className="label">
+            Close Time:
+            <input
+                type="number"  
+                value={resCloseTime}
+                onChange={(e) => setResCloseTime(Number(e.target.value))}  // Ensure it's converted to a number
                 className="input"
             />
         </label>
