@@ -142,9 +142,9 @@ body {
 }
 
 .createManagerLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -205,6 +205,12 @@ body {
   top: 300px;
 }
 
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
 .label {
   font-size: 1rem;
   color: #555;
@@ -217,9 +223,9 @@ body {
 }
 
 .managerLogIn {
-  font: bold 11px Arial;
+  font-size: 0.8rem;
+  color: #555;
   background-color: #EEEEEE;
-  color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
   border-right: 1px solid #333333;
@@ -245,9 +251,19 @@ body {
 }
 
 .managerLogInMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
   position: absolute;
   left: 460px;
   top: 200px;
+}
+
+.message {
+  text-align: center;
+  color: #f96f6f;
+  margin-top: 10px;
 }
 
 .reservationMessage {
@@ -272,6 +288,13 @@ body {
   position: absolute;
   left: 80px;
   top: 60px;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
 }
 
 .welcomeMessage {
