@@ -14,7 +14,7 @@ export default function Home() {
     const[message, setMessage] = React.useState('');
     const[resOpenTime, setResOpenTime] = React.useState(0);
     const[resCloseTime, setResCloseTime] = React.useState(0);
-    
+
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
@@ -35,6 +35,11 @@ export default function Home() {
     setResNumTables(0);
     setResOpenTime(0);
     setResSeatsPerTable([]);
+};
+
+const handleEditRestaurant = () => {
+    const result = controller.editRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable);
+    setMessage(result);
 };
 
 return (

@@ -1,14 +1,13 @@
 import { Consumer } from './consumer';
 
-// Define the Restaurant class
 export class Restaurant {
     name: string;
     address: string;
     restaurantID: string;
     isActive: boolean;
-    openTime: number;  // Single open time for all days
-    closeTime: number; // Single close time for all days
-    closedDays: ourDate[];  // Array of ourDate for closed days
+    openTime: number;  
+    closeTime: number; 
+    closedDays: ourDate[];  
     tables: Table[];
     dailySchedule: Schedule[];
 

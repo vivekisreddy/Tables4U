@@ -49,7 +49,7 @@ export class Manager {
             name,
             address,
             restaurantID,
-            isActive,
+            isActive = false,
             openTime,
             closeTime,
             closedDays,  
@@ -71,6 +71,24 @@ export class Manager {
         this.restaurant.isActive = true;
         return `${this.restaurant.name} has been activated and is now visible to consumers.`;
     }
-    editRestaurant(){
+
+    editRestaurant(
+        updatedName?: string,
+        updatedAddress?: string,
+        updatedOpenTime?: number,
+        updatedCloseTime?: number,
+        updatedClosedDays?: ourDate[],
+        updatedTables?: Table[],
+        updatedSchedule?: Schedule[]
+    ): string {
+        let changesMade = false; 
+            if (updatedName) {
+            this.restaurant.name = updatedName;
+            changesMade = true;
+        }
+
+        return changesMade
+            ? `${this.restaurant.name} has been successfully updated.`
+            : "No changes were made to the restaurant.";
     }
 }
