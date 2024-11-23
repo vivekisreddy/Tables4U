@@ -1,5 +1,5 @@
 export class RestaurantController {
-    createRestaurant(name: string, address: string, numTables:number, seatsPerTable:number[]): string {
+    createRestaurant(name: string, address: string, openTime:number, closeTime:number, numTables:number, seatsPerTable:number[]): string {
         if (!name || !address) {
             return "Error: Both restaurant name and address are required.";
         }

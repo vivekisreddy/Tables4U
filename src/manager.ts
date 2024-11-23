@@ -1,9 +1,9 @@
-
 import { Restaurant } from './restaurant';
 import { Table } from './restaurant';
 import { Schedule } from './restaurant';
+import { ourDate } from './restaurant'
 
-export let managerList :Manager[] = [];
+export let managerList: Manager[] = [];
 
 export class Manager {
     name: string;
@@ -14,41 +14,41 @@ export class Manager {
         this.name = name;
         this.email = email;
         this.restaurant = restaurant;
-        managerList.push(this)
+        managerList.push(this);
     }
-
     createRestaurant(
         name: string,
         address: string,
         restaurantID: string,
         isActive: boolean,
-        openTime: number[],
-        closeTime: number[],
-        closedDays: number[],
+        openTime: number,  // Single open time for all days
+        closeTime: number, // Single close time for all days
+        closedDays: ourDate[],  // Array of closed days as ourDate[]
         tables: number,
-        dailySchedule: Schedule[],
-        seats: number[],
+        dailySchedule: Schedule[],  // Daily schedules with time slots
+        seats: number[]  // Seats configuration for each table
     ): Restaurant {
         const allTables: Table[] = [];
 
+        // Validate the number of tables and seat configurations
         if (tables <= 0 || tables !== seats.length || tables >= 8) {
             throw new Error("Number of tables must match the number of seat configurations.");
         }
 
-        for (let i = 0; i < openTime.length; i++) {
-            if (openTime[i] >= closeTime[i]) {
-                throw new Error(`Opening time must be earlier than closing time for day ${i}.`);
-            }
-        }
-
-
+        // Create tables based on seat configurations
         for (let i = 0; i < seats.length; i++) {
-            const tableID = `T${i + 1}`; 
-            const seatsPerTable = seats[i];  
-            const table = new Table(tableID, seatsPerTable, true);  
-            allTables.push(table);  
+            const tableID = `T${i + 1}`;
+            const seatsPerTable = seats[i];
+            const table = new Table(tableID, seatsPerTable, true);  // Initially all tables are available
+            allTables.push(table);
         }
 
+        // Validate that opening time is earlier than closing time
+        if (openTime >= closeTime) {
+            throw new Error("Opening time must be earlier than closing time.");
+        }
+
+        // Create a new Restaurant instance
         const newRestaurant = new Restaurant(
             name,
             address,
@@ -56,25 +56,24 @@ export class Manager {
             isActive,
             openTime,
             closeTime,
-            closedDays,
+            closedDays,  // Use closedDays (ourDate[])
             allTables,
             dailySchedule
         );
 
-        this.restaurant.push(newRestaurant);
-        return newRestaurant;
+        this.restaurant = newRestaurant;  // Set the manager's restaurant
+        return newRestaurant;  // Return the newly created restaurant
     }
 
-    activateRestaurant(restaurantID: string) : string { 
-        const restaurant = this.restaurant.find((res) => res.restaurantID === restaurantID);
-        if (!restaurant) {
-          return "Restaurant not found.";
+    // Activate the restaurant
+    activateRestaurant(): string {
+        if (!this.restaurant) {
+            return "Restaurant not found.";
         }
-        if (restaurant.isActive) {
-          return "Restaurant is already active.";
+        if (this.restaurant.isActive) {
+            return "Restaurant is already active.";
         }
-        restaurant.isActive = true;
-        return `${restaurant.name} has been activated and is now visible to consumers.`;
+        this.restaurant.isActive = true;
+        return `${this.restaurant.name} has been activated and is now visible to consumers.`;
     }
 }
-
