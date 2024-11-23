@@ -18,4 +18,8 @@ export class Consumer{
         this.ifActive = ifActive;
     }
 
+    listActiveRestaurant() {
+        return this.ifActive.filter(restaurant => restaurant.isActive);
+    }
+
 }

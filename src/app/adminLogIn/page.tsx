@@ -1,12 +1,12 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
-import React, {useState} from 'react'
+import React from 'react'
 
 export default function Home() {
     // initial instantiation for admin log in page
     const [redraw, forceRedraw] = React.useState(0)
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {

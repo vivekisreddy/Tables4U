@@ -1,9 +1,9 @@
-
 import { Restaurant } from './restaurant';
 import { Table } from './restaurant';
 import { Schedule } from './restaurant';
+import { ourDate } from './restaurant'
 
-export let managerList :Manager[] = [];
+export let managerList: Manager[] = [];
 
 export class Manager {
     name: string;
@@ -14,20 +14,19 @@ export class Manager {
         this.name = name;
         this.email = email;
         this.restaurant = restaurant;
-        managerList.push(this)
+        managerList.push(this);
     }
-
     createRestaurant(
         name: string,
         address: string,
         restaurantID: string,
         isActive: boolean,
-        openTime: number[],
-        closeTime: number[],
-        closedDays: number[],
+        openTime: number,  
+        closeTime: number, 
+        closedDays: ourDate[], 
         tables: number,
-        dailySchedule: Schedule[],
-        seats: number[],
+        dailySchedule: Schedule[],  
+        seats: number[]  
     ): Restaurant {
         const allTables: Table[] = [];
 
@@ -35,46 +34,61 @@ export class Manager {
             throw new Error("Number of tables must match the number of seat configurations.");
         }
 
-        for (let i = 0; i < openTime.length; i++) {
-            if (openTime[i] >= closeTime[i]) {
-                throw new Error(`Opening time must be earlier than closing time for day ${i}.`);
-            }
+        if (openTime >= closeTime) {
+            throw new Error("Opening time must be earlier than closing time.");
         }
 
-
-        for (let i = 0; i < seats.length; i++) {
-            const tableID = `T${i + 1}`; 
-            const seatsPerTable = seats[i];  
+         for (let i = 0; i < seats.length; i++) {
+            const tableID = `T${i + 1}`;
+            const seatsPerTable = seats[i];
             const table = new Table(tableID, seatsPerTable, true);  
-            allTables.push(table);  
+            allTables.push(table);
         }
 
         const newRestaurant = new Restaurant(
             name,
             address,
             restaurantID,
-            isActive,
+            isActive = false,
             openTime,
             closeTime,
-            closedDays,
+            closedDays,  
             allTables,
             dailySchedule
         );
 
-        this.restaurant.push(newRestaurant);
-        return newRestaurant;
+        this.restaurant = newRestaurant;  
+        return newRestaurant;  
     }
 
-    activateRestaurant(restaurantID: string) : string { 
-        const restaurant = this.restaurant.find((res) => res.restaurantID === restaurantID);
-        if (!restaurant) {
-          return "Restaurant not found.";
+    activateRestaurant(): string {
+        if (!this.restaurant) {
+            return "Restaurant not found.";
         }
-        if (restaurant.isActive) {
-          return "Restaurant is already active.";
+        if (this.restaurant.isActive) {
+            return "Restaurant is already active.";
         }
-        restaurant.isActive = true;
-        return `${restaurant.name} has been activated and is now visible to consumers.`;
+        this.restaurant.isActive = true;
+        return `${this.restaurant.name} has been activated and is now visible to consumers.`;
+    }
+
+    editRestaurant(
+        updatedName?: string,
+        updatedAddress?: string,
+        updatedOpenTime?: number,
+        updatedCloseTime?: number,
+        updatedClosedDays?: ourDate[],
+        updatedTables?: Table[],
+        updatedSchedule?: Schedule[]
+    ): string {
+        let changesMade = false; 
+            if (updatedName) {
+            this.restaurant.name = updatedName;
+            changesMade = true;
+        }
+        
+        return changesMade
+            ? `${this.restaurant.name} has been successfully updated.`
+            : "No changes were made to the restaurant.";
     }
 }
-

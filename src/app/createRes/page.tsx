@@ -15,6 +15,14 @@ export default function Home() {
     const[resOpenTime, setResOpenTime] = React.useState(0);
     const[resCloseTime, setResCloseTime] = React.useState(0);
 
+    const[resName, setResName] = React.useState('')
+    const[resAddress, setResAddress] = React.useState('')
+    const[resNumTables, setResNumTables] = React.useState(0)
+    const[resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
+    const[message, setMessage] = React.useState('');
+    const[resOpenTime, setResOpenTime] = React.useState(0);
+    const[resCloseTime, setResCloseTime] = React.useState(0);
+
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
@@ -33,6 +41,7 @@ export default function Home() {
     setResName('');
     setResAddress('');
     setResNumTables(0);
+    setResOpenTime(0);
     setResOpenTime(0);
     setResSeatsPerTable([]);
     // TO DO: create restaurant lambda functions
@@ -62,6 +71,24 @@ return (
                 type="text"
                 value={resAddress}
                 onChange={(e) => setResAddress(e.target.value)}
+                className="input"
+            />
+        </label>
+        <label className="label">
+            Open Time:
+            <input
+                type="number"
+                value={resOpenTime}
+                onChange={(e) => setResOpenTime(Number(e.target.value))}
+                className="input"
+            />
+        </label>
+        <label className="label">
+            Close Time:
+            <input
+                type="number"  
+                value={resCloseTime}
+                onChange={(e) => setResCloseTime(Number(e.target.value))}  // Ensure it's converted to a number
                 className="input"
             />
         </label>
