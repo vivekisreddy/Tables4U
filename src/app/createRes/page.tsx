@@ -35,6 +35,7 @@ export default function Home() {
     setResNumTables(0);
     setResOpenTime(0);
     setResSeatsPerTable([]);
+    // TO DO: create restaurant lambda functions
     // display credentials then log in button to bring user back to manager log in page
 };
 
