@@ -35,8 +35,7 @@ export default function Home() {
     setResNumTables(0);
     setResOpenTime(0);
     setResSeatsPerTable([]);
-    and.preventDefault();
-    //window.location.replace("/managerLogIn")
+    // display credentials then log in button to bring user back to manager log in page
 };
 
 const handleEditRestaurant = () => {
