@@ -1,7 +1,7 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 
 import React from "react";
-import { RestaurantController } from "../../restaurantController.ts";
+import { RestaurantController } from "../restaurantController";
 
 export default function Home() {
     const controller = new RestaurantController();
@@ -15,13 +15,6 @@ export default function Home() {
     const[resOpenTime, setResOpenTime] = React.useState(0);
     const[resCloseTime, setResCloseTime] = React.useState(0);
 
-    const[resName, setResName] = React.useState('')
-    const[resAddress, setResAddress] = React.useState('')
-    const[resNumTables, setResNumTables] = React.useState(0)
-    const[resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
-    const[message, setMessage] = React.useState('');
-    const[resOpenTime, setResOpenTime] = React.useState(0);
-    const[resCloseTime, setResCloseTime] = React.useState(0);
 
 
     // helper function that forces React app to redraw whenever this is called.
@@ -35,7 +28,7 @@ export default function Home() {
     setResSeatsPerTable(updatedSeats);
 };
 
-  const handleCreateRestaurant = (and) => {
+  const handleCreateRestaurant = () => {
     const result = controller.createRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable);
     setMessage(result); 
     setResName('');
@@ -53,10 +46,6 @@ const handleEditRestaurant = () => {
     setMessage(result);
 };
 
-const handleEditRestaurant = () => {
-    const result = controller.editRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable)
-    setMessage(result);
-}
 
 return (
     <div className="container">

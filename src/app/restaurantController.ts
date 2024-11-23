@@ -43,9 +43,9 @@ export class RestaurantController {
         numTables: number,
         seatsPerTable: number[]
     ): string {
-        if (!this.manager) {
-            return 'No manager is assigned to create a restaurant.';
-        }
+        // if (!this.manager) {
+        //     return 'No manager is assigned to create a restaurant.';
+        // }
 
         const validationError = this.validateCreateRestaurantInput(
             name,
