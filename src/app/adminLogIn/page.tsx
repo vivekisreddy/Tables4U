@@ -13,11 +13,28 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
+  function adminLogIn(email:String, password:String) {
+    let payload = {
+      "adminEmail": email,
+      "adminPassword": password
+    }
+    fetch("url", {
+      // method: is it a GET because i'm checking to see if the account is in the database or is it a POST because im giving it information 
+      body: JSON.stringify(payload)
+    })
+  }
+
   const handleLogIn = (and) => {
     and.preventDefault()
-    // TO DO: admin log in lambda function
+    if (email == '') {
+      alert("Please enter your email address")
+    }
+    if (password == '') {
+      alert("Please enter you password")
+    }
     console.log('Admin Email:', email)
     console.log('Admin Password:', password)
+    adminLogIn(email, password)
     // if valid log in
       window.location.replace("/adminHomePage")
     // else

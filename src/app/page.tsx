@@ -31,7 +31,7 @@ export default function Home() {
 
   const handleSearch = (and) => {
     and.preventDefault();
-    // TO DO: lambda function to check if restaurant is in database + active
+    // TO DO: lambda function to check if restaurant is in database & active
     let currentDate = new Date()
     console.log('Current Date:', currentDate)
     // TO DO: if date is in the past

@@ -13,11 +13,28 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
+  function adminCreateAccount(email:String, password:String) {
+    let payload = {
+      "newAdminEmail": email,
+      "newAdminPassword": password
+    }
+    fetch("url", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+  }
+
   const handleCreate = (and) => {
     and.preventDefault()
-    // TO DO: admin create account lambda function
-    console.log('Admin Email:', email)
+    if (email == '') {
+      alert("Please enter an email address")
+    }
+    if (password == '') {
+      alert("Please create a password")
+    }
+    console.log('Admine Email:', email)
     console.log('Admin Password:', password)
+    adminCreateAccount(email, password)
     window.location.replace("/adminLogIn")
     andRefreshDisplay()
   }
