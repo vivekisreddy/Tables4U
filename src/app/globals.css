@@ -90,7 +90,6 @@ body {
   top: 60px;
 }
 
-
 .adminLogInButton {
   font-size: 0.8rem;
   color: #555;
@@ -150,7 +149,6 @@ body {
   left: 75px;
   top: 60px;
 }
-
 
 .createManagerAccount {
   font: bold 11px Arial;
@@ -333,7 +331,7 @@ body {
   border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 80px;
-  top: 80px;
+  top: 110px;
 }
 
 .title {

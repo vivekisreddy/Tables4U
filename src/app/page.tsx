@@ -6,6 +6,7 @@ export default function Home() {
   // initial instantiation of landing home page
   const [redraw, forceRedraw] = React.useState(0)
 
+  const [restaurant, setRestaurant] = useState('')
   const [month, setMonth] = useState('')
   const [day, setDay] = useState('')
   const [year, setYear] = useState('')
@@ -30,6 +31,7 @@ export default function Home() {
 
   const handleSearch = (and) => {
     and.preventDefault();
+    // TO DO: lambda function to check if restaurant is in database + active
     let currentDate = new Date()
     console.log('Current Date:', currentDate)
     // TO DO: if date is in the past
@@ -68,6 +70,10 @@ export default function Home() {
       <label className="reservationMessage">{"Make a reservation below:"}</label>
 
       <form className="handleSearch" onSubmit={handleSearch}>
+        <label className="label" htmlFor="restaurant">Restaurant:</label>
+        <input type="text" id="restaurant" name="restaurant" value={restaurant} onChange={(and) => setRestaurant(and.target.value)}/>
+        <br></br>
+        <br></br>
         <label className="label" htmlFor="month">Month:</label>
         <input type="text" id="month" name="month" value={month} onChange={(and) => setMonth(and.target.value)}/>
         <label className="label" htmlFor="day">Day:</label>

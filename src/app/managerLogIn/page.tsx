@@ -17,8 +17,8 @@ export default function Home() {
   const handleLogIn = (and) => {
     and.preventDefault()
     // TO DO: manager log in lambda function
-    console.log('Manager Name:', name)
-    console.log('Restaurant Pin Code:', pin)
+    console.log('Restaurant Name:', name)
+    console.log('Pin Code:', pin)
     managerLogIn(name, pin)
     andRefreshDisplay()
   }
@@ -35,11 +35,11 @@ export default function Home() {
 
       <form className="handleLogIn" onSubmit={handleLogIn}>
         <label className="label" htmlFor="name">Restaurant Name:</label>
-        <input type="text" id="name" name="name" value={name} onChange={(and) => setName(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }}  id="name" name="name" value={name} onChange={(and) => setName(and.target.value)}/>
         <br></br>
         <br></br>
         <label className="label" htmlFor="pin">Pin Code:</label>
-        <input type="text" id="pin" name="pin" value={pin} onChange={(and) => setPin(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }}  id="pin" name="pin" value={pin} onChange={(and) => setPin(and.target.value)}/>
         <button type="submit" className="managerLogIn">Log In</button>
       </form>
 

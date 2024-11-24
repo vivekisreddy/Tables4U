@@ -37,11 +37,11 @@ export default function Home() {
 
       <form className="handleLogIn" onSubmit={handleLogIn}>
         <label className="label" htmlFor="email">Email:</label>
-        <input type="text" id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
         <br></br>
         <br></br>
         <label className="label" htmlFor="password">Password:</label>
-        <input type="text" id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
         <button type="submit" className="adminLogIn">Log In</button>
       </form>
 
