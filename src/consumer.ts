@@ -1,4 +1,3 @@
-
 import { Restaurant } from './restaurant';
 import {Reservation} from './restaurant';
 

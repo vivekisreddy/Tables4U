@@ -7,12 +7,12 @@ export let managerList: Manager[] = [];
 
 export class Manager {
     name: string;
-    email: string;
+   //email: string;
     restaurant: Restaurant;
 
-    constructor(name: string, email: string, restaurant: Restaurant) {
+    constructor(name: string, restaurant: Restaurant) {
         this.name = name;
-        this.email = email;
+        // this.email = email;
         this.restaurant = restaurant;
         managerList.push(this);
     }

@@ -37,6 +37,7 @@ export default function Home() {
     setResOpenTime(0);
     setResOpenTime(0);
     setResSeatsPerTable([]);
+    //POST
     // TO DO: create restaurant lambda functions
     // display credentials then log in button to bring user back to manager log in page
 };
@@ -85,25 +86,7 @@ return (
                 onChange={(e) => setResCloseTime(Number(e.target.value))}  // Ensure it's converted to a number
                 className="input"
             />
-        </label>
-        <label className="label">
-            Open Time:
-            <input
-                type="number"
-                value={resOpenTime}
-                onChange={(e) => setResOpenTime(Number(e.target.value))}
-                className="input"
-            />
-        </label>
-        <label className="label">
-            Close Time:
-            <input
-                type="number"  
-                value={resCloseTime}
-                onChange={(e) => setResCloseTime(Number(e.target.value))}  // Ensure it's converted to a number
-                className="input"
-            />
-        </label>
+        </label> 
         <label className="label">
             Number of Tables:
             <input

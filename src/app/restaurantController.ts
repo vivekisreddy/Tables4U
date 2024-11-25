@@ -1,17 +1,12 @@
-import { table } from 'console';
 import { Manager } from '../manager';
 import { ourDate } from '../restaurant';
-import { Schedule, Table } from '../restaurant';
+import { Schedule, Table, Restaurant } from '../restaurant';
 
 export class RestaurantController {
     private manager: Manager | null;
 
     constructor() {
-        this.manager = null; 
-    }
-
-    setManager(manager: Manager) {
-        this.manager = manager;
+        this.manager = null;
     }
 
     private validateCreateRestaurantInput(
@@ -31,9 +26,8 @@ export class RestaurantController {
             return 'Number of tables must match the number of seat configurations and be between 1 and 8.';
         if (seatsPerTable.some((seats) => seats <= 0))
             return 'Each table must have at least one seat.';
-        return null; 
+        return null;
     }
-
 
     createRestaurant(
         name: string,
@@ -43,10 +37,6 @@ export class RestaurantController {
         numTables: number,
         seatsPerTable: number[]
     ): string {
-        // if (!this.manager) {
-        //     return 'No manager is assigned to create a restaurant.';
-        // }
-
         const validationError = this.validateCreateRestaurantInput(
             name,
             address,
@@ -57,37 +47,43 @@ export class RestaurantController {
         );
         if (validationError) return validationError;
 
-        const closedDays: ourDate[] = []; 
+        const closedDays: ourDate[] = [];
         const dailySchedule: Schedule[] = [];
 
-        //comment comment comment
-
         try {
-            const restaurant = this.manager.createRestaurant(
+            // Generate a unique restaurant ID as a 4-digit number
+            const restaurantID = Math.floor(1000 + Math.random() * 9000).toString();
+
+            // Create a new Restaurant instance
+            const newRestaurant = new Restaurant(
                 name,
                 address,
-                `R${Date.now()}`, 
-                false, 
+                restaurantID,
+                false, // isActive
                 openTime,
                 closeTime,
                 closedDays,
-                numTables,
-                dailySchedule,
-                seatsPerTable
+                [], // Tables will be added later
+                dailySchedule
             );
-            return `Restaurant "${restaurant.name}" created successfully.`;
+
+            // Assign the manager
+            this.manager = new Manager(name, newRestaurant);
+
+            return `Restaurant "${name}" created successfully. Manager credentials: Name="${name}", ID="${restaurantID}".`;
         } catch (error) {
             return `Error creating restaurant: ${(error as Error).message}`;
         }
-
-
-        // test test test
     }
 
-    editRestaurant(name: string, address: string, openTime: number, closeTime: number, numTables: number, seatsPerTable: number[]) : string {
-        if (!this.manager) {
-            return 'No manager is assigned to create a restaurant.';
-        }
+    editRestaurant(
+        name: string,
+        address: string,
+        openTime: number,
+        closeTime: number,
+        numTables: number,
+        seatsPerTable: number[]
+    ): string {
 
         try {
             const restaurant = this.manager.editRestaurant(
@@ -104,5 +100,3 @@ export class RestaurantController {
         }
     }
 }
-
-
