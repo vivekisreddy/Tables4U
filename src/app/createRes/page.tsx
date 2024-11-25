@@ -30,19 +30,12 @@ export default function Home() {
         const restaurantData = {
             name: resName,
             address: resAddress,
-            numTables: resNumTables,
-            seatsPerTable: resSeatsPerTable,
             openTime: resOpenTime,
             closeTime: resCloseTime,
+            closedDays: resClosedDays,
+            tables: resNumTables,
+            seats: resSeatsPerTable,
         };
-    
-        // Reset the form fields
-        setResName('');
-        setResAddress('');
-        setResNumTables(0);
-        setResOpenTime(0);
-        setResCloseTime(0);
-        setResSeatsPerTable([]);
     
         try {
             const response = await axios.post(
@@ -52,15 +45,28 @@ export default function Home() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    timeout: 5000,  // Timeout in milliseconds (5 seconds)
+                    timeout: 5000, // Timeout in milliseconds (5 seconds)
                 }
             );
     
+            // Log raw response for debugging
+            console.log("Raw Response:", response);
+    
             if (response.status === 200) {
-                setMessage('Restaurant created successfully!');
-                console.log(response.data);  
+                // If the body is a string, parse it into a JSON object
+                const responseBody = JSON.parse(response.data.body);
+    
+                const { message, restaurantID } = responseBody;
+    
+                if (message && restaurantID) {
+                    setMessage(`${message} (ID: ${restaurantID})`);
+                    console.log(`Success: ${message}, Restaurant ID: ${restaurantID}`);
+                } else {
+                    setMessage('Unexpected response format.');
+                    console.error('Unexpected Response Format:', responseBody);
+                }
             } else {
-                throw new Error('Failed to create restaurant');
+                throw new Error('Failed to create restaurant.');
             }
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
@@ -70,11 +76,21 @@ export default function Home() {
             } else {
                 console.error('Unexpected error:', error);
             }
-            setMessage('Error creating restaurant');
+            setMessage('Error creating restaurant.');
         }
+    
+        // Reset form fields
+        setResName('');
+        setResAddress('');
+        setResNumTables(0);
+        setResOpenTime(0);
+        setResCloseTime(0);
+        setResSeatsPerTable([]);
+        setResClosedDays([]);
     };
-
-
+    
+    
+    
     const handleActivateRestaurant = async () => {
         try {
             const activationData = { name: resName }; 
@@ -183,7 +199,7 @@ export default function Home() {
                 </button>
             </div>
 
-            {message && <p className="message">{message}</p>}
+            {message && <p className="message">{message}</p>} {/* This will display the message including restaurant ID */}
         </div>
     );
 }
