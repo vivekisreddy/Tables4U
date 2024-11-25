@@ -1,10 +1,9 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 
 import React from "react";
-import { RestaurantController } from "../restaurantController";
+import axios from "axios";
 
 export default function Home() {
-    const controller = new RestaurantController();
 
     const[redraw, forceRedraw] = React.useState(0)
     const[resName, setResName] = React.useState('')
@@ -14,7 +13,6 @@ export default function Home() {
     const[message, setMessage] = React.useState('');
     const[resOpenTime, setResOpenTime] = React.useState(0);
     const[resCloseTime, setResCloseTime] = React.useState(0);
-
 
 
     // helper function that forces React app to redraw whenever this is called.
@@ -28,23 +26,46 @@ export default function Home() {
     setResSeatsPerTable(updatedSeats);
 };
 
-  const handleCreateRestaurant = () => {
-    const result = controller.createRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable);
-    setMessage(result); 
+  const handleCreateRestaurant = async () => {
+
+    const restaurantData = {
+        name: resName,
+        address: resAddress,
+        numTables: resNumTables,
+        seatsPerTable: resSeatsPerTable,
+        openTime: resOpenTime,
+        closeTime: resCloseTime,
+    }
     setResName('');
     setResAddress('');
     setResNumTables(0);
     setResOpenTime(0);
     setResOpenTime(0);
     setResSeatsPerTable([]);
-    //POST
-    // TO DO: create restaurant lambda functions
-    // display credentials then log in button to bring user back to manager log in page
-};
 
-const handleEditRestaurant = () => {
-    const result = controller.editRestaurant(resName, resAddress, resOpenTime, resCloseTime, resNumTables, resSeatsPerTable);
-    setMessage(result);
+    try {
+        const response = await fetch('https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/createRestaurant', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add other headers if needed, such as authentication tokens
+            },
+            body: JSON.stringify(restaurantData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create restaurant');
+        }
+
+        const result = await response.json();
+        setMessage('Restaurant created successfully!');
+        console.log(result);  // Log the response from the backend
+    } catch (error) {
+        console.error('Error:', error);
+        setMessage('Error creating restaurant');
+    }
+
+    // display credentials then log in button to bring user back to manager log in page
 };
 
 
@@ -113,9 +134,6 @@ return (
 
         <button onClick={handleCreateRestaurant} className="button-createRes">
             Create Restaurant
-        </button>
-        <button onClick={handleEditRestaurant} className="button-editRes">
-            Edit Restaurant
         </button>
         {message && <p className="message">{message}</p>}
     </div>

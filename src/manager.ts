@@ -22,59 +22,57 @@ export class Manager {
         for (let i = 0; i < seats.length; i++) {
             const tableID = `T${i + 1}`;
             const seatsPerTable = seats[i];
-            const table = new Table(tableID, seatsPerTable, true);  
+            const table = new Table(tableID, seatsPerTable);  
             allTables.push(table);
         }
         return allTables
     }
     
-    createRestaurant(
-        name: string,
-        address: string,
-        restaurantID: string,
-        isActive: boolean,
-        openTime: number,  
-        closeTime: number, 
-        closedDays: ourDate[], 
-        tables: number,
-        dailySchedule: Schedule[],  
-        seats: number[]  
-    ): Restaurant {
+    // createRestaurant(
+    //     name: string,
+    //     address: string,
+    //     restaurantID: string,
+    //     isActive: boolean,
+    //     openTime: number,  
+    //     closeTime: number, 
+    //     closedDays: ourDate[], 
+    //     tables: number,
+    //     dailySchedule: Schedule[],  
+    //     seats: number[]  
+    // ): Restaurant {
 
-        if (tables <= 0 || tables !== seats.length || tables >= 8) {
-            throw new Error("Number of tables must match the number of seat configurations.");
-        }
+    //     if (tables <= 0 || tables !== seats.length) {
+    //         throw new Error("Number of tables must match the number of seat configurations.");
+    //     }
 
-        if (openTime >= closeTime) {
-            throw new Error("Opening time must be earlier than closing time.");
-        }
+    //     if (openTime >= closeTime) {
+    //         throw new Error("Opening time must be earlier than closing time.");
+    //     }
 
-        const newRestaurant = new Restaurant(
-            name,
-            address,
-            restaurantID,
-            isActive = false,
-            openTime,
-            closeTime,
-            closedDays,  
-            this.createTables(seats),
-            dailySchedule
-        );
+    //     const newRestaurant = new Restaurant(
+    //         name,
+    //         address,
+    //         openTime,
+    //         closeTime,
+    //         closedDays,  
+    //         this.createTables(seats),
+    //         isActive = false,
+    //     );
 
-        this.restaurant = newRestaurant;  
-        return newRestaurant;  
-    }
+    //     this.restaurant = newRestaurant;  
+    //     return newRestaurant;  
+    // }
 
-    activateRestaurant(): string {
-        if (!this.restaurant) {
-            return "Restaurant not found.";
-        }
-        if (this.restaurant.isActive) {
-            return "Restaurant is already active.";
-        }
-        this.restaurant.isActive = true;
-        return `${this.restaurant.name} has been activated and is now visible to consumers.`;
-    }
+    // activateRestaurant(): string {
+    //     if (!this.restaurant) {
+    //         return "Restaurant not found.";
+    //     }
+    //     if (this.restaurant.isActive) {
+    //         return "Restaurant is already active.";
+    //     }
+    //     this.restaurant.isActive = true;
+    //     return `${this.restaurant.name} has been activated and is now visible to consumers.`;
+    // }
 
     editRestaurant(
         updatedName: string,
