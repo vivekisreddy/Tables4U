@@ -15,11 +15,11 @@ export default function Home() {
 
   function adminLogIn(email:String, password:String) {
     let payload = {
-      "adminEmail": email,
-      "adminPassword": password
+      "email": email,
+      "password": password
     }
-    fetch("url", {
-      // method: is it a GET because i'm checking to see if the account is in the database or is it a POST because im giving it information 
+    fetch("https://w64trg7ugmy27kwdsypiclfiba0djzgg.lambda-url.us-east-1.on.aws/", {
+      method: "GET",
       body: JSON.stringify(payload)
     })
   }
@@ -30,16 +30,11 @@ export default function Home() {
       alert("Please enter your email address")
     }
     if (password == '') {
-      alert("Please enter you password")
+      alert("Please enter your password")
     }
     console.log('Admin Email:', email)
     console.log('Admin Password:', password)
     adminLogIn(email, password)
-    // if valid log in
-      window.location.replace("/adminHomePage")
-    // else
-      // alert("incorrect email or password")
-    andRefreshDisplay()
   }
 
   function createAccount() {

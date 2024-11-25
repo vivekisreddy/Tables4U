@@ -18,7 +18,7 @@ export default function Home() {
       "newAdminEmail": email,
       "newAdminPassword": password
     }
-    fetch("url", {
+    fetch("https://cyzldssv4gks6bdkbrxc7kztsm0avynj.lambda-url.us-east-1.on.aws/", {
       method: "POST",
       body: JSON.stringify(payload)
     })
