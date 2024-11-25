@@ -1,19 +1,21 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 
+import axios from "axios";
 import React from "react";
 
 
 export default function Home() {
 
-    const[redraw, forceRedraw] = React.useState(0)
-    const[name, setResName] = React.useState('')
-    const[address, setResAddress] = React.useState('')
-    const[restaurantID, IDreference] = React.useState('')
-    const[tables, setResNumTables] = React.useState(0);
-    const[isActive, setIsActive] = React.useState(false)
-    const[resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
-    const[openTime, setResOpenTime] = React.useState(0);
-    const[closeTime, setResCloseTime] = React.useState(0);
+    const [redraw, forceRedraw] = React.useState(0);
+    const [resName, setResName] = React.useState('');
+    const [resAddress, setResAddress] = React.useState('');
+    const [resNumTables, setResNumTables] = React.useState(0);
+    const [resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
+    const [message, setMessage] = React.useState('');
+    const [resOpenTime, setResOpenTime] = React.useState(0);
+    const [resCloseTime, setResCloseTime] = React.useState(0);
+    const [resClosedDays, setResClosedDays] = React.useState<string[]>([]);
+
 
 
 
@@ -22,113 +24,97 @@ export default function Home() {
         forceRedraw(redraw + 1)
     }
 
-  const handleAddSeats = (index: number, value: number) => {
-    const updatedSeats = [...resSeatsPerTable];
-    updatedSeats[index] = value;
-    setResSeatsPerTable(updatedSeats);
-};
+    const handleAddSeats = (index: number, value: number) => {
+        const updatedSeats = [...resSeatsPerTable];
+        updatedSeats[index] = value;
+        setResSeatsPerTable(updatedSeats);
+    };
 
 
-const editRes = (name:string, address:string, restaurantID:string, isActive:Boolean, openTime:number, closeTime:number, tables:number, seats:number[]) => {
-    let payload = {
-        "name": name, "address": address, "restaurantID": restaurantID, "isActive":isActive, "openTime":openTime, "closeTime":closeTime, "tables":tables, "seats":seats
-      }
-      fetch("https://hxb5sgcwlguyaco5uaidn23l3a0nkajp.lambda-url.us-east-1.on.aws/", {
-        method: "POST",
-        body: JSON.stringify(payload)
-      })
-}
+    const editRes = async () => {
+        let payload = {
+            "name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable
+        }
+        try {
+            const response = await axios.post(
+            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial',
+            payload,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    timeout: 5000,  // Timeout in milliseconds (5 seconds)
+                }
+            );
+    
+            if (response.status === 200) {
+                setMessage('Restaurant created successfully!');
+                console.log(response.data);  
+            } else {
+                throw new Error('Failed to create restaurant');
+            }
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                console.error('Axios error:', error.message);
+            } else if (error instanceof Error) {
+                console.error('Error creating restaurant:', error.message);
+            } else {
+                console.error('Unexpected error:', error);
+            }
+            setMessage('Error creating restaurant');
+        }
+    };
 
-const handleEditRestaurant = () => {
-    if (name == '') {
-      alert("Please enter your name")
-    }
-    if (address == '') {
-      alert("Please enter your restaurant's address")
-    }
-    if (isActive == true) {
-        alert("Cannot Edit - Restaurant is already Active")
-      }
-    if (restaurantID == '') {
-    alert("Restaurant cannot be found")
-    }
-    if (openTime == null) {
-    alert("Please enter an opening time")
-    }
-    if (closeTime == null) {
-    alert("Please enter a closing time")
-    }
-    if (tables == 0) {
-        alert("Please enter more tables")
-    }
-    if (resSeatsPerTable.length == 0) {
-        alert("Please enter more table seats")
-    }
+    return (
+        <div className="container">
+            <h1 className="title">Create Restaurant</h1>
+            <label className="label">
+                Restaurant Name:
+                <input
+                    type="text"
+                    value={resName}
+                    onChange={(e) => setResName(e.target.value)}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Restaurant Address:
+                <input
+                    type="text"
+                    value={resAddress}
+                    onChange={(e) => setResAddress(e.target.value)}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Open Time:
+                <input
+                    type="number"
+                    value={resOpenTime}
+                    onChange={(e) => setResOpenTime(Number(e.target.value))}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Close Time:
+                <input
+                    type="number"
+                    value={resCloseTime}
+                    onChange={(e) => setResCloseTime(Number(e.target.value))}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Number of Tables:
+                <input
+                    type="number"
+                    value={resNumTables}
+                    onChange={(e) => setResNumTables(Number(e.target.value))}
+                    className="input"
+                />
+            </label>
 
-    console.log('Restaurant Name:', name)
-    console.log('Restaurant Address:', address)
-    console.log('Restaurant ID:', restaurantID)
-    console.log('Restaurant isActive:', isActive)
-    console.log('Restaurant openTime:', openTime)
-    console.log('Restaurant closeTime:', closeTime)
-    console.log('Tables:', tables)
-    console.log('Seats Per Table:', resSeatsPerTable)
-    editRes(name, address, restaurantID, isActive, openTime, closeTime, tables, resSeatsPerTable)
-
-
-};
-
-
-return (
-    <div className="container">
-        <h1 className="title">Create Restaurant</h1>
-        <label className="label">
-            Restaurant Name:
-            <input
-                type="text"
-                value={name}
-                onChange={(e) => setResName(e.target.value)}
-                className="input"
-            />
-        </label>
-        <label className="label">
-            Restaurant Address:
-            <input
-                type="text"
-                value={address}
-                onChange={(e) => setResAddress(e.target.value)}
-                className="input"
-            />
-        </label>
-        <label className="label">
-            Open Time:
-            <input
-                type="number"
-                value={openTime}
-                onChange={(e) => setResOpenTime(Number(e.target.value))}
-                className="input"
-            />
-        </label>
-        <label className="label">
-            Close Time:
-            <input
-                type="number"  
-                value={closeTime}
-                onChange={(e) => setResCloseTime(Number(e.target.value))}  // Ensure it's converted to a number
-                className="input"
-            />
-        </label>
-        <label className="label">
-            Number of Tables:
-            <input
-                type="number"
-                value={tables}
-                onChange={(e) => setResNumTables(Number(e.target.value))}
-                className="input"
-            />
-        </label>
-
-        {[...Array(tables)].map((_, index) => (
+            {[...Array(resNumTables)].map((_, index) => (
                 <div key={index}>
                     <label className="label">
                         Seats at Table {index + 1}:
@@ -141,9 +127,24 @@ return (
                     </label>
                 </div>
             ))}
-        <button onClick={handleEditRestaurant} className="button-editRes">
-            Complete Edits
-        </button>
-    </div>
-);
+
+            <label className="label">
+                Closed Days (format: YYYY-MM-DD):
+                <input
+                    type="text"
+                    value={resClosedDays.join(', ')} // Display closed days as comma-separated string
+                    onChange={(e) => setResClosedDays(e.target.value.split(',').map(day => day.trim()))}
+                    className="input"
+                />
+            </label>
+
+            {/* Container for the buttons */}
+            <div className="button-container">
+                <button onClick={editRes} className="button-editRes">
+                    Edit Restaurant
+                </button>
+            </div>
+            {message && <p className="message">{message}</p>}
+        </div>
+    );
 }

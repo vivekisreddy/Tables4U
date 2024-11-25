@@ -1,6 +1,6 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 import React from 'react'
-import {managerLogIn} from '../../rLoginController'
+import axios from 'axios'
 
 export default function Home() {
     // initial instantiation for admin log in page
@@ -8,34 +8,48 @@ export default function Home() {
 
     const [manager, setManager] = React.useState('')
     const [resID, setID] = React.useState('')
+    const [message, setMessage] = React.useState('');
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
     forceRedraw(redraw + 1)
   }
 
-  function managerLogIn(manager:String, resID:String) {
+  async function managerLogIn() {
     let payload = {
       "manager": manager,
       "resID": resID
     }
-    fetch("https://thvplief2n4e6qwpg6nl5x7fti0mdklc.lambda-url.us-east-1.on.aws/", {
-      method: "GET",
-      body: JSON.stringify(payload)
-    })
-  }
 
-  const handleLogIn = () => {
-    if (manager == '') {
-      alert("Please enter your name")
-    }
-    if (resID == '') {
-      alert("Please enter your restaurant's ID")
-    }
-    console.log('Manager Name:', manager)
-    console.log('Restaurant ID:', resID)
-    managerLogIn(manager, resID)
+    try {
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial',
+        payload,
+          {
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              timeout: 5000,  // Timeout in milliseconds (5 seconds)
+          }
+      );
+
+      if (response.status === 200) {
+          setMessage('Restaurant created successfully!');
+          console.log(response.data);  
+      } else {
+          throw new Error('Failed to create restaurant');
+      }
+  } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+          console.error('Axios error:', error.message);
+      } else if (error instanceof Error) {
+          console.error('Error creating restaurant:', error.message);
+      } else {
+          console.error('Unexpected error:', error);
+      }
+      setMessage('Error creating restaurant');
   }
+};
 
   function createAccount() {
     window.location.replace("/managerCreateAccount")
@@ -48,7 +62,7 @@ export default function Home() {
     <div>
       <label className="managerLogInMessage">{"Manager Log In"}</label>
 
-      <form className="handleLogIn" onSubmit={handleLogIn}>
+      <form className="handleLogIn" onSubmit={managerLogIn}>
         <label className="label" htmlFor="name">Restaurant Name:</label>
         <input type="text" id="name" name="name" value={manager} onChange={(and) => setManager(and.target.value)}/>
         <br></br>
