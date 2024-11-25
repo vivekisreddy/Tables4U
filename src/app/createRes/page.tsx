@@ -1,6 +1,8 @@
 'use client';  // directive to clarify client-side. Place at top of ALL .tsx files
+'use client';  // directive to clarify client-side. Place at top of ALL .tsx files
 
 import React from "react";
+import axios from "axios";
 import axios from "axios";
 
 export default function Home() {
@@ -17,6 +19,7 @@ export default function Home() {
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
+        forceRedraw(redraw + 1);
         forceRedraw(redraw + 1);
     }
 
@@ -164,7 +167,56 @@ export default function Home() {
                     className="input"
                 />
             </label>
+    return (
+        <div className="container">
+            <h1 className="title">Create Restaurant</h1>
+            <label className="label">
+                Restaurant Name:
+                <input
+                    type="text"
+                    value={resName}
+                    onChange={(e) => setResName(e.target.value)}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Restaurant Address:
+                <input
+                    type="text"
+                    value={resAddress}
+                    onChange={(e) => setResAddress(e.target.value)}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Open Time:
+                <input
+                    type="number"
+                    value={resOpenTime}
+                    onChange={(e) => setResOpenTime(Number(e.target.value))}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Close Time:
+                <input
+                    type="number"
+                    value={resCloseTime}
+                    onChange={(e) => setResCloseTime(Number(e.target.value))}
+                    className="input"
+                />
+            </label>
+            <label className="label">
+                Number of Tables:
+                <input
+                    type="number"
+                    value={resNumTables}
+                    onChange={(e) => setResNumTables(Number(e.target.value))}
+                    className="input"
+                />
+            </label>
 
+            {[...Array(resNumTables)].map((_, index) => (
             {[...Array(resNumTables)].map((_, index) => (
                 <div key={index}>
                     <label className="label">
@@ -179,6 +231,29 @@ export default function Home() {
                 </div>
             ))}
 
+            <label className="label">
+                Closed Days (format: YYYY-MM-DD):
+                <input
+                    type="text"
+                    value={resClosedDays.join(', ')} // Display closed days as comma-separated string
+                    onChange={(e) => setResClosedDays(e.target.value.split(',').map(day => day.trim()))}
+                    className="input"
+                />
+            </label>
+
+            {/* Container for the buttons */}
+            <div className="button-container">
+                <button onClick={handleCreateRestaurant} className="button-createRes">
+                    Create Restaurant
+                </button>
+                <button onClick={handleActivateRestaurant} className="button-activateRes">
+                    Activate Restaurant
+                </button>
+            </div>
+
+            {message && <p className="message">{message}</p>} {/* This will display the message including restaurant ID */}
+        </div>
+    );
             <label className="label">
                 Closed Days (format: YYYY-MM-DD):
                 <input
