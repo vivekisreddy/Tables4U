@@ -3,38 +3,42 @@ import { Consumer } from './consumer';
 export class Restaurant {
     name: string;
     address: string;
-    restaurantID: string;
-    isActive: boolean;
     openTime: number;  
     closeTime: number; 
     closedDays: ourDate[];  
     tables: Table[];
-    dailySchedule: Schedule[];
+    isActive: boolean;
 
     constructor(
         name: string,
         address: string,
-        restaurantID: string,
-        isActive: boolean,
         openTime: number,  // Single open time for all days
         closeTime: number, // Single close time for all days
         closedDays: ourDate[],  // Array of ourDate for closed days
         tables: Table[],
-        dailySchedule: Schedule[]
+        isActive: boolean,
+
     ) {
         this.name = name;
         this.address = address;
-        this.restaurantID = restaurantID;
-        this.isActive = isActive;
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.closedDays = closedDays;  // Assign closed days
         this.tables = tables;
-        this.dailySchedule = dailySchedule;
+        this.isActive = isActive;
     }
 }
 
-// Define the Reservation class
+
+export class Table {
+    tableID: string;
+    seats: number;
+    constructor(tableID: string, seats: number) {
+        this.tableID = tableID;
+        this.seats = seats;
+    }
+}
+
 export class Reservation {
     confirmationCode: string;
     consumer: Consumer[];
@@ -63,18 +67,6 @@ export class Reservation {
     }
 }
 
-// Define the Table class
-export class Table {
-    tableID: string;
-    seats: number;
-    isAvailable: boolean;
-
-    constructor(tableID: string, seats: number, isAvailable: boolean) {
-        this.tableID = tableID;
-        this.seats = seats;
-        this.isAvailable = isAvailable;
-    }
-}
 
 // Define the Schedule class
 export class Schedule {

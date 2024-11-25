@@ -14,6 +14,97 @@
   }
 }
 
+/* globals.css */
+
+/* Existing CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ececec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
+}
+
+.button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #DDDDDD;
+}
+
+/* Create Restaurant Button - Green */
+.button-createRes {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+}
+
+.button-createRes:hover {
+  background-color: #45a049;
+}
+
+/* Activate Restaurant Button - Blue */
+.button-activateRes {
+  background-color: #2196F3; /* Blue */
+  color: white;
+  border: none;
+}
+
+.button-activateRes:hover {
+  background-color: #0b7dda;
+}
+
+/* Other existing styles */
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.label {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Create Restaurant Button - Green */
+.button-createRes {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+  margin-right: 10px; /* Add space to the right */
+}
 
 body {
   font-family: Arial, sans-serif;
