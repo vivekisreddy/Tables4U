@@ -1,6 +1,8 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 import React from 'react'
-import {managerLogIn} from '../../rLoginController'
+
+//i commented out everything in rLoginController page, that's why it's throwing an error.
+//import {managerLogIn} from '../../rLoginController'
 
 export default function Home() {
     // initial instantiation for admin log in page
@@ -19,7 +21,7 @@ export default function Home() {
     // TO DO: manager log in lambda function
     console.log('Manager Name:', name)
     console.log('Restaurant Pin Code:', pin)
-    managerLogIn(name, pin)
+    //managerLogIn(name, pin)
     andRefreshDisplay()
   }
 
