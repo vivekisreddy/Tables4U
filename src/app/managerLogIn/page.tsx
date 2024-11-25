@@ -25,8 +25,7 @@ export default function Home() {
     })
   }
 
-  const handleLogIn = (and) => {
-    and.preventDefault()
+  const handleLogIn = () => {
     if (manager == '') {
       alert("Please enter your name")
     }

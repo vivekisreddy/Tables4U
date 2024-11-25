@@ -39,8 +39,7 @@ const editRes = (name:string, address:string, restaurantID:string, isActive:Bool
       })
 }
 
-const handleEditRestaurant = (and) => {
-    and.preventDefault()
+const handleEditRestaurant = () => {
     if (name == '') {
       alert("Please enter your name")
     }
