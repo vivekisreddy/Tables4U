@@ -28,9 +28,57 @@ export default function Home() {
     setResSeatsPerTable(updatedSeats);
 };
 
-  const handleCreateRestaurant = () => {
-    
+
+const editRes = (name:string, address:string, restaurantID:string, isActive:Boolean, openTime:number, closeTime:number, tables:number, seats:number[]) => {
+    let payload = {
+        "name": name, "address": address, "restaurantID": restaurantID, "isActive":isActive, "openTime":openTime, "closeTime":closeTime, "tables":tables, "seats":seats
+      }
+      fetch("https://hxb5sgcwlguyaco5uaidn23l3a0nkajp.lambda-url.us-east-1.on.aws/", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      })
+}
+
+const handleEditRestaurant = (and) => {
+    and.preventDefault()
+    if (name == '') {
+      alert("Please enter your name")
+    }
+    if (address == '') {
+      alert("Please enter your restaurant's address")
+    }
+    if (isActive == true) {
+        alert("Cannot Edit - Restaurant is already Active")
+      }
+    if (restaurantID == '') {
+    alert("Restaurant cannot be found")
+    }
+    if (openTime == null) {
+    alert("Please enter an opening time")
+    }
+    if (closeTime == null) {
+    alert("Please enter a closing time")
+    }
+    if (tables == 0) {
+        alert("Please enter more tables")
+    }
+    if (resSeatsPerTable.length == 0) {
+        alert("Please enter more table seats")
+    }
+
+    console.log('Restaurant Name:', name)
+    console.log('Restaurant Address:', address)
+    console.log('Restaurant ID:', restaurantID)
+    console.log('Restaurant isActive:', isActive)
+    console.log('Restaurant openTime:', openTime)
+    console.log('Restaurant closeTime:', closeTime)
+    console.log('Tables:', tables)
+    console.log('Seats Per Table:', resSeatsPerTable)
+    editRes(name, address, restaurantID, isActive, openTime, closeTime, tables, resSeatsPerTable)
+
+
 };
+
 
 return (
     <div className="container">
@@ -94,8 +142,8 @@ return (
                     </label>
                 </div>
             ))}
-        <button onClick={handleCreateRestaurant} className="button-createRes">
-            Create Restaurant
+        <button onClick={handleEditRestaurant} className="button-editRes">
+            Complete Edits
         </button>
     </div>
 );
