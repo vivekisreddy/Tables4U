@@ -52,6 +52,20 @@ body {
   top: 465px;
 }
 
+.activateRestaurantButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 75px;
+  top: 500px;
+}
+
 .adminAccountButton {
   font-size: 1rem;
   color: #555;
@@ -183,6 +197,19 @@ body {
   color: #555;
 }
 
+.editRestaurantButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 1325px;
+  top: 125px;
+}
 
 .enter {
   font-size: 1rem;
@@ -196,6 +223,15 @@ body {
   position: absolute;
   left: 320px;
   top: 0px;
+}
+
+.handleActivateRestaurant {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 500px;
 }
 
 .handleConfirm {
@@ -215,6 +251,15 @@ body {
   position: absolute;
   left: 460px;
   top: 300px;
+}
+
+.handleEditRestaurant {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 700px;
 }
 
 .handleLogIn {
@@ -257,6 +302,20 @@ body {
   border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 600px;
+  top: 25px;
+}
+
+.managerAccountButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 1325px;
   top: 25px;
 }
 
