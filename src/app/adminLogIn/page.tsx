@@ -8,6 +8,7 @@ export default function Home() {
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [message, setMessage] = React.useState('')
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
@@ -15,7 +16,7 @@ export default function Home() {
   }
 
   const adminLogIn = async () => {
-    const payload = {
+    const adminInfo = {
       adminID: email,
       password: password,
     };
@@ -23,7 +24,7 @@ export default function Home() {
     try {
       const response = await axios.post(
         'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminLogIn',
-        payload,
+        adminInfo,
         {
           headers: {
               'Content-Type': 'application/json',
@@ -37,32 +38,19 @@ export default function Home() {
       if (response.status === 200) {
         console.log("response status:", response.status)
         console.log("Admin successfully logged in")
-        window.location.replace('/adminHomePage')
+        //window.location.replace('/adminHomePage')
         // andRefreshDisplay()
       } else {
-        alert("Failed to log in")
+        throw new Error('Failed to log in')
       }
-    } catch(error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.log('Axios error:', error.message)
-      } else if (error instanceof Error) {
-        console.log('Error loggin in:', error.message)
-      } else {
-        console.log('Unexpected error')
-      }
+    } catch(error) {
+      console.log('Error logging in:', error);
+      setMessage('Error logging in');
     }
   }
 
   const handleLogIn = (and) => {
     and.preventDefault()
-    if (email == '') {
-      alert("Please enter your email address")
-    }
-    if (password == '') {
-      alert("Please enter your password")
-    }
-    console.log('Admin Email:', email)
-    console.log('Admin Password:', password)
     adminLogIn()
   }
 
