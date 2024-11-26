@@ -1,180 +1,294 @@
-'use client'; 
-import React, { useState } from 'react';
-import axios from 'axios';
+//====================================================================================
+//     LIST ONLY ACTIVE RESTAURANTS FOR CONSUMER SIDE
+// =====================================================================================
 
-// Define the type for Restaurant
-interface Restaurant {
-    restaurantID: string;
-    name: string;
-    address: string;
-    openTime: number;
-    closeTime: number;
-    isActive: number;
-}
+// 'use client'; 
+// import React, { useState } from 'react';
+// import axios from 'axios';
 
-export default function AdminHomePage() {
-    // State variables
-    const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
-    const [message, setMessage] = useState(''); // For success or error messages
+// // Define the type for Restaurant
+// interface Restaurant {
+//     restaurantID: string;
+//     name: string;
+//     address: string;
+//     openTime: number;
+//     closeTime: number;
+//     isActive: number;
+// }
 
-    // Function to list restaurants from the API
-    const listRestaurants = async () => {
-        try {
-            const response = await axios.get(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminList',
-                { headers: { 'Content-Type': 'application/json' } }
-            );
+// export default function AdminHomePage() {
+//     // State variables
+//     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
+//     const [activeRestaurantList, setActiveRestaurantList] = useState<Restaurant[]>([]); // Store active restaurant list
+//     const [message, setMessage] = useState(''); 
 
-            console.log("Raw Response:", response);  // Check the whole response
+//     // Function to list all restaurants from the API
+//     const listRestaurants = async () => {
+//         try {
+//             const response = await axios.get(
+//                 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
+//                 { headers: { 'Content-Type': 'application/json' } }
+//             );
 
-            if (response.status === 200) {
-                let restaurantData = response.data;
+//             if (response.status === 200) {
+//                 let restaurantData = response.data;
 
-                // Log the raw response body
-                console.log("Raw Data from Lambda:", restaurantData);
+//                 restaurantData = JSON.parse(restaurantData.body);
 
-                // If the data is a string, parse it
-                restaurantData = JSON.parse(restaurantData.body);
+//                 setRestaurantList(restaurantData);
+//                 setMessage('Restaurants loaded successfully!');
+//             } else {
+//                 throw new Error('Failed to load restaurants.');
+//             }
+//         } catch (error) {
+//             console.error('Error listing restaurants:', error);
+//             setMessage('Error loading restaurants.');
+//         }
+//     };
 
-                console.log("Parsed Restaurant Data:", restaurantData);
+//     const listActiveRestaurants = () => {
+//         const activeRestaurants = restaurantList.filter(restaurant => restaurant.isActive === 0);
+//         setActiveRestaurantList(activeRestaurants);
+//         setMessage('Active restaurants loaded successfully!');
+//     };
 
-                // Update the restaurant list state
-                setRestaurantList(restaurantData);
-                setMessage('Restaurants loaded successfully!');
-            } else {
-                throw new Error('Failed to load restaurants.');
-            }
-        } catch (error) {
-            console.error('Error listing restaurants:', error);
-            setMessage('Error loading restaurants.');
-        }
-    };
+//     return (
+//         <div className="admin-container">
+//             <h1 className="title">Admin Dashboard</h1>
 
-    return (
-        <div className="admin-container">
-            <h1 className="title">Admin Dashboard</h1>
+//             <div className="button-container">
+//                 <button className="listRestaurantsButton" onClick={listRestaurants}>
+//                     List All Restaurants
+//                 </button>
+//                 <button className="listActiveRestaurantsButton" onClick={listActiveRestaurants}>
+//                     List Active Restaurants
+//                 </button>
+//             </div>
 
-            <div className="button-container">
-                <button className="listRestaurantsButton" onClick={listRestaurants}>
-                    List Restaurants
-                </button>
-            </div>
+//             {/* Display message */}
+//             {message && <p className="message">{message}</p>}
 
-            {/* Display message */}
-            {message && <p className="message">{message}</p>}
+//             {/* Display all restaurants */}
+//             {restaurantList.length > 0 && activeRestaurantList.length === 0 ? (
+//                 <div className="restaurant-list">
+//                     {restaurantList.map((restaurant) => (
+//                         <div key={restaurant.restaurantID} className="restaurant-item">
+//                             <p><strong>ID:</strong> {restaurant.restaurantID}</p>
+//                             <p><strong>Name:</strong> {restaurant.name}</p>
+//                             <p><strong>Address:</strong> {restaurant.address}</p>
+//                             <p><strong>Open Time:</strong> {restaurant.openTime}</p>
+//                             <p><strong>Close Time:</strong> {restaurant.closeTime}</p>
+//                             <p><strong>Status:</strong> {restaurant.isActive === 1 ? 'Inactive' : 'active'}</p>
+//                             <hr />
+//                         </div>
+//                     ))}
+//                 </div>
+//             ) : null}
 
-            {/* Display each restaurant */}
-            {restaurantList.length > 0 ? (
-                <div className="restaurant-list">
-                    {restaurantList.map((restaurant) => (
-                        <div key={restaurant.restaurantID} className="restaurant-item">
-                            <p>
-                                <strong>ID:</strong> {restaurant.restaurantID}
-                            </p>
-                            <p>
-                                <strong>Name:</strong> {restaurant.name}
-                            </p>
-                            <p>
-                                <strong>Address:</strong> {restaurant.address}
-                            </p>
-                            <p>
-                                <strong>Open Time:</strong> {restaurant.openTime}
-                            </p>
-                            <p>
-                                <strong>Close Time:</strong> {restaurant.closeTime}
-                            </p>
-                            <p>
-                                <strong>Status:</strong> {restaurant.isActive === 1 ? 'Active' : 'Inactive'}
-                            </p>
-                            <hr />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p>No restaurants available.</p>
-            )}
-        </div>
-    );
-}
+//             {/* Display active restaurants */}
+//             {activeRestaurantList.length > 0 ? (
+//                 <div className="restaurant-list">
+//                     {activeRestaurantList.map((restaurant) => (
+//                         <div key={restaurant.restaurantID} className="restaurant-item">
+//                             <p><strong>ID:</strong> {restaurant.restaurantID}</p>
+//                             <p><strong>Name:</strong> {restaurant.name}</p>
+//                             <p><strong>Address:</strong> {restaurant.address}</p>
+//                             <p><strong>Open Time:</strong> {restaurant.openTime}</p>
+//                             <p><strong>Close Time:</strong> {restaurant.closeTime}</p>
+//                             <p><strong>Status:</strong> Active</p>
+//                             <hr />
+//                         </div>
+//                     ))}
+//                 </div>
+//             ) : (
+//                 <p>No more active restaurants available.</p>
+//             )}
+//         </div>
+//     );
+// }
 
 
 
+//==================================================================
+// LIST ALL OF RESTAURANTS FOR ADMIN SIDE
+//==================================================================
+
+
+
+// 'use client'; 
+// import React, { useState } from 'react';
+// import axios from 'axios';
+
+// // Define the type for Restaurant
+// interface Restaurant {
+//     restaurantID: string;
+//     name: string;
+//     address: string;
+//     openTime: number;
+//     closeTime: number;
+//     isActive: number;
+// }
+
+// export default function AdminHomePage() {
+//     // State variables
+//     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
+//     const [message, setMessage] = useState(''); // For success or error messages
+
+//     // Function to list restaurants from the API
+//     const listRestaurants = async () => {
+//         try {
+//             const response = await axios.get(
+//                 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminList',
+//                 { headers: { 'Content-Type': 'application/json' } }
+//             );
+
+//             console.log("Raw Response:", response);  // Check the whole response
+
+//             if (response.status === 200) {
+//                 let restaurantData = response.data;
+
+//                 // Log the raw response body
+//                 console.log("Raw Data from Lambda:", restaurantData);
+
+//                 // If the data is a string, parse it
+//                 restaurantData = JSON.parse(restaurantData.body);
+
+//                 console.log("Parsed Restaurant Data:", restaurantData);
+
+//                 // Update the restaurant list state
+//                 setRestaurantList(restaurantData);
+//                 setMessage('Restaurants loaded successfully!');
+//             } else {
+//                 throw new Error('Failed to load restaurants.');
+//             }
+//         } catch (error) {
+//             console.error('Error listing restaurants:', error);
+//             setMessage('Error loading restaurants.');
+//         }
+//     };
+
+//     return (
+//         <div className="admin-container">
+//             <h1 className="title">Admin Dashboard</h1>
+
+//             <div className="button-container">
+//                 <button className="listRestaurantsButton" onClick={listRestaurants}>
+//                     List Restaurants
+//                 </button>
+//             </div>
+
+//             {/* Display message */}
+//             {message && <p className="message">{message}</p>}
+
+//             {/* Display each restaurant */}
+//             {restaurantList.length > 0 ? (
+//                 <div className="restaurant-list">
+//                     {restaurantList.map((restaurant) => (
+//                         <div key={restaurant.restaurantID} className="restaurant-item">
+//                             <p>
+//                                 <strong>ID:</strong> {restaurant.restaurantID}
+//                             </p>
+//                             <p>
+//                                 <strong>Name:</strong> {restaurant.name}
+//                             </p>
+//                             <p>
+//                                 <strong>Address:</strong> {restaurant.address}
+//                             </p>
+//                             <p>
+//                                 <strong>Open Time:</strong> {restaurant.openTime}
+//                             </p>
+//                             <p>
+//                                 <strong>Close Time:</strong> {restaurant.closeTime}
+//                             </p>
+//                             <p>
+//                                 <strong>Status:</strong> {restaurant.isActive === 1 ? 'Active' : 'Inactive'}
+//                             </p>
+//                             <hr />
+//                         </div>
+//                     ))}
+//                 </div>
+//             ) : (
+//                 <p>No restaurants available.</p>
+//             )}
+//         </div>
+//     );
+// }
+
+
+
+// ==============================================================================================
+// --------------------------------------------------------------------------------------------
+// THIS IS THE ACTIVATE RESTAURANT
+// --------------------------------------------------------------------------------------------
 
 // 'use client'; // Add this at the top of your component file
 
-// import React, { useState, useEffect } from "react";
+// import React, { useState } from "react";
 // import axios from "axios";
 
-// interface Table {
-//   tableID: string;
-//   seats: number;
-// }
+// export default function ActivateRestaurantPage() {
+//     const [restaurantID, setRestaurantID] = useState<string>('');
+//     const [message, setMessage] = useState<string>('');
 
-// interface Restaurant {
-//   name: string;
-//   address: string;
-//   openTime: number;
-//   closeTime: number;
-//   closedDays: string[];
-//   isActive: boolean;
-//   tables: Table[];
-// }
+//     // Function to activate the restaurant
+//     const handleActivateRestaurant = async () => {
+//         // if (!restaurantID) {
+//         //     setMessage('Please provide a restaurant ID!');
+//         //     return;
+//         // }
 
-// export default function ActiveRestaurants() {
-//   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-//   const [error, setError] = useState<string | null>(null);
+//         try {
+//             const activationData = { restaurantID };  
+//             const response = await axios.post(
+//                 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',  // Adjust the URL if needed
+//                 activationData,
+//                 {
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                     },
+//                 }
+//             );
 
-//   // Fetch active restaurants on component mount
-//   useEffect(() => {
-//     const fetchActiveRestaurants = async () => {
-//       try {
-//         const response = await axios.get(
-//           'https://your-api-gateway-url.amazonaws.com/dev/consumerListRes' // Replace with your API Gateway URL
-//         );
-
-//         if (response.status === 200) {
-//           setRestaurants(response.data.activeRestaurants);
-//         } else {
-//           setError('Failed to fetch active restaurants.');
+//             if (response.status === 200) {
+//                 setMessage(`Restaurant activated successfully!`);
+//                 console.log(response.data);
+//             } else {
+//                 const errorMessage = response.data.error || 'Failed to activate restaurant';
+//                 setMessage(errorMessage);
+//             }
+//         } catch (error) {
+//             console.error('Error activating restaurant:', error);
+//             setMessage('Error activating restaurant');
 //         }
-//       } catch (error) {
-//         setError('Error fetching active restaurants.');
-//       }
 //     };
 
-//     fetchActiveRestaurants();
-//   }, []);
+//     return (
+//         <div className="container">
+//             <h1 className="title">Activate Restaurant</h1>
 
-//   return (
-//     <div className="container">
-//       <h1 className="title">Active Restaurants</h1>
-      
-//       {error && <p className="error">{error}</p>}
-
-//       {restaurants.length === 0 ? (
-//         <p>No active restaurants available.</p>
-//       ) : (
-//         <div className="restaurants-list">
-//           {restaurants.map((restaurant, index) => (
-//             <div key={index} className="restaurant-card">
-//               <h2>{restaurant.name}</h2>
-//               <p>{restaurant.address}</p>
-//               <p>Open: {restaurant.openTime}:00 - Close: {restaurant.closeTime}:00</p>
-//               <p>Closed Days: {restaurant.closedDays.join(', ')}</p>
-              
-//               <h3>Tables:</h3>
-//               <ul>
-//                 {restaurant.tables.map((table, idx) => (
-//                   <li key={idx}>Table ID: {table.tableID} - Seats: {table.seats}</li>
-//                 ))}
-//               </ul>
+//             {/* Input for restaurantID */}
+//             <div className="input-container">
+//                 <label htmlFor="restaurantID">Enter Restaurant ID:</label>
+//                 <input
+//                     type="text"
+//                     id="restaurantID"
+//                     value={restaurantID}
+//                     onChange={(e) => setRestaurantID(e.target.value)}
+//                     placeholder="Enter Restaurant ID"
+//                 />
 //             </div>
-//           ))}
+
+//             <div className="button-container">
+//                 <button onClick={handleActivateRestaurant} className="button-activateRes">
+//                     Activate Restaurant
+//                 </button>
+//             </div>
+
+//             {message && <p className="message">{message}</p>} {/* Display the message */}
 //         </div>
-//       )}
-//     </div>
-//   );
+//     );
 // }
+
 
 
 // //--------------------------------------------------------------------------------------------
@@ -274,77 +388,4 @@ export default function AdminHomePage() {
 //       </form>
 //     </div>
 //   )
-// }
-
-//==============================================================================================
-//--------------------------------------------------------------------------------------------
-// THIS IS THE ACTIVATE RESTAURANT
-//--------------------------------------------------------------------------------------------
-
-// 'use client'; // Add this at the top of your component file
-
-// import React, { useState } from "react";
-// import axios from "axios";
-
-// export default function ActivateRestaurantPage() {
-//     const [restaurantID, setRestaurantID] = useState<string>('');
-//     const [message, setMessage] = useState<string>('');
-
-//     // Function to activate the restaurant
-//     const handleActivateRestaurant = async () => {
-//         // if (!restaurantID) {
-//         //     setMessage('Please provide a restaurant ID!');
-//         //     return;
-//         // }
-
-//         try {
-//             const activationData = { restaurantID };  
-//             const response = await axios.post(
-//                 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',  // Adjust the URL if needed
-//                 activationData,
-//                 {
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                 }
-//             );
-
-//             if (response.status === 200) {
-//                 setMessage(`Restaurant activated successfully!`);
-//                 console.log(response.data);
-//             } else {
-//                 const errorMessage = response.data.error || 'Failed to activate restaurant';
-//                 setMessage(errorMessage);
-//             }
-//         } catch (error) {
-//             console.error('Error activating restaurant:', error);
-//             setMessage('Error activating restaurant');
-//         }
-//     };
-
-//     return (
-//         <div className="container">
-//             <h1 className="title">Activate Restaurant</h1>
-
-//             {/* Input for restaurantID */}
-//             <div className="input-container">
-//                 <label htmlFor="restaurantID">Enter Restaurant ID:</label>
-//                 <input
-//                     type="text"
-//                     id="restaurantID"
-//                     value={restaurantID}
-//                     onChange={(e) => setRestaurantID(e.target.value)}
-//                     placeholder="Enter Restaurant ID"
-//                 />
-//             </div>
-
-//             <div className="button-container">
-//                 <button onClick={handleActivateRestaurant} className="button-activateRes">
-//                     Activate Restaurant
-//                 </button>
-//             </div>
-
-//             {message && <p className="message">{message}</p>} {/* Display the message */}
-//         </div>
-//     );
 // }
