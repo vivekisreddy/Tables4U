@@ -30,6 +30,12 @@ export default function Home() {
     andRefreshDisplay()
   }
 
+  function activate(){
+    window.location.replace("/activateRes")
+    andRefreshDisplay()
+  }
+
+
   // below is where the GUI for the admin log in page is drawn
   return (
     <div>
@@ -50,3 +56,4 @@ export default function Home() {
     </div>
   )
 }
+

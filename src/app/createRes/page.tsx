@@ -1,31 +1,28 @@
-'use client';  // directive to clarify client-side. Place at top of ALL .tsx files
+'use client'; // Add this at the top of your component file
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Home() {
-    const [redraw, forceRedraw] = React.useState(0);
-    const [resName, setResName] = React.useState('');
-    const [resAddress, setResAddress] = React.useState('');
-    const [resNumTables, setResNumTables] = React.useState(0);
-    const [resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
-    const [message, setMessage] = React.useState('');
-    const [resOpenTime, setResOpenTime] = React.useState(0);
-    const [resCloseTime, setResCloseTime] = React.useState(0);
-    const [resClosedDays, setResClosedDays] = React.useState<string[]>([]);  // For closed days
-    const [isRestaurantActive, setIsRestaurantActive] = React.useState(false); // To track if the restaurant is active
+    const [resName, setResName] = useState('');
+    const [resAddress, setResAddress] = useState('');
+    const [resNumTables, setResNumTables] = useState(0);
+    const [resSeatsPerTable, setResSeatsPerTable] = useState<number[]>([]);
+    const [resOpenTime, setResOpenTime] = useState(0);
+    const [resCloseTime, setResCloseTime] = useState(0);
+    const [resClosedDays, setResClosedDays] = useState<string[]>([]);
+    const [restaurantID, setRestaurantID] = useState<string | null>(null);  // Store the restaurantID
+    const [message, setMessage] = useState('');
 
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1);
-    }
+    // On component mount, check if restaurantID is in localStorage
+    useEffect(() => {
+        const storedRestaurantID = localStorage.getItem('restaurantID');
+        if (storedRestaurantID) {
+            setRestaurantID(storedRestaurantID);
+        }
+    }, []);
 
-    const handleAddSeats = (index: number, value: number) => {
-        const updatedSeats = [...resSeatsPerTable];
-        updatedSeats[index] = value;
-        setResSeatsPerTable(updatedSeats);
-    };
-
+    // Function to create the restaurant
     const handleCreateRestaurant = async () => {
         const restaurantData = {
             name: resName,
@@ -57,6 +54,8 @@ export default function Home() {
 
                 if (message && restaurantID) {
                     setMessage(`${message} (ID: ${restaurantID})`);
+                    setRestaurantID(restaurantID);  // Set the restaurantID from response
+                    localStorage.setItem('restaurantID', restaurantID);  // Store in localStorage
                     console.log(`Success: ${message}, Restaurant ID: ${restaurantID}`);
                 } else {
                     setMessage('Unexpected response format.');
@@ -65,34 +64,21 @@ export default function Home() {
             } else {
                 throw new Error('Failed to create restaurant.');
             }
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                console.error('Axios error:', error.message);
-            } else if (error instanceof Error) {
-                console.error('Error creating restaurant:', error.message);
-            } else {
-                console.error('Unexpected error:', error);
-            }
+        } catch (error) {
+            console.error('Error creating restaurant:', error);
             setMessage('Error creating restaurant.');
         }
-
-        // Reset form fields
-        setResName('');
-        setResAddress('');
-        setResNumTables(0);
-        setResOpenTime(0);
-        setResCloseTime(0);
-        setResSeatsPerTable([]);
-        setResClosedDays([]);
     };
-
     const handleActivateRestaurant = async () => {
-        const restaurantID = "some-id";  // Replace this with the actual restaurant ID after creation
-
+        if (!restaurantID) {
+            setMessage('Restaurant ID is missing!');
+            return;
+        }
+    
         try {
             const activationData = { restaurantID };  // Send restaurant ID to activate
             const response = await axios.post(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',
+                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',  // Adjust the URL if needed
                 activationData,
                 {
                     headers: {
@@ -100,19 +86,20 @@ export default function Home() {
                     },
                 }
             );
-
+    
             if (response.status === 200) {
-                setMessage('Restaurant activated successfully!');
-                setIsRestaurantActive(true);  // Set the restaurant as active
+                setMessage(`Restaurant activated successfully!`);
                 console.log(response.data);
             } else {
-                throw new Error('Failed to activate restaurant');
+                const errorMessage = response.data.error || 'Failed to activate restaurant';
+                setMessage(errorMessage);
             }
         } catch (error) {
             console.error('Error activating restaurant:', error);
             setMessage('Error activating restaurant');
         }
     };
+    
 
     return (
         <div className="container">
@@ -124,7 +111,6 @@ export default function Home() {
                     value={resName}
                     onChange={(e) => setResName(e.target.value)}
                     className="input"
-                    disabled={isRestaurantActive}  // Disable input if active
                 />
             </label>
             <label className="label">
@@ -134,7 +120,6 @@ export default function Home() {
                     value={resAddress}
                     onChange={(e) => setResAddress(e.target.value)}
                     className="input"
-                    disabled={isRestaurantActive}  // Disable input if active
                 />
             </label>
             <label className="label">
@@ -144,7 +129,6 @@ export default function Home() {
                     value={resOpenTime}
                     onChange={(e) => setResOpenTime(Number(e.target.value))}
                     className="input"
-                    disabled={isRestaurantActive}  // Disable input if active
                 />
             </label>
             <label className="label">
@@ -154,7 +138,6 @@ export default function Home() {
                     value={resCloseTime}
                     onChange={(e) => setResCloseTime(Number(e.target.value))}
                     className="input"
-                    disabled={isRestaurantActive}  // Disable input if active
                 />
             </label>
             <label className="label">
@@ -164,7 +147,6 @@ export default function Home() {
                     value={resNumTables}
                     onChange={(e) => setResNumTables(Number(e.target.value))}
                     className="input"
-                    disabled={isRestaurantActive}  // Disable input if active
                 />
             </label>
 
@@ -175,9 +157,12 @@ export default function Home() {
                         <input
                             type="number"
                             value={resSeatsPerTable[index] || 0}
-                            onChange={(e) => handleAddSeats(index, Number(e.target.value))}
+                            onChange={(e) => {
+                                const updatedSeats = [...resSeatsPerTable];
+                                updatedSeats[index] = Number(e.target.value);
+                                setResSeatsPerTable(updatedSeats);
+                            }}
                             className="input"
-                            disabled={isRestaurantActive}  // Disable input if active
                         />
                     </label>
                 </div>
@@ -190,16 +175,19 @@ export default function Home() {
                     value={resClosedDays.join(', ')} // Display closed days as comma-separated string
                     onChange={(e) => setResClosedDays(e.target.value.split(',').map(day => day.trim()))}
                     className="input"
-                    disabled={isRestaurantActive}  // Disable input if active
                 />
             </label>
 
             {/* Container for the buttons */}
             <div className="button-container">
-                <button onClick={handleCreateRestaurant} className="button-createRes" disabled={isRestaurantActive}>
+                <button onClick={handleCreateRestaurant} className="button-createRes">
                     Create Restaurant
                 </button>
-                <button onClick={handleActivateRestaurant} className="button-activateRes" disabled={isRestaurantActive}>
+                <button
+                    onClick={handleActivateRestaurant}
+                    className="button-activateRes"
+                    disabled={!restaurantID} // Disable if restaurantID is not set
+                >
                     Activate Restaurant
                 </button>
             </div>
