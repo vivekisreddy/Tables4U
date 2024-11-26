@@ -1,78 +1,180 @@
-'use client'; // Add this at the top of your component file
+'use client'; 
+import React, { useState } from 'react';
+import axios from 'axios';
 
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-
-interface Table {
-  tableID: string;
-  seats: number;
-}
-
+// Define the type for Restaurant
 interface Restaurant {
-  name: string;
-  address: string;
-  openTime: number;
-  closeTime: number;
-  closedDays: string[];
-  isActive: boolean;
-  tables: Table[];
+    restaurantID: string;
+    name: string;
+    address: string;
+    openTime: number;
+    closeTime: number;
+    isActive: number;
 }
 
-export default function ActiveRestaurants() {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [error, setError] = useState<string | null>(null);
+export default function AdminHomePage() {
+    // State variables
+    const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
+    const [message, setMessage] = useState(''); // For success or error messages
 
-  // Fetch active restaurants on component mount
-  useEffect(() => {
-    const fetchActiveRestaurants = async () => {
-      try {
-        const response = await axios.get(
-          'https://your-api-gateway-url.amazonaws.com/dev/consumerListRes' // Replace with your API Gateway URL
-        );
+    // Function to list restaurants from the API
+    const listRestaurants = async () => {
+        try {
+            const response = await axios.get(
+                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminList',
+                { headers: { 'Content-Type': 'application/json' } }
+            );
 
-        if (response.status === 200) {
-          setRestaurants(response.data.activeRestaurants);
-        } else {
-          setError('Failed to fetch active restaurants.');
+            console.log("Raw Response:", response);  // Check the whole response
+
+            if (response.status === 200) {
+                let restaurantData = response.data;
+
+                // Log the raw response body
+                console.log("Raw Data from Lambda:", restaurantData);
+
+                // If the data is a string, parse it
+                restaurantData = JSON.parse(restaurantData.body);
+
+                console.log("Parsed Restaurant Data:", restaurantData);
+
+                // Update the restaurant list state
+                setRestaurantList(restaurantData);
+                setMessage('Restaurants loaded successfully!');
+            } else {
+                throw new Error('Failed to load restaurants.');
+            }
+        } catch (error) {
+            console.error('Error listing restaurants:', error);
+            setMessage('Error loading restaurants.');
         }
-      } catch (error) {
-        setError('Error fetching active restaurants.');
-      }
     };
 
-    fetchActiveRestaurants();
-  }, []);
+    return (
+        <div className="admin-container">
+            <h1 className="title">Admin Dashboard</h1>
 
-  return (
-    <div className="container">
-      <h1 className="title">Active Restaurants</h1>
-      
-      {error && <p className="error">{error}</p>}
-
-      {restaurants.length === 0 ? (
-        <p>No active restaurants available.</p>
-      ) : (
-        <div className="restaurants-list">
-          {restaurants.map((restaurant, index) => (
-            <div key={index} className="restaurant-card">
-              <h2>{restaurant.name}</h2>
-              <p>{restaurant.address}</p>
-              <p>Open: {restaurant.openTime}:00 - Close: {restaurant.closeTime}:00</p>
-              <p>Closed Days: {restaurant.closedDays.join(', ')}</p>
-              
-              <h3>Tables:</h3>
-              <ul>
-                {restaurant.tables.map((table, idx) => (
-                  <li key={idx}>Table ID: {table.tableID} - Seats: {table.seats}</li>
-                ))}
-              </ul>
+            <div className="button-container">
+                <button className="listRestaurantsButton" onClick={listRestaurants}>
+                    List Restaurants
+                </button>
             </div>
-          ))}
+
+            {/* Display message */}
+            {message && <p className="message">{message}</p>}
+
+            {/* Display each restaurant */}
+            {restaurantList.length > 0 ? (
+                <div className="restaurant-list">
+                    {restaurantList.map((restaurant) => (
+                        <div key={restaurant.restaurantID} className="restaurant-item">
+                            <p>
+                                <strong>ID:</strong> {restaurant.restaurantID}
+                            </p>
+                            <p>
+                                <strong>Name:</strong> {restaurant.name}
+                            </p>
+                            <p>
+                                <strong>Address:</strong> {restaurant.address}
+                            </p>
+                            <p>
+                                <strong>Open Time:</strong> {restaurant.openTime}
+                            </p>
+                            <p>
+                                <strong>Close Time:</strong> {restaurant.closeTime}
+                            </p>
+                            <p>
+                                <strong>Status:</strong> {restaurant.isActive === 1 ? 'Active' : 'Inactive'}
+                            </p>
+                            <hr />
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>No restaurants available.</p>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }
+
+
+
+
+// 'use client'; // Add this at the top of your component file
+
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+
+// interface Table {
+//   tableID: string;
+//   seats: number;
+// }
+
+// interface Restaurant {
+//   name: string;
+//   address: string;
+//   openTime: number;
+//   closeTime: number;
+//   closedDays: string[];
+//   isActive: boolean;
+//   tables: Table[];
+// }
+
+// export default function ActiveRestaurants() {
+//   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+//   const [error, setError] = useState<string | null>(null);
+
+//   // Fetch active restaurants on component mount
+//   useEffect(() => {
+//     const fetchActiveRestaurants = async () => {
+//       try {
+//         const response = await axios.get(
+//           'https://your-api-gateway-url.amazonaws.com/dev/consumerListRes' // Replace with your API Gateway URL
+//         );
+
+//         if (response.status === 200) {
+//           setRestaurants(response.data.activeRestaurants);
+//         } else {
+//           setError('Failed to fetch active restaurants.');
+//         }
+//       } catch (error) {
+//         setError('Error fetching active restaurants.');
+//       }
+//     };
+
+//     fetchActiveRestaurants();
+//   }, []);
+
+//   return (
+//     <div className="container">
+//       <h1 className="title">Active Restaurants</h1>
+      
+//       {error && <p className="error">{error}</p>}
+
+//       {restaurants.length === 0 ? (
+//         <p>No active restaurants available.</p>
+//       ) : (
+//         <div className="restaurants-list">
+//           {restaurants.map((restaurant, index) => (
+//             <div key={index} className="restaurant-card">
+//               <h2>{restaurant.name}</h2>
+//               <p>{restaurant.address}</p>
+//               <p>Open: {restaurant.openTime}:00 - Close: {restaurant.closeTime}:00</p>
+//               <p>Closed Days: {restaurant.closedDays.join(', ')}</p>
+              
+//               <h3>Tables:</h3>
+//               <ul>
+//                 {restaurant.tables.map((table, idx) => (
+//                   <li key={idx}>Table ID: {table.tableID} - Seats: {table.seats}</li>
+//                 ))}
+//               </ul>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 
 // //--------------------------------------------------------------------------------------------
