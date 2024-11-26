@@ -1,6 +1,8 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 import React from 'react';
 import axios from 'axios';
+import { managerList } from '@/manager';
+import { managerLogIn } from '@/rLoginController';
 
 export default function Home() {
     // initial instantiation for admin log in page
@@ -10,43 +12,47 @@ export default function Home() {
     const [ID, setID] = React.useState('')
     const [message, setMessage] = React.useState('');
 
+    const instance = axios.create({
+      baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
+    });
 
     function andRefreshDisplay() {
       forceRedraw(redraw + 1)
     }
 
-  const managerLogIn =async () => {
-    try {
-      const response = await axios.post(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/managerLogIn',
-        { resName: name,
-          resID: ID,
-        }, {
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              timeout: 5000,  // Timeout in milliseconds (5 seconds)
-          }
-      );
-      if (response.status === 200) {
-        console.log("response status:", response.status)
-        console.log("Manager successfully logged in")
-        // andRefreshDisplay()
-      } else {
-        throw new Error('Failed to log in')
-      }
-  } catch (error) {
-    console.error('Error logging in:', error);
-    setMessage('Error logging in.');
+  function managerLogIn() {
+    if (name && ID) {
+      instance.post('/managerLogIn', {"resName":name, "resID":ID})
+      .then(function (response) {
+        console.log("raw response:", response)
+        let status = response.data.statusCode
+        let result = response.data.body
+
+        console.log("response status:", status)
+
+        if (status == 200) {
+          console.log("response status:", status)
+          console.log("Manager successfully logged in")
+          setMessage("Successfully logging in")
+          window.location.replace('/managerHomePage')
+          andRefreshDisplay()
+        } else {
+          setMessage("Incorrect Log In Information")
+          console.log("Error logging in:", result)
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    } else {
+      setMessage("Please complete all fields")
+    }
+    }
+
+  const handleLogIn = (and) => {
+    and.preventDefault()
+    managerLogIn()
   }
-}
-
-const handleLogIn = (and) => {
-  and.preventDefault()
-  managerLogIn()
-  window.location.replace('/managerHomePage')
-
-}
 
   function createAccount() {
     window.location.replace("/createRes")
@@ -55,18 +61,33 @@ const handleLogIn = (and) => {
 
   // below is where the GUI for the manager log in page is drawn
   return (
-    <div>
-      <label className="managerLogInMessage">{"Manager Log In"}</label>
+    <div className="container">
+      <h1 className="title">Manager Log In</h1>
+      <label className="label">
+          Restaurant Name:
+          <input
+              type="string"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input"
+          />
+      </label>
+      <label className="label">
+          Restaurant ID:
+          <input
+              type="string"
+              value={ID}
+              onChange={(e) => setID(e.target.value)}
+              className="input"
+          />
+      </label>
+      <div className="button-container">
+          <button onClick={handleLogIn} className="button-logIn">
+              Log In
+          </button>
+      </div>
 
-      <form className="handleLogIn" onSubmit={handleLogIn}>
-        <label className="label" htmlFor="name">Restaurant Name:</label>
-        <input type="text" style={{ color: 'black' }} id="name" name="name" value={name} onChange={(and) => setName(and.target.value)}/>
-        <br></br>
-        <br></br>
-        <label className="label" htmlFor="ID">Pin Code:</label>
-        <input type="text" style={{ color: 'black' }} id="pin" name="pin" value={ID} onChange={(and) => setID(and.target.value)}/>
-        <button type="submit" className="managerLogIn">Log In</button>
-      </form>
+      {message && <p className="message">{message}</p>}
 
       <label className="account">{"Don't have an account? Create one now!"}</label>
       <button className="createManagerLogIn" onClick={() => createAccount()}>Create Restaurant</button>

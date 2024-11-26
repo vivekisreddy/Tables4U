@@ -16,8 +16,9 @@ export default function Home() {
     const [resCloseTime, setResCloseTime] = React.useState(0);
     const [resClosedDays, setResClosedDays] = React.useState<string[]>([]);
 
-
-
+    const instance = axios.create({
+        baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
+    });
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
@@ -31,34 +32,29 @@ export default function Home() {
     };
 
 
-    const editRes = async () => {
-        let payload = {
-            "name": resName, "address": resAddress, "openTime":resOpenTime,
-            "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable,
-        }
-        try {
-            const response = await axios.post(
-            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/editRes',
-            payload,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    timeout: 5000,  // Timeout in milliseconds (5 seconds)
-                }
-            );
+    function editRes() {
+        instance.post('/editRes', {"name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable,})
+        .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
     
+            console.log("response status:", status)
             if (response.status === 200) {
                 setMessage('Restaurant edited successfully!');
-                console.log(response.data);  
+                console.log(response.data);
+                window.location.replace('/managerHomePage')
+                andRefreshDisplay()
             } else {
-                throw new Error('Failed to create restaurant');
+            console.log("Error logging in:", result)
             }
-        } catch (error) {
-            console.error('Error editing:', error);
-            setMessage('Error editing restaurant.');
-        }
-    };
+        })
+    }
+
+    const handleEditRes = (and) => {
+        and.preventDefault()
+        editRes()
+      }
 
     return (
         <div className="container">
@@ -135,7 +131,7 @@ export default function Home() {
 
             {/* Container for the buttons */}
             <div className="button-container">
-                <button onClick={editRes} className="button-editRes">
+                <button onClick={handleEditRes} className="button-editRes">
                     Edit Restaurant
                 </button>
             </div>
