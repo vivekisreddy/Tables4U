@@ -1,5 +1,6 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 
 export default function Home() {
     // initial instantiation for admin log in page
@@ -13,15 +14,43 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
-  function adminLogIn(email:String, password:String) {
-    let payload = {
-      "email": email,
-      "password": password
+  const adminLogIn = async () => {
+    const payload = {
+      "adminID": email,
+      "password": password,
+    };
+
+    setEmail('');
+    setPassword('');
+
+    try {
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminLogIn',
+        payload,
+        {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          timeout: 5000,  // Timeout in milliseconds (5 seconds)
+        }
+      );
+      if (response.status === 200) {
+        console.log("response status:", response.status)
+        console.log("Admin successfully logged in")
+        //window.location.replace('/adminHomePage')
+        // andRefreshDisplay()
+      } else {
+        alert("Failed to log in")
+      }
+    } catch(error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log('Axios error:', error.message)
+      } else if (error instanceof Error) {
+        console.log('Error loggin in:', error.message)
+      } else {
+        console.log('Unexpected error')
+      }
     }
-    fetch("https://w64trg7ugmy27kwdsypiclfiba0djzgg.lambda-url.us-east-1.on.aws/", {
-      method: "GET",
-      body: JSON.stringify(payload)
-    })
   }
 
   const handleLogIn = (and) => {
@@ -34,7 +63,7 @@ export default function Home() {
     }
     console.log('Admin Email:', email)
     console.log('Admin Password:', password)
-    adminLogIn(email, password)
+    adminLogIn()
   }
 
   function createAccount() {

@@ -1,5 +1,6 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 import React, {useState} from 'react'
+import axios from 'axios'
 
 export default function Home() {
     // initial instantiation for admin log in page
@@ -13,15 +14,43 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
-  function adminCreateAccount(email:String, password:String) {
-    let payload = {
-      "newAdminEmail": email,
-      "newAdminPassword": password
+  const adminCreateAccount = async () => {
+    const payload = {
+      "adminID": email,
+      "password": password,
+    };
+
+    setEmail('');
+    setPassword('');
+
+    try {
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminCreateAccount',
+        payload,
+        {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          timeout: 5000,  // Timeout in milliseconds (5 seconds)
+        }
+      );
+      if (response.status === 200) {
+        console.log("response status:", response.status)
+        console.log("Admin account successfully created")
+        //window.location.replace('/adminLogIn')
+        // andRefreshDisplay()
+      } else {
+        alert("Failed to create account")
+      }
+    } catch(error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log('Axios error:', error.message)
+      } else if (error instanceof Error) {
+        console.log('Error creating account:', error.message)
+      } else {
+        console.log('Unexpected error')
+      }
     }
-    fetch("https://cyzldssv4gks6bdkbrxc7kztsm0avynj.lambda-url.us-east-1.on.aws/", {
-      method: "POST",
-      body: JSON.stringify(payload)
-    })
   }
 
   const handleCreate = (and) => {
@@ -34,9 +63,7 @@ export default function Home() {
     }
     console.log('Admine Email:', email)
     console.log('Admin Password:', password)
-    adminCreateAccount(email, password)
-    window.location.replace("/adminLogIn")
-    andRefreshDisplay()
+    adminCreateAccount()
   }
 
   // below is where the GUI for the admin log in page is drawn
