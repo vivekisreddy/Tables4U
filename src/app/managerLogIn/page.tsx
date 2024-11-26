@@ -20,7 +20,8 @@ export default function Home() {
       "manager": manager,
       "resID": resID
     }
-
+    setManager(' ')
+    setID(' ')
     try {
       const response = await axios.post(
         'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/managerLogIn',
@@ -32,7 +33,7 @@ export default function Home() {
               timeout: 5000,  // Timeout in milliseconds (5 seconds)
           }
       );
-
+      console.log("Raw Response:", response)
       if (response.status === 200) {
           setMessage('Manager successfully logged in!');
           console.log(response.data);
@@ -52,6 +53,18 @@ export default function Home() {
   }
 };
 
+const handleLogIn = () => {
+  if (manager == '') {
+    alert("Please enter the restaraunt name")
+  }
+  if (resID == '') {
+    alert("Please enter the restaurant ID")
+  }
+  console.log('Restaraunt Name:', manager)
+  console.log('Restaurant ID:', resID)
+  managerLogIn()
+}
+
   function createAccount() {
     window.location.replace("/createRes")
     andRefreshDisplay()
@@ -62,7 +75,7 @@ export default function Home() {
     <div>
       <label className="managerLogInMessage">{"Manager Log In"}</label>
 
-      <form className="handleLogIn" onSubmit={managerLogIn}>
+      <form className="handleLogIn" onSubmit={handleLogIn}>
         <label className="label" htmlFor="name">Restaurant Name:</label>
         <input type="text" style={{ color: 'black' }} id="name" name="name" value={manager} onChange={(and) => setManager(and.target.value)}/>
         <br></br>
