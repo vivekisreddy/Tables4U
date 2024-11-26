@@ -53,7 +53,10 @@ export default function Home() {
   }
 };
 
-
+  function createAccount() {
+    window.location.replace("/managerCreateAccount")
+    andRefreshDisplay()
+  }
   // below is where the GUI for the manager log in page is drawn
   return (
     <div>
