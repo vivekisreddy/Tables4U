@@ -62,39 +62,6 @@ export default function AdminHomePage() {
           })
         }
 
-    // // Function to list restaurants from the API
-    // const listRestaurants = async () => {
-    //     try {
-    //         const response = await axios.get(
-    //             'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminList',
-    //             { headers: { 'Content-Type': 'application/json' } }
-    //         );
-
-    //         console.log("Raw Response:", response);  // Check the whole response
-
-    //         if (response.status === 200) {
-    //             let restaurantData = response.data;
-
-    //             // Log the raw response body
-    //             console.log("Raw Data from Lambda:", restaurantData);
-
-    //             // If the data is a string, parse it
-    //             restaurantData = JSON.parse(restaurantData.body);
-
-    //             console.log("Parsed Restaurant Data:", restaurantData);
-
-    //             // Update the restaurant list state
-    //             setRestaurantList(restaurantData);
-    //             setMessage('Restaurants loaded successfully!');
-    //         } else {
-    //             throw new Error('Failed to load restaurants.');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error listing restaurants:', error);
-    //         setMessage('Error loading restaurants.');
-    //     }
-    // };
-
     function deleteRestaurant() {
         if (resID) {
           

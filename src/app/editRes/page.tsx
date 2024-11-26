@@ -1,73 +1,117 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
+'use client';
 
+import React, { useState } from "react";
 import axios from "axios";
-import React from "react";
 
+const EditRestaurant = () => {
+    const [restaurantID, setRestaurantID] = useState('');
+    const [resName, setResName] = useState('');
+    const [resAddress, setResAddress] = useState('');
+    const [resOpenTime, setResOpenTime] = useState(0);
+    const [resCloseTime, setResCloseTime] = useState(0);
+    const [resClosedDays, setResClosedDays] = useState<string[]>([]);  // For closed days
+    const [resNumTables, setResNumTables] = useState(0);
+    const [resSeatsPerTable, setResSeatsPerTable] = useState<number[]>([]);
+    const [message, setMessage] = useState('');
 
-export default function Home() {
-
-    const [redraw, forceRedraw] = React.useState(0);
-    const [resName, setResName] = React.useState('');
-    const [resAddress, setResAddress] = React.useState('');
-    const [resNumTables, setResNumTables] = React.useState(0);
-    const [resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
-    const [message, setMessage] = React.useState('');
-    const [resOpenTime, setResOpenTime] = React.useState(0);
-    const [resCloseTime, setResCloseTime] = React.useState(0);
-    const [resClosedDays, setResClosedDays] = React.useState<string[]>([]);
-
-
-
-
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1)
-    }
-
+    // Handle seat input for each table
     const handleAddSeats = (index: number, value: number) => {
         const updatedSeats = [...resSeatsPerTable];
         updatedSeats[index] = value;
         setResSeatsPerTable(updatedSeats);
     };
-
-
-    const editRes = async () => {
-        let payload = {
-            "name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable
+    const handleEditRestaurant = async () => {
+        // Ensure required fields are filled
+        if (!restaurantID || !resName || !resAddress || resOpenTime === 0 || resCloseTime === 0 || !resClosedDays.length || resSeatsPerTable.length !== resNumTables) {
+            setMessage('Please fill in all fields properly.');
+            return;
         }
+    
+        // Prepare data to send to backend
+        const updatedData = {
+            restaurantID,
+            name: resName,
+            address: resAddress,
+            openTime: resOpenTime,
+            closeTime: resCloseTime,
+            closedDays: resClosedDays,
+            tables: Array.from({ length: resNumTables }, (_, index) => ({
+                seats: resSeatsPerTable[index],
+            })),
+        };
+    
         try {
             const response = await axios.post(
-            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial',
-            payload,
+                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/InitialeditRes', 
+                updatedData,
                 {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    timeout: 5000,  // Timeout in milliseconds (5 seconds)
+                    timeout: 5000, // Timeout in milliseconds (5 seconds)
                 }
             );
     
-            if (response.status === 200) {
-                setMessage('Restaurant created successfully!');
-                console.log(response.data);  
+            console.log("Raw Response:", response);  // Log the entire response to inspect it
+    
+            // Ensure response has a valid 'data' field
+            if (!response || !response.data || Object.keys(response.data).length === 0) {
+                setMessage('Invalid or empty response received from server.');
+                console.error('Empty or invalid response:', response);
+                return;
+            }
+    
+            // Parse the response properly
+            let responseBody;
+            try {
+                responseBody = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                console.log("Parsed Response:", responseBody);
+            } catch (e) {
+                console.error('Error parsing response:', e);
+                setMessage('Error parsing response from server.');
+                return;
+            }
+    
+            // Handle success response
+            if (responseBody && responseBody.message) {
+                setMessage(`Restaurant updated successfully: ${responseBody.message}`);
+                console.log(`Success: ${responseBody.message}`);
             } else {
-                throw new Error('Failed to create restaurant');
+                setMessage('Unexpected response format.');
+                console.error('Unexpected Response Format:', responseBody);
             }
         } catch (error: unknown) {
+            // Enhanced error handling with Axios-specific and general error types
             if (axios.isAxiosError(error)) {
                 console.error('Axios error:', error.message);
+                setMessage(`Axios error: ${error.message}`);
             } else if (error instanceof Error) {
-                console.error('Error creating restaurant:', error.message);
+                console.error('Error editing restaurant:', error.message);
+                setMessage(`Error editing restaurant: ${error.message}`);
             } else {
                 console.error('Unexpected error:', error);
+                setMessage('Unexpected error occurred.');
             }
-            setMessage('Error creating restaurant');
         }
     };
+    
 
     return (
         <div className="container">
-            <h1 className="title">Create Restaurant</h1>
+            <h1 className="title">Edit Restaurant</h1>
+
+            {/* Restaurant ID */}
+            <label className="label">
+                Restaurant ID:
+                <input
+                    type="text"
+                    value={restaurantID}
+                    onChange={(e) => setRestaurantID(e.target.value)}
+                    className="input"
+                />
+            </label>
+
+            {/* Restaurant Name */}
             <label className="label">
                 Restaurant Name:
                 <input
@@ -77,6 +121,8 @@ export default function Home() {
                     className="input"
                 />
             </label>
+
+            {/* Restaurant Address */}
             <label className="label">
                 Restaurant Address:
                 <input
@@ -86,6 +132,8 @@ export default function Home() {
                     className="input"
                 />
             </label>
+
+            {/* Open Time */}
             <label className="label">
                 Open Time:
                 <input
@@ -95,6 +143,8 @@ export default function Home() {
                     className="input"
                 />
             </label>
+
+            {/* Close Time */}
             <label className="label">
                 Close Time:
                 <input
@@ -104,6 +154,8 @@ export default function Home() {
                     className="input"
                 />
             </label>
+
+            {/* Number of Tables */}
             <label className="label">
                 Number of Tables:
                 <input
@@ -114,6 +166,7 @@ export default function Home() {
                 />
             </label>
 
+            {/* Seats for Each Table */}
             {[...Array(resNumTables)].map((_, index) => (
                 <div key={index}>
                     <label className="label">
@@ -128,6 +181,7 @@ export default function Home() {
                 </div>
             ))}
 
+            {/* Closed Days */}
             <label className="label">
                 Closed Days (format: YYYY-MM-DD):
                 <input
@@ -138,13 +192,15 @@ export default function Home() {
                 />
             </label>
 
-            {/* Container for the buttons */}
             <div className="button-container">
-                <button onClick={editRes} className="button-editRes">
+                <button onClick={handleEditRestaurant} className="button-editRes">
                     Edit Restaurant
                 </button>
             </div>
-            {message && <p className="message">{message}</p>}
+
+            {message && <p className="message">{message}</p>} {/* This will display the message */}
         </div>
     );
-}
+};
+
+export default EditRestaurant;
