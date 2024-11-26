@@ -1,5 +1,6 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 
 export default function Home() {
     // initial instantiation for admin log in page
@@ -7,22 +8,50 @@ export default function Home() {
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [message, setMessage] = React.useState('')
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
     forceRedraw(redraw + 1)
   }
 
+  const adminLogIn = async () => {
+    const adminInfo = {
+      adminID: email,
+      password: password,
+    };
+
+    try {
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminLogIn',
+        adminInfo,
+        {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          timeout: 5000,  // Timeout in milliseconds (5 seconds)
+        }
+      );
+
+      console.log("Raw Response:", response);
+      
+      if (response.status === 200) {
+        console.log("response status:", response.status)
+        console.log("Admin successfully logged in")
+        //window.location.replace('/adminHomePage')
+        // andRefreshDisplay()
+      } else {
+        throw new Error('Failed to log in')
+      }
+    } catch(error) {
+      console.log('Error logging in:', error);
+      setMessage('Error logging in');
+    }
+  }
+
   const handleLogIn = (and) => {
     and.preventDefault()
-    // TO DO: admin log in lambda function
-    console.log('Admin Email:', email)
-    console.log('Admin Password:', password)
-    // if valid log in
-      window.location.replace("/adminHomePage")
-    // else
-      // alert("incorrect email or password")
-    andRefreshDisplay()
+    adminLogIn()
   }
 
   function createAccount() {
@@ -37,11 +66,11 @@ export default function Home() {
 
       <form className="handleLogIn" onSubmit={handleLogIn}>
         <label className="label" htmlFor="email">Email:</label>
-        <input type="text" id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
         <br></br>
         <br></br>
         <label className="label" htmlFor="password">Password:</label>
-        <input type="text" id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
         <button type="submit" className="adminLogIn">Log In</button>
       </form>
 
