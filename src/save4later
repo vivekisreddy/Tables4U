@@ -1,0 +1,16 @@
+<label className="label" htmlFor="month">Month:</label>
+        <input type="text" style={{ color: 'black' }} id="month" name="month" value={month} onChange={(and) => setMonth(and.target.value)}/>
+        <label className="label" htmlFor="day">Day:</label>
+        <input type="text" style={{ color: 'black' }} id="day" name="day" value={day} onChange={(and) => setDay(and.target.value)}/>
+        <label className="label" htmlFor="year">Year:</label>
+        <input type="text" style={{ color: 'black' }} id="year" name="year" value={year} onChange={(and) => setYear(and.target.value)}/>
+        <br></br>
+        <label className="dateFormat">{"Format: MM/DD/YYYY"}</label>
+        <br></br>
+        <br></br>
+        <label className="label" htmlFor="time">Start Time:</label>
+        <input type="text" style={{ color: 'black' }} id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
+
+        <form className="handleSearch" onSubmit={handleSearch}>
+        <button type="submit" className="search">Search</button>
+      </form>

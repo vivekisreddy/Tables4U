@@ -11,7 +11,7 @@ export default function Home() {
     const [message, setMessage] = React.useState('')
 
     const instance = axios.create({
-      baseURL: 'https://ufk3b674ga.execute-api.us-east-1.amazonaws.com/initial/'
+      baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
     
 
@@ -21,14 +21,18 @@ export default function Home() {
   }
 
   function adminLogIn() {
-    // potentially modify the model
+
+
     if (email && password) {
       
       // Access the REST-based API and in response (on a 200 or 400) process.
-      instance.post('/adminLogIn', {"adminID":email, "password":password})
+      instance.post('/jessAdminLog', {"adminID":email, "password":password})
       .then(function (response) {
+        console.log("raw response:", response)
         let status = response.data.statusCode
         let result = response.data.body
+
+        console.log("response status:", status)
 
         if (status == 200) {
           console.log("response status:", status)
