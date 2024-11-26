@@ -9,6 +9,10 @@ export default function Home() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const instance = axios.create({
+      baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
+    });
+
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
     forceRedraw(redraw + 1)
@@ -18,7 +22,7 @@ export default function Home() {
     if (email && password) {
       
       // Access the REST-based API and in response (on a 200 or 400) process.
-      instance.post('/jessAdminLog', {"adminID":email, "password":password})
+      instance.post('/adminCreateAccount', {"adminID":email, "password":password})
       .then(function (response) {
         console.log("raw response:", response)
         let status = response.data.statusCode
@@ -28,11 +32,11 @@ export default function Home() {
 
         if (status == 200) {
           console.log("response status:", status)
-          console.log("Admin successfully logged in")
-          window.location.replace('/adminHomePage')
+          console.log("Admin account successfully created")
+          window.location.replace('/adminLogIn')
           andRefreshDisplay()
         } else {
-          console.log("Error logging in:", result)
+          console.log("Error creating admin account:", result)
         }
       })
       .catch(function (error) {

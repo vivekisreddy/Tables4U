@@ -20,22 +20,26 @@ export default function AdminHomePage() {
     const [message, setMessage] = useState(''); // For success or error messages
     const [resID, setResID] = useState(''); // For success or error messages
 
+    const instance = axios.create({
+        baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
+      });
+
       // helper function that forces React app to redraw whenever this is called.
       function andRefreshDisplay() {
         forceRedraw(redraw + 1)
       }
 
-    // Function to list restaurants from the API
-    const listRestaurants = async () => {
-        try {
-            const response = await axios.get(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminList',
-                { headers: { 'Content-Type': 'application/json' } }
-            );
-
-            console.log("Raw Response:", response);  // Check the whole response
-
-            if (response.status === 200) {
+      function listRestaurants() {
+          // Access the REST-based API and in response (on a 200 or 400) process.
+          instance.get('/adminList')
+          .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
+    
+            console.log("response status:", status)
+    
+            if (status == 200) {
                 let restaurantData = response.data;
 
                 // Log the raw response body
@@ -50,45 +54,83 @@ export default function AdminHomePage() {
                 setRestaurantList(restaurantData);
                 setMessage('Restaurants loaded successfully!');
             } else {
-                throw new Error('Failed to load restaurants.');
+              console.log("Error listing restaurants:", result)
             }
-        } catch (error) {
-            console.error('Error listing restaurants:', error);
-            setMessage('Error loading restaurants.');
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
         }
-    };
 
-    const deleteRestaurant = async () => {
-        try {
-            const response = await axios.get(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/deleteRestaurant',
-                { headers: { 'Content-Type': 'application/json' } }
-            );
-  
-            console.log("Raw Response:", response);  // Check the whole response
-  
-            if (response.status === 200) {
-              console.log("response status:", response.status)
+    // // Function to list restaurants from the API
+    // const listRestaurants = async () => {
+    //     try {
+    //         const response = await axios.get(
+    //             'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminList',
+    //             { headers: { 'Content-Type': 'application/json' } }
+    //         );
+
+    //         console.log("Raw Response:", response);  // Check the whole response
+
+    //         if (response.status === 200) {
+    //             let restaurantData = response.data;
+
+    //             // Log the raw response body
+    //             console.log("Raw Data from Lambda:", restaurantData);
+
+    //             // If the data is a string, parse it
+    //             restaurantData = JSON.parse(restaurantData.body);
+
+    //             console.log("Parsed Restaurant Data:", restaurantData);
+
+    //             // Update the restaurant list state
+    //             setRestaurantList(restaurantData);
+    //             setMessage('Restaurants loaded successfully!');
+    //         } else {
+    //             throw new Error('Failed to load restaurants.');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error listing restaurants:', error);
+    //         setMessage('Error loading restaurants.');
+    //     }
+    // };
+
+    function deleteRestaurant() {
+        if (resID) {
+          
+          // Access the REST-based API and in response (on a 200 or 400) process.
+          instance.post('/deleteRestaurant', {"restaurantID":resID})
+          .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
+    
+            console.log("response status:", status)
+    
+            if (status == 200) {
+              console.log("response status:", status)
               console.log("Restaurant successfully deleted")
-              //andRefreshDisplay()
+              listRestaurants()
+              andRefreshDisplay()
             } else {
-              alert("Failed to delete restaurant")
+              console.log("Error deleting restaurant:", result)
             }
-          } catch(error: unknown) {
-            if (axios.isAxiosError(error)) {
-              console.log('Axios error:', error.message)
-            } else if (error instanceof Error) {
-              console.log('Error deleting restaurant:', error.message)
-            } else {
-              console.log('Unexpected error')
-            }
-          }
-        };
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+        }
+      }
   
       function adminAccount() {
         // displays account information
         // log out button
         andRefreshDisplay()
+      }
+
+      const handleDeleteRestaurant = (and) => {
+        and.preventDefault()
+        deleteRestaurant()
       }
 
     return (
@@ -137,11 +179,11 @@ export default function AdminHomePage() {
             
             <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
 
-<form className="handleDeleteRestaurant" onSubmit={deleteRestaurant}>
-  <label className="label" htmlFor="resID">Restaurant ID:</label>
-  <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
-  <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
-</form>
+            <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
+                <label className="label" htmlFor="resID">Restaurant ID:</label>
+                <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
+                <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
+            </form>
         </div>
     );
 }

@@ -309,8 +309,8 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 275px;
-  top: -10px;
+  left: 300px;
+  top: 0px;
 }
 
 .editRestaurantButton {
@@ -375,7 +375,7 @@ body {
   padding: 2px 6px 2px 6px;
   position: absolute;
   left: 25px;
-  top: 800px;
+  top: 775px;
 }
 
 .handleEditRestaurant {
@@ -427,7 +427,7 @@ body {
   border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 1325px;
-  top: 75px;
+  top: 100px;
 }
 
 .managerAccountButton {
