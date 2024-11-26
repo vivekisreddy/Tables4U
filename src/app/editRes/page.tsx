@@ -147,4 +147,8 @@ export default function Home() {
             {message && <p className="message">{message}</p>}
         </div>
     );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a9623a41ee134ca7fafa44721f1ca38361746974
