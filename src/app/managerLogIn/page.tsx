@@ -17,8 +17,8 @@ export default function Home() {
 
   async function managerLogIn() {
     let payload = {
-      "manager": manager,
-      "resID": resID
+      manager: manager,
+      resID: resID
     }
 
     try {
@@ -33,10 +33,12 @@ export default function Home() {
           }
       );
 
+      console.log("Raw Response:", response);
+
       if (response.status === 200) {
           setMessage('Manager successfully logged in!');
           console.log(response.data);
-          window.location.replace('/managerHomePage')  
+          //window.location.replace('/managerHomePage')  
       } else {
           throw new Error('Failed to log in');
       }

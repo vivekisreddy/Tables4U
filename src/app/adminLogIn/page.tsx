@@ -16,12 +16,9 @@ export default function Home() {
 
   const adminLogIn = async () => {
     const payload = {
-      "adminID": email,
-      "password": password,
+      adminID: email,
+      password: password,
     };
-
-    setEmail('');
-    setPassword('');
 
     try {
       const response = await axios.post(
@@ -34,10 +31,13 @@ export default function Home() {
           timeout: 5000,  // Timeout in milliseconds (5 seconds)
         }
       );
+
+      console.log("Raw Response:", response);
+      
       if (response.status === 200) {
         console.log("response status:", response.status)
         console.log("Admin successfully logged in")
-        //window.location.replace('/adminHomePage')
+        window.location.replace('/adminHomePage')
         // andRefreshDisplay()
       } else {
         alert("Failed to log in")
