@@ -53,7 +53,7 @@ export default function Home() {
                 const { message, restaurantID } = responseBody;
 
                 if (message && restaurantID) {
-                    setMessage(`${message} (ID: ${restaurantID})`);
+                    setMessage(`${message} (Restaurant ID: ${restaurantID})`);
                     setRestaurantID(restaurantID);  // Set the restaurantID from response
                     localStorage.setItem('restaurantID', restaurantID);  // Store in localStorage
                     console.log(`Success: ${message}, Restaurant ID: ${restaurantID}`);
@@ -69,37 +69,6 @@ export default function Home() {
             setMessage('Error creating restaurant.');
         }
     };
-    const handleActivateRestaurant = async () => {
-        if (!restaurantID) {
-            setMessage('Restaurant ID is missing!');
-            return;
-        }
-    
-        try {
-            const activationData = { restaurantID };  // Send restaurant ID to activate
-            const response = await axios.post(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',  // Adjust the URL if needed
-                activationData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-    
-            if (response.status === 200) {
-                setMessage(`Restaurant activated successfully!`);
-                console.log(response.data);
-            } else {
-                const errorMessage = response.data.error || 'Failed to activate restaurant';
-                setMessage(errorMessage);
-            }
-        } catch (error) {
-            console.error('Error activating restaurant:', error);
-            setMessage('Error activating restaurant');
-        }
-    };
-    
 
     return (
         <div className="container">
@@ -182,13 +151,6 @@ export default function Home() {
             <div className="button-container">
                 <button onClick={handleCreateRestaurant} className="button-createRes">
                     Create Restaurant
-                </button>
-                <button
-                    onClick={handleActivateRestaurant}
-                    className="button-activateRes"
-                    disabled={!restaurantID} // Disable if restaurantID is not set
-                >
-                    Activate Restaurant
                 </button>
             </div>
 
