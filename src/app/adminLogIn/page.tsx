@@ -20,30 +20,31 @@ export default function Home() {
       adminID: email,
       password: password,
     };
-
+  
     try {
       const response = await axios.post(
         'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminLogIn',
         adminInfo,
         {
           headers: {
-              'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
           },
           timeout: 5000,  // Timeout in milliseconds (5 seconds)
         }
       );
-
+  
       console.log("Raw Response:", response);
-      
-      if (response.status === 200) {
-        console.log("response status:", response.status)
-        console.log("Admin successfully logged in")
-        //window.location.replace('/adminHomePage')
+  
+      // Check if the status is 200 and the response body indicates success
+      if (response.status === 200 && response.data.success) {
+        console.log("response status:", response.status);
+        console.log("Admin successfully logged in");
+        // window.location.replace('/adminHomePage')
         // andRefreshDisplay()
       } else {
-        throw new Error('Failed to log in')
+        throw new Error('Login failed: ' + (response.data.message || 'Unknown error'));
       }
-    } catch(error) {
+    } catch (error) {
       console.log('Error logging in:', error);
       setMessage('Error logging in');
     }
