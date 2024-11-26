@@ -1,4 +1,3 @@
-
 import { Restaurant } from './restaurant';
 import {Reservation} from './restaurant';
 
@@ -18,8 +17,8 @@ export class Consumer{
         this.ifActive = ifActive;
     }
 
-    listActiveRestaurant() {
-        return this.ifActive.filter(restaurant => restaurant.isActive);
-    }
+    // listActiveRestaurant() {
+    //     return this.ifActive.filter(restaurant => restaurant.isActive);
+    // }
 
 }
