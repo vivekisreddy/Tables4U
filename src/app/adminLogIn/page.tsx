@@ -38,11 +38,13 @@ export default function Home() {
           window.location.replace('/adminHomePage')
           andRefreshDisplay()
         } else {
-          console.log("Error logging in:", result)
+          console.log("Error logging in:", result);
+          alert("Error logging in: " + result);
         }
       })
       .catch(function (error) {
-        console.log(error)
+        console.log(error);
+        alert("An unexpected error occured.");
       })
     }
   }

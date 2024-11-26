@@ -99,7 +99,7 @@ export default function AdminHomePage() {
         if (resID) {
           
           // Access the REST-based API and in response (on a 200 or 400) process.
-          instance.post('/deleteRestaurant', {"restaurantID":resID})
+          instance.post('/adminDeleteRes', {"restaurantID":resID})
           .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode

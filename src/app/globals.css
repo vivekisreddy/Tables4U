@@ -178,7 +178,7 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 1325px;
+  left: 25px;
   top: 25px;
 }
 
@@ -216,7 +216,7 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 1375px;
+  left: 25px;
   top: 25px;
 }
 
@@ -236,6 +236,20 @@ body {
   position: absolute;
   left: 25px;
   top: 775px;
+}
+
+.consumerListRestaurantsButton {
+  font-size: 0.8rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 210px;
+  top: 65px;
 }
 
 .createAdminLogIn {
@@ -309,8 +323,8 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 300px;
-  top: 0px;
+  left: 275px;
+  top: -10px;
 }
 
 .editRestaurantButton {
@@ -375,7 +389,7 @@ body {
   padding: 2px 6px 2px 6px;
   position: absolute;
   left: 25px;
-  top: 775px;
+  top: 825px;
 }
 
 .handleEditRestaurant {
@@ -417,7 +431,7 @@ body {
 }
 
 .listRestaurantsButton {
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #555;
   background-color: #EEEEEE;
   padding: 2px 6px 2px 6px;
@@ -427,7 +441,7 @@ body {
   border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 1325px;
-  top: 100px;
+  top: 63px;
 }
 
 .managerAccountButton {
@@ -483,7 +497,7 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 1375px;
+  left: 25px;
   top: 60px;
 }
 
@@ -509,7 +523,7 @@ body {
   color: #555;
   margin-bottom: 20px;
   position: absolute;
-  left: 25px;
+  left: 1146px;
   top: 60px;
 }
 
@@ -540,7 +554,7 @@ body {
   color: #3d3333;
   margin-bottom: 20px;
   position: absolute;
-  left: 25px;
+  left: 1146px;
   top: 25px;
 
 

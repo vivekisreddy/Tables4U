@@ -37,10 +37,12 @@ export default function Home() {
           andRefreshDisplay()
         } else {
           console.log("Error creating admin account:", result)
+          alert("Error creating admin account: " + result)
         }
       })
       .catch(function (error) {
         console.log(error)
+        alert("An unexpected error occured.");
       })
     }
   }
