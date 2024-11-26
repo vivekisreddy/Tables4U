@@ -68,17 +68,17 @@ export default function Home() {
 
       <form className="handleSearch" onSubmit={handleSearch}>
         <label className="label" htmlFor="month">Month:</label>
-        <input type="text" id="month" name="month" value={month} onChange={(and) => setMonth(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="month" name="month" value={month} onChange={(and) => setMonth(and.target.value)}/>
         <label className="label" htmlFor="day">Day:</label>
-        <input type="text" id="day" name="day" value={day} onChange={(and) => setDay(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="day" name="day" value={day} onChange={(and) => setDay(and.target.value)}/>
         <label className="label" htmlFor="year">Year:</label>
-        <input type="text" id="year" name="year" value={year} onChange={(and) => setYear(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="year" name="year" value={year} onChange={(and) => setYear(and.target.value)}/>
         <br></br>
         <label className="dateFormat">{"Format: MM/DD/YYYY"}</label>
         <br></br>
         <br></br>
         <label className="label" htmlFor="time">Start Time:</label>
-        <input type="text" id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
         <button type="submit" className="search">Search</button>
       </form>
 
@@ -86,7 +86,7 @@ export default function Home() {
 
       <form className="handleConfirm" onSubmit={handleConfirm}>
         <label className="label" htmlFor="code">Confirmation Code:</label>
-        <input type="text" id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
+        <input type="text" style={{ color: 'black' }} id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
         <button type="submit" className="enter">Enter</button>
       </form>
     </div>
