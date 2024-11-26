@@ -13,10 +13,6 @@ export default function Home() {
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
 
-    const instance = axios.create({
-      baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
-    });
-
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
     forceRedraw(redraw + 1)
