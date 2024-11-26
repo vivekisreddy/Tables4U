@@ -324,7 +324,7 @@ body {
   border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 1325px;
-  top: 125px;
+  top: 100px;
 }
 
 .enter {
@@ -441,6 +441,15 @@ body {
   border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 1325px;
+  top: 25px;
+}
+
+.manager-activate {
+  font-size: 0.9rem;
+  color: #3d3333;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
   top: 25px;
 }
 

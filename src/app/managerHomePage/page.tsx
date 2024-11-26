@@ -7,6 +7,7 @@ export default function ActivateRestaurantPage() {
   const [redraw, forceRedraw] = React.useState(0)
     const [restaurantID, setRestaurantID] = useState<string>('');
     const [message, setMessage] = useState<string>('');
+    const [resID, setResID] = useState(''); // For success or error messages
 
       // helper function that forces React app to redraw whenever this is called.
       function andRefreshDisplay() {
@@ -45,6 +46,33 @@ export default function ActivateRestaurantPage() {
         }
     };
 
+    const deleteRestaurant = async () => {
+        try {
+            const response = await axios.get(
+                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/managerDeleteRestaurant',
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+  
+            console.log("Raw Response:", response);  // Check the whole response
+  
+            if (response.status === 200) {
+              console.log("response status:", response.status)
+              console.log("Restaurant successfully deleted")
+              //andRefreshDisplay()
+            } else {
+              alert("Failed to delete restaurant")
+            }
+          } catch(error: unknown) {
+            if (axios.isAxiosError(error)) {
+              console.log('Axios error:', error.message)
+            } else if (error instanceof Error) {
+              console.log('Error deleting restaurant:', error.message)
+            } else {
+              console.log('Unexpected error')
+            }
+          }
+        };
+
     function managerAccount() {
       // displays account information
       // log out button
@@ -58,8 +86,8 @@ export default function ActivateRestaurantPage() {
     }
 
     return (
-        <div className="container">
-            <h1 className="title">Activate Restaurant</h1>
+        <div className="manager-activate">
+            <h1 className="title">Ready to Activate Your Restaurant?</h1>
 
             {/* Input for restaurantID */}
             <div className="input-container">
@@ -82,7 +110,13 @@ export default function ActivateRestaurantPage() {
             {message && <p className="message">{message}</p>} {/* Display the message */}
 
             <button className="editRestaurantButton" onClick={(e) => editRestaurant} >Edit Restaurant</button>
-<button className="managerAccountButton" onClick={(e) => managerAccount()} >Account Information</button>
+            <button className="managerAccountButton" onClick={(e) => managerAccount()} >Account Information</button>
+
+            <form className="handleDeleteRestaurant" onSubmit={deleteRestaurant}>
+                <label className="label" htmlFor="resID">Restaurant ID:</label>
+                <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
+                <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
+            </form>
         </div>
     );
 }
