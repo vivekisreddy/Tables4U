@@ -562,3 +562,92 @@ body {
   margin-top: 10px;
 }
 }
+
+/* Global Styles for Consumer Dashboard */
+.consumer-container {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 800px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+
+.message {
+  text-align: center;
+  font-size: 1rem;
+  color: #333;
+}
+
+.restaurant-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.restaurant-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.restaurant-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.restaurant-table td:first-child {
+  font-weight: bold;
+}
+
+.restaurant-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Consumer container */
+.consumer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Move the table down */
+.restaurant-table {
+  margin-top: 500px; /* Adjust this value to move the table further down */
+}
+
+/* Container for buttons to ensure absolute positioning works */
+.button-container {
+  position: relative; /* Make sure the container is positioned */
+  width: 100%; /* Ensure it takes up full width */
+}
+
+/* Container for buttons to ensure absolute positioning works */
+.button-container {
+  position: relative; /* Make sure the container is positioned */
+  width: 100%; /* Ensure it takes up full width */
+}
+
+/* Load Restaurants Button at top-right */
+.listRestaurantsButton {
+  position: absolute;
+
+  left: 500px; /* Adjust this value for the distance from the right */
+  background-color: #2196F3; /* Blue background */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hover effect for the button */
+.listRestaurantsButton:hover {
+  background-color: #0b7dda;
+}
+

@@ -15,7 +15,7 @@ interface Restaurant {
 export default function Home() {
     // State variables
     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
-    const [activeRestaurantList, setActiveRestaurantList] = useState<Restaurant[]>([]); // Store active restaurant list
+    const [showActiveOnly, setShowActiveOnly] = useState(false); 
     const [message, setMessage] = useState(''); 
 
     // Function to list all restaurants from the API
@@ -28,7 +28,6 @@ export default function Home() {
 
             if (response.status === 200) {
                 let restaurantData = response.data;
-
                 restaurantData = JSON.parse(restaurantData.body);
 
                 setRestaurantList(restaurantData);
@@ -42,62 +41,64 @@ export default function Home() {
         }
     };
 
-    const listActiveRestaurants = () => {
-        const activeRestaurants = restaurantList.filter(restaurant => restaurant.isActive === 0);
-        setActiveRestaurantList(activeRestaurants);
-        setMessage('Active restaurants loaded successfully!');
+    // Toggle between showing all or only active restaurants
+    const toggleActiveRestaurants = () => {
+        setShowActiveOnly(!showActiveOnly);
+        setMessage(
+            showActiveOnly ? 'Showing all restaurants.' : 'Showing only active restaurants.'
+        );
     };
 
+    // Filter restaurants dynamically based on active status
+    const displayedRestaurants = showActiveOnly
+        ? restaurantList.filter((restaurant) => restaurant.isActive === 1)
+        : restaurantList;
+
     return (
-        <div className="admin-container">
-            <h1 className="title">Admin Dashboard</h1>
+        <div className="consumer-container">
+            <h1 className="title">Consumer Dashboard</h1>
 
             <div className="button-container">
                 <button className="listRestaurantsButton" onClick={listRestaurants}>
-                    List All Restaurants
-                </button>
-                <button className="listActiveRestaurantsButton" onClick={listActiveRestaurants}>
                     List Active Restaurants
                 </button>
+                {restaurantList.length > 0 && (
+                    <button className="toggleRestaurantsButton" onClick={toggleActiveRestaurants}>
+                        {showActiveOnly ? 'Show All Restaurants' : 'Show Active Restaurants'}
+                    </button>
+                )}
             </div>
 
             {/* Display message */}
             {message && <p className="message">{message}</p>}
 
-            {/* Display all restaurants */}
-            {restaurantList.length > 0 && activeRestaurantList.length === 0 ? (
-                <div className="restaurant-list">
-                    {restaurantList.map((restaurant) => (
-                        <div key={restaurant.restaurantID} className="restaurant-item">
-                            <p><strong>ID:</strong> {restaurant.restaurantID}</p>
-                            <p><strong>Name:</strong> {restaurant.name}</p>
-                            <p><strong>Address:</strong> {restaurant.address}</p>
-                            <p><strong>Open Time:</strong> {restaurant.openTime}</p>
-                            <p><strong>Close Time:</strong> {restaurant.closeTime}</p>
-                            <p><strong>Status:</strong> {restaurant.isActive === 1 ? 'Inactive' : 'active'}</p>
-                            <hr />
-                        </div>
-                    ))}
-                </div>
-            ) : null}
+            {/* Display restaurants in tabular form */}
+            {restaurantList.length > 0 ? (
+                <table className="restaurant-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Open Time</th>
+                            <th>Close Time</th>
+                            {showActiveOnly && <th>Status</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+    {displayedRestaurants.map((restaurant, index) => (
+        <tr key={restaurant.restaurantID || index}> 
+            <td>{restaurant.name}</td>
+            <td>{restaurant.address}</td>
+            <td>{restaurant.openTime}</td>
+            <td>{restaurant.closeTime}</td>
+            {showActiveOnly && <td>Active</td>}
+        </tr>
+    ))}
+</tbody>
 
-            {/* Display active restaurants */}
-            {activeRestaurantList.length > 0 ? (
-                <div className="restaurant-list">
-                    {activeRestaurantList.map((restaurant) => (
-                        <div key={restaurant.restaurantID} className="restaurant-item">
-                            <p><strong>ID:</strong> {restaurant.restaurantID}</p>
-                            <p><strong>Name:</strong> {restaurant.name}</p>
-                            <p><strong>Address:</strong> {restaurant.address}</p>
-                            <p><strong>Open Time:</strong> {restaurant.openTime}</p>
-                            <p><strong>Close Time:</strong> {restaurant.closeTime}</p>
-                            <p><strong>Status:</strong> Active</p>
-                            <hr />
-                        </div>
-                    ))}
-                </div>
+                </table>
             ) : (
-                <p>No more active restaurants available.</p>
+                <p>No restaurants available.</p>
             )}
         </div>
     );
