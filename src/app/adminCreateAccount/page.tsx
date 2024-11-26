@@ -37,8 +37,8 @@ export default function Home() {
       if (response.status === 200) {
         console.log("response status:", response.status)
         console.log("Admin account successfully created")
-        window.location.replace('/adminLogIn')
-        andRefreshDisplay()
+        //window.location.replace('/adminLogIn')
+        //andRefreshDisplay()
       } else {
         alert("Failed to create account")
       }

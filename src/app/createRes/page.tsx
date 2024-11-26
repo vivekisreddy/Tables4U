@@ -51,6 +51,7 @@ export default function Home() {
             if (response.status === 200) {
                 const responseBody = JSON.parse(response.data.body);
                 const { message, restaurantID } = responseBody;
+                window.location.replace('/managerLogIn');
 
                 if (message && restaurantID) {
                     setMessage(`${message} (Restaurant ID: ${restaurantID})`);
@@ -59,7 +60,7 @@ export default function Home() {
                     console.log(`Success: ${message}, Restaurant ID: ${restaurantID}`);
                 } else {
                     setMessage('Unexpected response format.');
-                    console.error('Unexpected Response Format:', responseBody);
+                    //console.error('Unexpected Response Format:', responseBody);
                 }
             } else {
                 throw new Error('Failed to create restaurant.');

@@ -12,7 +12,7 @@ interface Restaurant {
     isActive: number;
 }
 
-export default function AdminHomePage() {
+export default function Home() {
     // State variables
     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
     const [activeRestaurantList, setActiveRestaurantList] = useState<Restaurant[]>([]); // Store active restaurant list

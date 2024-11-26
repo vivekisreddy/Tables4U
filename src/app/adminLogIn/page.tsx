@@ -36,13 +36,17 @@ export default function Home() {
       console.log("Raw Response:", response);
   
       // Check if the status is 200 and the response body indicates success
-      if (response.status === 200 && response.data.success) {
-        console.log("response status:", response.status);
+      if (response.data.statusCode === 200) {
+        //console.log("response status:", response.status);
         console.log("Admin successfully logged in");
         window.location.replace('/adminHomePage')
         andRefreshDisplay()
-      } else {
-        throw new Error('Login failed: ' + (response.data.message || 'Unknown error'));
+      }
+      if (response.data.statusCode < 200 || response.data.statusCode >= 300) {
+        throw new Error(`Login failed with status: ${response.status}`);
+      }
+       else {
+        throw new Error('Login failed: ' + (response.data.message));
       }
     } catch (error) {
       console.log('Error logging in:', error);
