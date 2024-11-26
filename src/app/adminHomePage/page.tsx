@@ -1,4 +1,4 @@
-'use client'; // Directive to clarify client-side. Place at top of ALL .tsx files
+'use client'; 
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -13,17 +13,17 @@ interface Restaurant {
 }
 
 export default function AdminHomePage() {
-  const [redraw, forceRedraw] = React.useState(0)
-
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-      forceRedraw(redraw + 1)
-    }
+    const [redraw, forceRedraw] = React.useState(0)
 
     // State variables
     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
     const [message, setMessage] = useState(''); // For success or error messages
-    const [resID, setResID] = useState('');
+    const [resID, setResID] = useState(''); // For success or error messages
+
+      // helper function that forces React app to redraw whenever this is called.
+      function andRefreshDisplay() {
+        forceRedraw(redraw + 1)
+      }
 
     // Function to list restaurants from the API
     const listRestaurants = async () => {
@@ -42,9 +42,7 @@ export default function AdminHomePage() {
                 console.log("Raw Data from Lambda:", restaurantData);
 
                 // If the data is a string, parse it
-                if (typeof restaurantData === 'string') {
-                    restaurantData = JSON.parse(restaurantData);
-                }
+                restaurantData = JSON.parse(restaurantData.body);
 
                 console.log("Parsed Restaurant Data:", restaurantData);
 
@@ -61,37 +59,37 @@ export default function AdminHomePage() {
     };
 
     const deleteRestaurant = async () => {
-      try {
-          const response = await axios.get(
-              'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/deleteRestaurant',
-              { headers: { 'Content-Type': 'application/json' } }
-          );
-
-          console.log("Raw Response:", response);  // Check the whole response
-
-          if (response.status === 200) {
-            console.log("response status:", response.status)
-            console.log("Restaurant successfully deleted")
-            //andRefreshDisplay()
-          } else {
-            alert("Failed to delete restaurant")
+        try {
+            const response = await axios.get(
+                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/deleteRestaurant',
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+  
+            console.log("Raw Response:", response);  // Check the whole response
+  
+            if (response.status === 200) {
+              console.log("response status:", response.status)
+              console.log("Restaurant successfully deleted")
+              //andRefreshDisplay()
+            } else {
+              alert("Failed to delete restaurant")
+            }
+          } catch(error: unknown) {
+            if (axios.isAxiosError(error)) {
+              console.log('Axios error:', error.message)
+            } else if (error instanceof Error) {
+              console.log('Error deleting restaurant:', error.message)
+            } else {
+              console.log('Unexpected error')
+            }
           }
-        } catch(error: unknown) {
-          if (axios.isAxiosError(error)) {
-            console.log('Axios error:', error.message)
-          } else if (error instanceof Error) {
-            console.log('Error deleting restaurant:', error.message)
-          } else {
-            console.log('Unexpected error')
-          }
-        }
-      };
-
-    function adminAccount() {
-      // displays account information
-      // log out button
-      andRefreshDisplay()
-    }
+        };
+  
+      function adminAccount() {
+        // displays account information
+        // log out button
+        andRefreshDisplay()
+      }
 
     return (
         <div className="admin-container">
@@ -138,11 +136,11 @@ export default function AdminHomePage() {
             )}
             <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
 
-            <form className="handleDeleteRestaurant" onSubmit={deleteRestaurant}>
-              <label className="label" htmlFor="resID">Restaurant ID:</label>
-              <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
-              <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
-            </form>
+<form className="handleDeleteRestaurant" onSubmit={deleteRestaurant}>
+  <label className="label" htmlFor="resID">Restaurant ID:</label>
+  <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
+  <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
+</form>
         </div>
     );
 }

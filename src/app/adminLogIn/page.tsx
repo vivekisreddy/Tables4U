@@ -39,8 +39,8 @@ export default function Home() {
       if (response.status === 200 && response.data.success) {
         console.log("response status:", response.status);
         console.log("Admin successfully logged in");
-        // window.location.replace('/adminHomePage')
-        // andRefreshDisplay()
+        window.location.replace('/adminHomePage')
+        andRefreshDisplay()
       } else {
         throw new Error('Login failed: ' + (response.data.message || 'Unknown error'));
       }
