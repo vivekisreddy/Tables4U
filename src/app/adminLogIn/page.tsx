@@ -10,13 +10,45 @@ export default function Home() {
     const [password, setPassword] = React.useState('')
     const [message, setMessage] = React.useState('')
 
+    const instance = axios.create({
+      baseURL: 'https://ufk3b674ga.execute-api.us-east-1.amazonaws.com/initial/'
+    });
+    
+
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
     forceRedraw(redraw + 1)
   }
 
+  function adminLogIn() {
+    // potentially modify the model
+    if (email && password) {
+      
+      // Access the REST-based API and in response (on a 200 or 400) process.
+      instance.post('/adminLogIn', {"adminID":email, "password":password})
+      .then(function (response) {
+        let status = response.data.statusCode
+        let result = response.data.body
+
+        if (status == 200) {
+          console.log("response status:", status)
+          console.log("Admin successfully logged in")
+          //window.location.replace('/adminHomePage')
+          //andRefreshDisplay()
+
+        } else {
+          console.log("Error logging in:", result)
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    }
+  }
+
+/*
   const adminLogIn = async () => {
-    const adminInfo = {
+    const payload = {
       adminID: email,
       password: password,
     };
@@ -24,7 +56,7 @@ export default function Home() {
     try {
       const response = await axios.post(
         'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminLogIn',
-        adminInfo,
+        payload,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -35,24 +67,25 @@ export default function Home() {
   
       console.log("Raw Response:", response);
   
-      // Check if the status is 200 and the response body indicates success
-      if (response.data.statusCode === 200) {
-        //console.log("response status:", response.status);
-        console.log("Admin successfully logged in");
-        window.location.replace('/adminHomePage')
-        andRefreshDisplay()
+      if (response.status === 200) {
+        console.log("response status:", response.status)
+        console.log("Admin successfully logged in")
+        //window.location.replace('/adminHomePage')
+        //andRefreshDisplay()
+      } else {
+        alert("Failed to log in")
       }
-      if (response.data.statusCode < 200 || response.data.statusCode >= 300) {
-        throw new Error(`Login failed with status: ${response.status}`);
+    } catch(error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log('Axios error:', error.message)
+      } else if (error instanceof Error) {
+        console.log('Error logging in:', error.message)
+      } else {
+        console.log('Unexpected error')
       }
-       else {
-        throw new Error('Login failed: ' + (response.data.message));
-      }
-    } catch (error) {
-      console.log('Error logging in:', error);
-      setMessage('Error logging in');
     }
   }
+    */
 
   const handleLogIn = (and) => {
     and.preventDefault()

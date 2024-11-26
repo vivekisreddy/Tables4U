@@ -20,9 +20,6 @@ export default function Home() {
       "password": password,
     };
 
-    setEmail('');
-    setPassword('');
-
     try {
       const response = await axios.post(
         'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminCreateAccount',

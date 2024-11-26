@@ -51,13 +51,17 @@ export default function Home() {
             if (response.status === 200) {
                 const responseBody = JSON.parse(response.data.body);
                 const { message, restaurantID } = responseBody;
-                window.location.replace('/managerLogIn');
+                // window.location.replace('/managerLogIn');
 
                 if (message && restaurantID) {
                     setMessage(`${message} (Restaurant ID: ${restaurantID})`);
                     setRestaurantID(restaurantID);  // Set the restaurantID from response
                     localStorage.setItem('restaurantID', restaurantID);  // Store in localStorage
                     console.log(`Success: ${message}, Restaurant ID: ${restaurantID}`);
+                    <div>
+                    <label className="account">{"Log back in here:"}</label>
+                    <button className="managerBackToLogIn" onClick={(e) => window.location.replace('/managerLogIn')}>Go To Log In</button>
+                    </div>
                 } else {
                     setMessage('Unexpected response format.');
                     //console.error('Unexpected Response Format:', responseBody);
