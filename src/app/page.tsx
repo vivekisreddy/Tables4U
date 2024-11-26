@@ -105,13 +105,13 @@ export default function ActivateRestaurantPage() {
 
     // Function to activate the restaurant
     const handleActivateRestaurant = async () => {
-        if (!restaurantID) {
-            setMessage('Please provide a restaurant ID!');
-            return;
-        }
+        // if (!restaurantID) {
+        //     setMessage('Please provide a restaurant ID!');
+        //     return;
+        // }
 
         try {
-            const activationData = { restaurantID };  // Send restaurant ID to activate
+            const activationData = { restaurantID };  
             const response = await axios.post(
                 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',  // Adjust the URL if needed
                 activationData,
