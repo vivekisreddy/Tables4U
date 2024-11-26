@@ -21,8 +21,6 @@ export default function Home() {
   }
 
   function adminLogIn() {
-
-
     if (email && password) {
       
       // Access the REST-based API and in response (on a 200 or 400) process.
@@ -37,9 +35,8 @@ export default function Home() {
         if (status == 200) {
           console.log("response status:", status)
           console.log("Admin successfully logged in")
-          //window.location.replace('/adminHomePage')
-          //andRefreshDisplay()
-
+          window.location.replace('/adminHomePage')
+          andRefreshDisplay()
         } else {
           console.log("Error logging in:", result)
         }
@@ -49,47 +46,6 @@ export default function Home() {
       })
     }
   }
-
-/*
-  const adminLogIn = async () => {
-    const payload = {
-      adminID: email,
-      password: password,
-    };
-  
-    try {
-      const response = await axios.post(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminLogIn',
-        payload,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          timeout: 5000,  // Timeout in milliseconds (5 seconds)
-        }
-      );
-  
-      console.log("Raw Response:", response);
-  
-      if (response.status === 200) {
-        console.log("response status:", response.status)
-        console.log("Admin successfully logged in")
-        //window.location.replace('/adminHomePage')
-        //andRefreshDisplay()
-      } else {
-        alert("Failed to log in")
-      }
-    } catch(error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.log('Axios error:', error.message)
-      } else if (error instanceof Error) {
-        console.log('Error logging in:', error.message)
-      } else {
-        console.log('Unexpected error')
-      }
-    }
-  }
-    */
 
   const handleLogIn = (and) => {
     and.preventDefault()

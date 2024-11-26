@@ -14,39 +14,30 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
-  const adminCreateAccount = async () => {
-    const payload = {
-      "adminID": email,
-      "password": password,
-    };
+  function adminCreateAccount() {
+    if (email && password) {
+      
+      // Access the REST-based API and in response (on a 200 or 400) process.
+      instance.post('/jessAdminLog', {"adminID":email, "password":password})
+      .then(function (response) {
+        console.log("raw response:", response)
+        let status = response.data.statusCode
+        let result = response.data.body
 
-    try {
-      const response = await axios.post(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminCreateAccount',
-        payload,
-        {
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          timeout: 5000,  // Timeout in milliseconds (5 seconds)
+        console.log("response status:", status)
+
+        if (status == 200) {
+          console.log("response status:", status)
+          console.log("Admin successfully logged in")
+          window.location.replace('/adminHomePage')
+          andRefreshDisplay()
+        } else {
+          console.log("Error logging in:", result)
         }
-      );
-      if (response.status === 200) {
-        console.log("response status:", response.status)
-        console.log("Admin account successfully created")
-        //window.location.replace('/adminLogIn')
-        //andRefreshDisplay()
-      } else {
-        alert("Failed to create account")
-      }
-    } catch(error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.log('Axios error:', error.message)
-      } else if (error instanceof Error) {
-        console.log('Error creating account:', error.message)
-      } else {
-        console.log('Unexpected error')
-      }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     }
   }
 
