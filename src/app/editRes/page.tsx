@@ -33,11 +33,12 @@ export default function Home() {
 
     const editRes = async () => {
         let payload = {
-            "name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable
+            "name": resName, "address": resAddress, "openTime":resOpenTime,
+            "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable,
         }
         try {
             const response = await axios.post(
-            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial',
+            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/editRes',
             payload,
                 {
                     headers: {
@@ -48,20 +49,14 @@ export default function Home() {
             );
     
             if (response.status === 200) {
-                setMessage('Restaurant created successfully!');
+                setMessage('Restaurant edited successfully!');
                 console.log(response.data);  
             } else {
                 throw new Error('Failed to create restaurant');
             }
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                console.error('Axios error:', error.message);
-            } else if (error instanceof Error) {
-                console.error('Error creating restaurant:', error.message);
-            } else {
-                console.error('Unexpected error:', error);
-            }
-            setMessage('Error creating restaurant');
+        } catch (error) {
+            console.error('Error editing:', error);
+            setMessage('Error editing restaurant.');
         }
     };
 

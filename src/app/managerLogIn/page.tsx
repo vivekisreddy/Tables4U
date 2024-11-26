@@ -16,14 +16,10 @@ export default function Home() {
     }
 
   const managerLogIn =async () => {
-    const restaurantInfo = {
-      resName: name,
-      resID: ID,
-    };
     try {
       const response = await axios.post(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/managerLogIn',{
-          resName: name,
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/managerLogIn',
+        { resName: name,
           resID: ID,
         }, {
               headers: {

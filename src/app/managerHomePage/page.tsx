@@ -57,9 +57,9 @@ export default function Home() {
     andRefreshDisplay();
   }
 
-  const editRestaurant = (and) => {
-    and.preventDefault()
+  function editRestaurant() {
     window.location.replace('/editRes')
+    andRefreshDisplay()
   }
 
   // below is where the GUI for the admin home page is drawn
@@ -73,7 +73,7 @@ export default function Home() {
         <button type="submit" className="activateRestaurantButton">Activate Restaurant</button>
       </form>
 
-      <button className="editRestaurantButton" onClick={(e) => editRestaurant(e)} >Edit Restaurant</button>
+      <button className="editRestaurantButton" onClick={() => editRestaurant()} >Edit Restaurant</button>
     </div>
   )
 }
