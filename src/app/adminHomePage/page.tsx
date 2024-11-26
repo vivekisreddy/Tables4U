@@ -1,31 +1,100 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
-import React, {useState} from 'react'
+'use client'; // Directive to clarify client-side. Place at top of ALL .tsx files
+import React, { useState } from 'react';
+import axios from 'axios';
 
-export default function Home() {
-    // initial instantiation for admin home page
-    const [redraw, forceRedraw] = React.useState(0)
+// Define the type for Restaurant
+interface Restaurant {
+    restaurantID: string;
+    name: string;
+    address: string;
+    openTime: number;
+    closeTime: number;
+    isActive: number;
+}
 
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-    forceRedraw(redraw + 1)
-  }
+export default function AdminHomePage() {
+    // State variables
+    const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
+    const [message, setMessage] = useState(''); // For success or error messages
 
-  function adminAccount() {
-    // displays account information
-    // log out button
-    andRefreshDisplay()
-  }
+    // Function to list restaurants from the API
+    const listRestaurants = async () => {
+        try {
+            const response = await axios.get(
+                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/adminList',
+                { headers: { 'Content-Type': 'application/json' } }
+            );
 
-  function listRestaurants() {
-    // all restaurants in the database appear on the screen
-    andRefreshDisplay()
-  }
+            console.log("Raw Response:", response);  // Check the whole response
 
-  // below is where the GUI for the admin home page is drawn
-  return (
-    <div>
-      <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
-      <button className="listRestaurantsButton" onClick={(e) => listRestaurants()} >List Restaurants</button>
-    </div>
-  )
+            if (response.status === 200) {
+                let restaurantData = response.data;
+
+                // Log the raw response body
+                console.log("Raw Data from Lambda:", restaurantData);
+
+                // If the data is a string, parse it
+                if (typeof restaurantData === 'string') {
+                    restaurantData = JSON.parse(restaurantData);
+                }
+
+                console.log("Parsed Restaurant Data:", restaurantData);
+
+                // Update the restaurant list state
+                setRestaurantList(restaurantData);
+                setMessage('Restaurants loaded successfully!');
+            } else {
+                throw new Error('Failed to load restaurants.');
+            }
+        } catch (error) {
+            console.error('Error listing restaurants:', error);
+            setMessage('Error loading restaurants.');
+        }
+    };
+
+    return (
+        <div className="admin-container">
+            <h1 className="title">Admin Dashboard</h1>
+
+            <div className="button-container">
+                <button className="listRestaurantsButton" onClick={listRestaurants}>
+                    List Restaurants
+                </button>
+            </div>
+
+            {/* Display message */}
+            {message && <p className="message">{message}</p>}
+
+            {/* Display each restaurant */}
+            {restaurantList.length > 0 ? (
+                <div className="restaurant-list">
+                    {restaurantList.map((restaurant) => (
+                        <div key={restaurant.restaurantID} className="restaurant-item">
+                            <p>
+                                <strong>ID:</strong> {restaurant.restaurantID}
+                            </p>
+                            <p>
+                                <strong>Name:</strong> {restaurant.name}
+                            </p>
+                            <p>
+                                <strong>Address:</strong> {restaurant.address}
+                            </p>
+                            <p>
+                                <strong>Open Time:</strong> {restaurant.openTime}
+                            </p>
+                            <p>
+                                <strong>Close Time:</strong> {restaurant.closeTime}
+                            </p>
+                            <p>
+                                <strong>Status:</strong> {restaurant.isActive === 1 ? 'Active' : 'Inactive'}
+                            </p>
+                            <hr />
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>No restaurants available.</p>
+            )}
+        </div>
+    );
 }
