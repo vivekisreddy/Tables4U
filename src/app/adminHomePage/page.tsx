@@ -98,7 +98,7 @@ export default function AdminHomePage() {
         andRefreshDisplay()
       }
 
-      const handleDeleteRestaurant = (and) => {
+      const handleDeleteRestaurant = (and:any) => {
         and.preventDefault()
         deleteRestaurant()
       }

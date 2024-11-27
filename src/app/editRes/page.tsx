@@ -65,7 +65,7 @@ export default function Home() {
         })
     }
 
-    const handleEditRes = (and) => {
+    const handleEditRes = (and:any) => {
         and.preventDefault()
         editRes()
       }

@@ -47,7 +47,7 @@ export default function Home() {
     }
   }
 
-  const handleCreate = (and) => {
+  const handleCreate = (and:any) => {
     and.preventDefault()
     if (email == '') {
       alert("Please enter an email address")

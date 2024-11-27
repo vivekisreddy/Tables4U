@@ -238,7 +238,7 @@ const displayedRestaurants = showActiveOnly
     ? restaurantList.filter((restaurant) => restaurant.isActive === 1)
     : restaurantList;
 
-  const handleConfirm = (and) => {
+  const handleConfirm = (and:any) => {
     and.preventDefault();
     console.log("Confirmation Code:", code)
     confirmRes(code)

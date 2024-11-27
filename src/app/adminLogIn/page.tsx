@@ -49,7 +49,7 @@ export default function Home() {
     }
   }
 
-  const handleLogIn = (and) => {
+  const handleLogIn = (and:any) => {
     and.preventDefault()
     adminLogIn()
   }

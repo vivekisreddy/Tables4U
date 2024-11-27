@@ -89,7 +89,7 @@ export default function ActivateRestaurantPage() {
       andRefreshDisplay()
     }
 
-    const handleDeleteRestaurant = (and) => {
+    const handleDeleteRestaurant = (and:any) => {
       and.preventDefault()
       if (resID == '') {
         alert("Please input the restaurant ID")
