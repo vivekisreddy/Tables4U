@@ -1,142 +1,108 @@
+'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
+import React, {useState} from 'react'
+import axios from 'axios';
 
-'use client'; // Add this at the top of your component file
+export default function Home() {
+    // initial instantiation for admin home page
+    const [redraw, forceRedraw] = React.useState(0)
+    const [resName, setResName] = useState('');
+    const [resAddress, setResAddress] = useState('');
+    const [resNumTables, setResNumTables] = useState(0);
+    const [resSeatsPerTable, setResSeatsPerTable] = useState<number[]>([]);
+    const [resOpenTime, setResOpenTime] = useState(0);
+    const [resCloseTime, setResCloseTime] = useState(0);
+    const [resClosedDays, setResClosedDays] = useState<string[]>([]);
+    const [resID, setRestaurantID] = useState('');  // Store the restaurantID
+    const [message, setMessage] = useState('');
+    const [restaurant, setRestaurant] = useState([]); // State to store the array
 
-import React, { useState } from "react";
-import axios from "axios";
 
-export default function ActivateRestaurantPage() {
-  const [redraw, forceRedraw] = React.useState(0)
-    const [restaurantID, setRestaurantID] = useState<string>('');
-    const [message, setMessage] = useState<string>('');
-    const [resID, setResID] = useState(''); 
-    const [resName, setResName] = useState(''); 
+    // helper function that forces React app to redraw whenever this is called.
+    function andRefreshDisplay() {
+    forceRedraw(redraw + 1)
+    }
 
+    let restaurantInfo: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined = [];
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
 
-      // helper function that forces React app to redraw whenever this is called.
-      function andRefreshDisplay() {
-        forceRedraw(redraw + 1)
-      }
+    function viewDetails() {
+      instance.post('/viewResDetails', {"name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable,})
+      .then(function (response) {
+        console.log("raw response:", response)
+        let status = response.data.statusCode
+        let result = response.data
+        setRestaurant(response.data); // Set the array directly in state
+      })
+    }
 
-    // Function to activate the restaurant
-    const handleActivateRestaurant = async () => {
-        // if (!restaurantID) {
-        //     setMessage('Please provide a restaurant ID!');
-        //     return;
-        // }
+  const handleActivateRestaurant = async () => {
+    if (!resID) {
+        setMessage('Restaurant ID is missing!');
+        return;
+    }
 
-        try {
-            const activationData = { restaurantID };  
-            const response = await axios.post(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',  // Adjust the URL if needed
-                activationData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-
-            if (response.status === 200) {
-                setMessage(`Restaurant activated successfully!`);
-                console.log(response.data);
-            } else {
-                const errorMessage = response.data.error || 'Failed to activate restaurant';
-                setMessage(errorMessage);
+    try {
+        const activationData = { resID };  // Send restaurant ID to activate
+        const response = await axios.post(
+            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/activateRes',  // Adjust the URL if needed
+            activationData,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             }
-        } catch (error) {
-            console.error('Error activating restaurant:', error);
-            setMessage('Error activating restaurant');
+        );
+
+        if (response.status === 200) {
+            setMessage(`Restaurant activated successfully!`);
+            console.log(response.data);
+        } else {
+            const errorMessage = response.data.error || 'Failed to activate restaurant';
+            setMessage(errorMessage);
         }
-    };
-
-    function deleteRestaurant() {
-      if (resID && resName) {
-        
-        // Access the REST-based API and in response (on a 200 or 400) process.
-        instance.post('/managerDeleteRes', {"restaurantID":resID, "name":resName})
-        .then(function (response) {
-          console.log("raw response:", response)
-          let status = response.data.statusCode
-          let result = response.data.body
-  
-          console.log("response status:", status)
-  
-          if (status == 200) {
-            console.log("response status:", status)
-            console.log("Restaurant successfully deleted")
-            window.location.replace('/managerLogIn')
-            andRefreshDisplay()
-          } else {
-            console.log("Error deleting restaurant:", result)
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-      }
+    } catch (error) {
+        console.error('Error activating restaurant:', error);
+        setMessage('Error activating restaurant');
     }
+};
 
-    function managerAccount() {
-      // displays account information
-      // log out button
-      andRefreshDisplay()
-    }
-  
-  const editRestaurant = (and) => {
-      and.preventDefault()
-      window.location.replace('/editRes')
-      andRefreshDisplay()
-    }
+  function managerAccount() {
+    viewDetails()
+    // log out button
+    andRefreshDisplay()
+  }
 
-    const handleDeleteRestaurant = (and) => {
-      and.preventDefault()
-      if (resID == '') {
-        alert("Please input the restaurant ID")
-      }
-      if (resName == '') {
-        alert("Please input the restaurant name")
-      }
-      deleteRestaurant()
-    }
+  const activateRestaurant = (and) => {
+    and.preventDefault();
+    handleActivateRestaurant();
+    andRefreshDisplay();
+  }
 
-    return (
-        <div className="manager-activate">
-            <h1 className="title">Ready to Activate Your Restaurant?</h1>
+  function editRestaurant() {
+    window.location.replace('/editRes')
+    andRefreshDisplay()
+  }
 
-            {/* Input for restaurantID */}
-            <div className="input-container">
-                <label htmlFor="restaurantID">Enter Restaurant ID:</label>
-                <input
-                    type="text"
-                    id="restaurantID"
-                    value={restaurantID}
-                    onChange={(e) => setRestaurantID(e.target.value)}
-                    placeholder="Enter Restaurant ID"
-                />
-            </div>
+  // below is where the GUI for the admin home page is drawn
+  return (
+    <div>
+      <button className="managerAccountButton" onClick={(e) => managerAccount()} >Account Information</button>
+      <div className = "container">
+        <h1>{restaurant[0]}</h1> {/* Restaurant Name */}
+        <p>Address: {restaurant[1]}</p>
+        <p>Open Time: {restaurant[2]}</p>
+        <p>Close Time: {restaurant[3]}</p>
+        <p>Status: {restaurant[5] ? "Active" : "Inactive"}</p>
+      </div>
+      <form className="handleActivateRestaurant" onSubmit={activateRestaurant}>
+        <label className="label" htmlFor="resID">Restaurant ID:</label>
+        <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setRestaurantID(and.target.value)}/>
+        <button type="submit" className="activateRestaurantButton">Activate Restaurant</button>
+      </form>
 
-            <div className="button-container">
-                <button onClick={handleActivateRestaurant} className="button-activateRes">
-                    Activate Restaurant
-                </button>
-            </div>
-
-            {message && <p className="message">{message}</p>} {/* Display the message */}
-
-            <button className="editRestaurantButton" onClick={(e) => editRestaurant} >Edit Restaurant</button>
-            <button className="managerAccountButton" onClick={(e) => managerAccount()} >Account Information</button>
-
-            <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
-                <label className="label" htmlFor="resName">Restaurant Name:</label>
-                <input type="text" style={{ color: 'black' }} id="resName" name="resName" value={resName} onChange={(and) => setResName(and.target.value)}/>
-                <br></br>
-                <label className="label" htmlFor="resID">Restaurant ID:</label>
-                <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
-                <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
-            </form>
-        </div>
-    );
+      <button className="editRestaurantButton" onClick={() => editRestaurant()} >Edit Restaurant</button>
+    </div>
+  )
 }
