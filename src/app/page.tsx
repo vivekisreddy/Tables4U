@@ -1,103 +1,95 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import axios from 'axios';
-
-// Define the type for Restaurant
-interface Restaurant {
-    name: string;
-    address: string;
-}
+import React, {useState} from 'react';
 
 export default function Home() {
-    // State variables
-    const [activeRestaurants, setActiveRestaurants] = useState<Restaurant[]>([]); // Stores the list of active restaurants
-    const [message, setMessage] = useState<string>(''); // For success or error messages
+  // initial instantiation of landing home page
+  const [redraw, forceRedraw] = React.useState(0)
 
-    // Function to fetch active restaurants from the API
-    const listActiveRestaurants = async () => {
-        try {
-            const response = await axios.get(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
-                { headers: { 'Content-Type': 'application/json' } }
-            );
+  const [month, setMonth] = useState('')
+  const [day, setDay] = useState('')
+  const [year, setYear] = useState('')
+  const [time, setTime] = useState('')
+  const [code, setCode] = useState('')
+  
+  // helper function that forces React app to redraw whenever this is called.
+  function andRefreshDisplay() {
+    forceRedraw(redraw + 1)
+  }
 
-            console.log("Raw Response:", response);
+  function confirmRes(code:String) {
+    let payload = {
+      "confirmationCode":code,
+    }
+    // TO DO: confirmRes lambda function
+    fetch("url", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+  }
 
-            if (response.status === 200) {
-                const restaurantData = typeof response.data === 'string'
-                    ? JSON.parse(response.data)
-                    : response.data;
+  const handleSearch = (and) => {
+    and.preventDefault();
+    let currentDate = new Date()
+    console.log('Current Date:', currentDate)
+    // TO DO: if date is in the past
+    console.log('Date:', month)
+    console.log('Start Time:', time)
+    // bring to consumer home page with this date and time
+    andRefreshDisplay()
+  }
 
-                console.log("Parsed Active Restaurants:", restaurantData);
+  const handleConfirm = (and) => {
+    and.preventDefault();
+    console.log("Confirmation Code:", code)
+    confirmRes(code)
+    andRefreshDisplay()
+  }
 
-                // Update the state with the fetched restaurant list
-                setActiveRestaurants(restaurantData);
-                setMessage('Active restaurants loaded successfully!');
-            } else {
-                throw new Error('Failed to load active restaurants.');
-            }
-        } catch (error) {
-            console.error('Error fetching active restaurants:', error);
-            setMessage('Error loading active restaurants.');
-            setActiveRestaurants([]); // Clear the list in case of error
-        }
-    };
+  // brings admin to the admin log in page
+  function adminLogIn() {
+    window.location.replace("/adminLogIn")
+    andRefreshDisplay()
+  }
 
-    // Placeholder function to redirect to admin login
-    const adminLogIn = () => {
-        window.location.replace('/adminLogIn');
-    };
+  // brings manager to the manager log in page
+  function managerLogIn() {
+    window.location.replace("/managerLogIn")
+    andRefreshDisplay()
+  }
 
-    // Placeholder function to redirect to manager login
-    const managerLogIn = () => {
-        window.location.replace('/managerLogIn');
-    };
+  // below is where the GUI for the landing home page is drawn
+  return (
+    <div>
+      <button className="adminLogInButton" onClick={(e) => adminLogIn()} >Admin Log In</button>
+      <button className="managerLogInButton" onClick={(e) => managerLogIn()} >Manager Log In</button>
 
-    return (
-        <div className="consumer-home-container">
-            <h1 className="title">Welcome to Tables4U!</h1>
+      <label className="welcomeMessage">{"Welcome to Tables4U!"}</label>
+      <label className="reservationMessage">{"Make a reservation below:"}</label>
 
-            {/* Admin and Manager Login */}
-            <div className="login-container">
-                <button className="adminLogInButton" onClick={adminLogIn}>
-                    Admin Log In
-                </button>
-                <button className="managerLogInButton" onClick={managerLogIn}>
-                    Manager Log In
-                </button>
-            </div>
+      <form className="handleSearch" onSubmit={handleSearch}>
+        <label className="label" htmlFor="month">Month:</label>
+        <input type="text" id="month" name="month" value={month} onChange={(and) => setMonth(and.target.value)}/>
+        <label className="label" htmlFor="day">Day:</label>
+        <input type="text" id="day" name="day" value={day} onChange={(and) => setDay(and.target.value)}/>
+        <label className="label" htmlFor="year">Year:</label>
+        <input type="text" id="year" name="year" value={year} onChange={(and) => setYear(and.target.value)}/>
+        <br></br>
+        <label className="dateFormat">{"Format: MM/DD/YYYY"}</label>
+        <br></br>
+        <br></br>
+        <label className="label" htmlFor="time">Start Time:</label>
+        <input type="text" id="time" name="time" value={time} onChange={(and) => setTime(and.target.value)}/>
+        <button type="submit" className="search">Search</button>
+      </form>
 
-            {/* Search and Confirm Reservations */}
-            <div className="action-container">
-                <button className="list-active-restaurants-button" onClick={listActiveRestaurants}>
-                    List All Active Restaurants
-                </button>
-            </div>
+      <label className="confirmMessage">{"Already have a reservation? Find details here!"}</label>
 
-            {/* Display success or error message */}
-            {message && <p className="message">{message}</p>}
-
-            {/* Display the list of active restaurants */}
-            {activeRestaurants.length > 0 ? (
-                <div className="restaurant-list">
-                    {activeRestaurants.map((restaurant, index) => (
-                        <div key={index} className="restaurant-item">
-                            <p>
-                                <strong>Name:</strong> {restaurant.name}
-                            </p>
-                            <p>
-                                <strong>Address:</strong> {restaurant.address}
-                            </p>
-                            <hr />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                message === 'Active restaurants loaded successfully!' && (
-                    <p>No active restaurants available.</p>
-                )
-            )}
-        </div>
-    );
+      <form className="handleConfirm" onSubmit={handleConfirm}>
+        <label className="label" htmlFor="code">Confirmation Code:</label>
+        <input type="text" id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
+        <button type="submit" className="enter">Enter</button>
+      </form>
+    </div>
+  )
 }
