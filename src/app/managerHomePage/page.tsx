@@ -1,3 +1,4 @@
+
 'use client'; // Add this at the top of your component file
 
 import React, { useState } from "react";
@@ -55,7 +56,7 @@ export default function ActivateRestaurantPage() {
       if (resID && resName) {
         
         // Access the REST-based API and in response (on a 200 or 400) process.
-        instance.post('/managerDeleteRestaurant', {"restaurantID":resID, "name":resName})
+        instance.post('/managerDeleteRes', {"restaurantID":resID, "name":resName})
         .then(function (response) {
           console.log("raw response:", response)
           let status = response.data.statusCode
@@ -131,6 +132,7 @@ export default function ActivateRestaurantPage() {
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
                 <label className="label" htmlFor="resName">Restaurant Name:</label>
                 <input type="text" style={{ color: 'black' }} id="resName" name="resName" value={resName} onChange={(and) => setResName(and.target.value)}/>
+                <br></br>
                 <label className="label" htmlFor="resID">Restaurant ID:</label>
                 <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
                 <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>

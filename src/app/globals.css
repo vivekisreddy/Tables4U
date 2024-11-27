@@ -361,8 +361,8 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 320px;
-  top: 0px;
+  left: 130px;
+  top: 30px;
 }
 
 .handleActivateRestaurant {
@@ -401,7 +401,7 @@ body {
   padding: 2px 6px 2px 6px;
   position: absolute;
   left: 25px;
-  top: 825px;
+  top: 800px;
 }
 
 .handleEditRestaurant {
@@ -673,7 +673,7 @@ body {
 .listRestaurantsButton {
   position: absolute;
 
-  left: 500px; /* Adjust this value for the distance from the right */
+  left: 700px; /* Adjust this value for the distance from the right */
   background-color: #2196F3; /* Blue background */
   color: white;
   padding: 10px 20px;
@@ -687,4 +687,3 @@ body {
 .listRestaurantsButton:hover {
   background-color: #0b7dda;
 }
-

@@ -30,39 +30,39 @@ export default function AdminHomePage() {
       }
 
       function listRestaurants() {
-          // Access the REST-based API and in response (on a 200 or 400) process.
-          instance.get('/adminList')
-          .then(function (response) {
-            console.log("raw response:", response)
-            let status = response.data.statusCode
-            let result = response.data.body
-    
-            console.log("response status:", status)
-    
-            if (status == 200) {
-                let restaurantData = response.data;
+        // Access the REST-based API and in response (on a 200 or 400) process.
+        instance.get('/adminList')
+        .then(function (response) {
+          console.log("raw response:", response)
+          let status = response.data.statusCode
+          let result = response.data.body
+  
+          console.log("response status:", status)
+  
+          if (status == 200) {
+              let restaurantData = response.data;
 
-                // Log the raw response body
-                console.log("Raw Data from Lambda:", restaurantData);
+              // Log the raw response body
+              console.log("Raw Data from Lambda:", restaurantData);
 
-                // If the data is a string, parse it
-                restaurantData = JSON.parse(restaurantData.body);
+              // If the data is a string, parse it
+              restaurantData = JSON.parse(restaurantData.body);
 
-                console.log("Parsed Restaurant Data:", restaurantData);
+              console.log("Parsed Restaurant Data:", restaurantData);
 
-                // Update the restaurant list state
-                setRestaurantList(restaurantData);
-                setMessage('Restaurants loaded successfully!');
-            } else {
-              console.log("Error listing restaurants:", result)
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-        }
+              // Update the restaurant list state
+              setRestaurantList(restaurantData);
+              setMessage('Restaurants loaded successfully!');
+          } else {
+            console.log("Error listing restaurants:", result)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      }
 
-    function deleteRestaurant() {
+      function deleteRestaurant() {
         if (resID) {
           
           // Access the REST-based API and in response (on a 200 or 400) process.
@@ -77,14 +77,17 @@ export default function AdminHomePage() {
             if (status == 200) {
               console.log("response status:", status)
               console.log("Restaurant successfully deleted")
+              alert("Successfully deleted restaurant!")
               listRestaurants()
               andRefreshDisplay()
             } else {
               console.log("Error deleting restaurant:", result)
+              alert("Error deleting restaurant: " + result)
             }
           })
           .catch(function (error) {
             console.log(error)
+            alert("An unexpected error occured")
           })
         }
       }
@@ -143,9 +146,8 @@ export default function AdminHomePage() {
             ) : (
                 <p>No restaurants available.</p>
             )}
-            
             <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
-
+            
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
                 <label className="label" htmlFor="resID">Restaurant ID:</label>
                 <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
