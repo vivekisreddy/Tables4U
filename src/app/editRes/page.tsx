@@ -3,18 +3,20 @@
 import axios from "axios";
 import React from "react";
 
-
 export default function Home() {
 
     const [redraw, forceRedraw] = React.useState(0);
     const [resName, setResName] = React.useState('');
     const [resAddress, setResAddress] = React.useState('');
-    const [resNumTables, setResNumTables] = React.useState(0);
+    const [resNumTables, setResNumTables] = React.useState(Number);
     const [resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
     const [message, setMessage] = React.useState('');
-    const [resOpenTime, setResOpenTime] = React.useState(0);
-    const [resCloseTime, setResCloseTime] = React.useState(0);
+    const [resOpenTime, setResOpenTime] = React.useState(Number);
+    const [resCloseTime, setResCloseTime] = React.useState(Number);
     const [resClosedDays, setResClosedDays] = React.useState<string[]>([]);
+    const [resIsActive, setIsActive] = React.useState(Number);
+    const [resID, setRestaurantID] = React.useState('');  // Store the restaurantID
+
 
     const instance = axios.create({
         baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
@@ -31,9 +33,20 @@ export default function Home() {
         setResSeatsPerTable(updatedSeats);
     };
 
+    function getDetails() {
+        instance.post('/viewResDetails', {resID})
+        .then(function (response) {
+          console.log("raw response:", response)
+          let status = response.data.statusCode
+          let result = response.data.message
+          setRestaurantID(result[4])
+          setIsActive(result[5])
+        })
+      }
 
     function editRes() {
-        instance.post('/editRes', {"name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable,})
+        getDetails()
+        instance.post('/editRes', {"resID" : resID, "name": resName, "address": resAddress, "isActive" : resIsActive, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable,})
         .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode
@@ -59,6 +72,15 @@ export default function Home() {
     return (
         <div className="container">
             <h1 className="title">Edit Restaurant</h1>
+            <label className="label">
+                Restaurant ID:
+                <input
+                    type="text"
+                    value={resID}
+                    onChange={(e) => setRestaurantID(e.target.value)}
+                    className="input"
+                />
+            </label>
             <label className="label">
                 Restaurant Name:
                 <input
@@ -119,20 +141,10 @@ export default function Home() {
                 </div>
             ))}
 
-            <label className="label">
-                Closed Days (format: YYYY-MM-DD):
-                <input
-                    type="text"
-                    value={resClosedDays.join(', ')} // Display closed days as comma-separated string
-                    onChange={(e) => setResClosedDays(e.target.value.split(',').map(day => day.trim()))}
-                    className="input"
-                />
-            </label>
-
             {/* Container for the buttons */}
             <div className="button-container">
                 <button onClick={handleEditRes} className="button-editRes">
-                    Edit Restaurant
+                    Confirm Edits
                 </button>
             </div>
             {message && <p className="message">{message}</p>}

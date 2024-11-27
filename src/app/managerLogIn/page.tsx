@@ -1,8 +1,6 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 import React from 'react';
 import axios from 'axios';
-import { managerList } from '@/manager';
-import { managerLogIn } from '@/rLoginController';
 
 export default function Home() {
     // initial instantiation for admin log in page

@@ -14,14 +14,15 @@ export default function Home() {
     const [resClosedDays, setResClosedDays] = useState<string[]>([]);
     const [resID, setRestaurantID] = useState('');  // Store the restaurantID
     const [message, setMessage] = useState('');
+    const [restaurant, setRestaurant] = useState([]); // State to store the array
 
-    let restaurantInfo : [];
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
     forceRedraw(redraw + 1)
     }
 
+    let restaurantInfo: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined = [];
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
@@ -31,12 +32,8 @@ export default function Home() {
       .then(function (response) {
         console.log("raw response:", response)
         let status = response.data.statusCode
-        let result = response.data.body
-        restaurantInfo = result;
-        setResName(result[0])
-        setResAddress(result[1])
-        setResOpenTime(result[2])
-        setResCloseTime(result[3])
+        let result = response.data
+        setRestaurant(response.data); // Set the array directly in state
       })
     }
 
@@ -93,14 +90,11 @@ export default function Home() {
     <div>
       <button className="managerAccountButton" onClick={(e) => managerAccount()} >Account Information</button>
       <div className = "container">
-        <label className="label" htmlFor="Restaurant Name:">Restaurant Name:</label>
-        <label className="label" htmlFor="resName">{resName}</label>
-        <label className="label" htmlFor="Restaurant Address">Restaurant Address:</label>
-        <label className="label" htmlFor="resAddress">{resAddress}</label>
-        <label className="label" htmlFor="Restaurant Open Time">Restaurant Open Time:</label>
-        <label className="label" htmlFor="resOpenTime">{resOpenTime}</label>
-        <label className="label" htmlFor="Restaurant Close Time">Restaurant Close Time:</label>
-        <label className="label" htmlFor="resCloseTime">{resCloseTime}</label>
+        <h1>{restaurant[0]}</h1> {/* Restaurant Name */}
+        <p>Address: {restaurant[1]}</p>
+        <p>Open Time: {restaurant[2]}</p>
+        <p>Close Time: {restaurant[3]}</p>
+        <p>Status: {restaurant[5] ? "Active" : "Inactive"}</p>
       </div>
       <form className="handleActivateRestaurant" onSubmit={activateRestaurant}>
         <label className="label" htmlFor="resID">Restaurant ID:</label>
