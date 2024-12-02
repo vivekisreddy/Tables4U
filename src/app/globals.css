@@ -1,464 +1,474 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Header styling */
+/* This is all homepage stuff */ 
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* globals.css */
-
-/* Existing CSS */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #ececec;
+.header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* Align items to the edges */
   align-items: center;
-  height: 500px;
+  background-color: #4eafff; /* Blue background */
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  margin-bottom: 20px; /* Space below header */
 }
 
-.title {
+.header-left {
+  display: flex;
+  gap: 10px; /* Spacing between buttons */
+}
+
+.header-center {
+  position: absolute;
+  right: 775px;
   text-align: center;
-  font-size: 1.5em;
-  color: #3d3333;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Buttons inside the header */
+.header-left .adminLogInButton,
+.header-left .managerLogInButton {
+  background-color: white;
+  color: #2196F3;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.header-left .adminLogInButton:hover,
+.header-left .managerLogInButton:hover {
+  background-color: #eeeeee;
+}
+
+/* Consumer dashboard section */
+.consumer-dashboard {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.consumer-dashboard .title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+  
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 15px;
   margin-bottom: 20px;
 }
 
-.button {
-  font: bold 11px Arial;
-  text-decoration: none;
-  background-color: #EEEEEE;
-  color: #333333;
-  padding: 10px 20px;
+.listRestaurantsButton,
+.toggleRestaurantsButton {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 15px;
+  font-size: 1rem;
+  position: absolute;
+  left: 815px;
   border-radius: 5px;
-  border: 1px solid #CCCCCC;
-  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
 }
 
-.button:hover {
-  background-color: #DDDDDD;
+.listRestaurantsButton:hover,
+.toggleRestaurantsButton:hover {
+  background-color: #0b7dda;
 }
 
-/* Create Restaurant Button - Green */
-.button-createRes {
-  background-color: #4CAF50; /* Green */
+/* Reservation confirmation section */
+.reservation-section {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.reservation-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.reservation-section p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.reservation-section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reservation-section form label {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.reservation-section form input {
+  width: 80%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.reservation-section form .enter {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.reservation-section form .enter:hover {
+  background-color: #45a049;
+}
+
+/* Restaurants table */
+.restaurant-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.restaurant-table th,
+.restaurant-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.restaurant-table th {
+  background-color: #f2f2f2;
+}
+
+.restaurant-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.restaurant-table td:first-child {
+  font-weight: bold;
+}
+
+/* Message styling */
+.message {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #f44336; /* Red for error messages */
+}
+
+.message.success {
+  color: #4CAF50; /* Green for success messages */
+}
+
+
+
+/* This is all managerLogin Page stuff */ 
+/* Container for the manager login page */
+.manager-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Full-page height */
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 10px solid #001694;
+}
+
+/* Box to wrap input fields and login button */
+.login-box {
+  background-color: #f8f8f8; /* Light background for the box */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 400px; /* Fixed width */
+}
+
+/* Inputs inside the box */
+.input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Login button */
+.button-logIn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50; /* Green */
   color: white;
   border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.button-logIn:hover {
+  background-color: #45a049;
+}
+
+/* Create account button */
+.button-create-account {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #2196f3; /* Blue */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.button-create-account:hover {
+  background-color: #0b7dda;
+}
+
+/* Message display */
+.message {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #e74c3c; /* Red for errors */
+  text-align: center;
+}
+
+/* This is CSS styling for create resturant stuff */ 
+
+/* Centered Title */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Rectangle Box */
+.rectangle-box {
+  margin: 0 auto;
+  padding: 50px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  width: 400px;
+  background-color: #f8f8f8;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.button-createRes {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .button-createRes:hover {
   background-color: #45a049;
 }
 
-/* Activate Restaurant Button - Blue */
 .button-activateRes {
-  background-color: #2196F3; /* Blue */
+  background-color: #2196f3;
   color: white;
+  padding: 10px 20px;
   border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .button-activateRes:hover {
   background-color: #0b7dda;
 }
 
-/* Other existing styles */
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto;
+  width: 400px;
+}
+
+/* This is all the CSS stuff for the adminLogin pgae */ 
+/* Admin Login Page Specific Styles */
+
+/* Center the title */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Container for the Admin Login form */
+.admin-logIn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* The box around the login form */
+.login-form-box {
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the labels and inputs */
+.label {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
 .input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.label {
-  font-size: 1rem;
-  color: #555;
-}
-
-/* Create Restaurant Button - Green */
-.button-createRes {
-  background-color: #4CAF50; /* Green */
+/* Button Styles */
+.adminLogInButton {
+  background-color: #4CAF50;
   color: white;
+  padding: 10px 20px;
   border: none;
-  margin-right: 10px; /* Add space to the right */
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #ececec;
+.adminLogInButton:hover {
+  background-color: #45a049;
+}
+
+.createAdminLogIn {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.createAdminLogIn:hover {
+  background-color: #0b7dda;
+}
+
+/* Container for Create Account message */
+.create-account-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 500px;
+  margin-top: 15px;
 }
-
-.title {
-  text-align: center;
-  font-size: 1.5em;
-  color: #3d3333;
-  margin-bottom: 20px;
-}
-
-.button {
-  font: bold 11px Arial;
-  text-decoration: none;
-  background-color: #EEEEEE;
-  color: #333333;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-}
-
 
 .account {
   font-size: 1rem;
   color: #555;
-  position: absolute;
-  left: 460px;
-  top: 465px;
 }
 
-.adminAccountButton {
-  font-size: 1rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 1325px;
-  top: 25px;
+/* This is CSS stuff for admin Create account */ 
+/* Admin Create Account Page Styles */
+
+/* Container for the whole page */
+.admin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f8f8;
 }
 
+/* Form container styled as a rectangle box */
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Admin Create Account title */
 .adminCreateAccountMessage {
-  text-align: center;
-  font-size: 1.5em;
-  color: #3d3333;
-  margin-bottom: 20px;
   position: absolute;
-  left: 460px;
-  top: 200px;
+  top: 250px;
+  font-size: 1.5rem;
+  color: #333;
 }
 
-.adminLogIn {
-  font-size: 0.8rem;
-  background-color: #EEEEEE;
-  color: #555;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 80px;
-  top: 60px;
-}
-
-
-.adminLogInButton {
-  font-size: 0.8rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 1375px;
-  top: 25px;
-}
-
-.adminLogInMessage {
-  text-align: center;
-  font-size: 1.5em;
-  color: #3d3333;
-  margin-bottom: 20px;
-  position: absolute;
-  left: 460px;
-  top: 200px;
-}
-
-.confirmMessage {
+/* Label styles */
+.label {
   font-size: 1rem;
   color: #555;
-  position: absolute;
-  left: 460px;
-  top: 465px;
+  margin-bottom: 5px;
 }
 
-.createAdminLogIn {
-  font-size: 0.8rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 550px;
-  top: 500px;
+/* Input styles */
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
+/* Create Account Button styles */
 .createAdminAccount {
-  font-size: 0.8rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 75px;
-  top: 60px;
-}
-
-
-.createManagerAccount {
-  font: bold 11px Arial;
-  background-color: #EEEEEE;
-  color: #333333;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 75px;
-  top: 90px;
-}
-
-.createManagerLogIn {
-  font-size: 0.8rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 550px;
-  top: 500px;
-}
-
-.dateFormat {
-  font-size: 0.7rem;
-  color: #555;
-}
-
-
-.enter {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   font-size: 1rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 320px;
-  top: 0px;
-}
-
-.handleConfirm {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 500px;
-}
-
-
-.handleCreate {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 300px;
-}
-
-.handleLogIn {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 300px;
-}
-
-.handleSearch {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 300px;
-}
-
-.input {
+  cursor: pointer;
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  margin-top: 10px;
 }
 
-.label {
-  font-size: 1rem;
-  color: #555;
+.createAdminAccount:hover {
+  background-color: #45a049;
 }
 
-.listRestaurantsButton {
-  font-size: 1rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 600px;
-  top: 25px;
-}
-
-.managerCreateAccountMessage {
-  position: absolute;
-  left: 460px;
-  top: 200px;
-}
-
-.managerLogIn {
-  font-size: 0.8rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 80px;
-  top: 60px;
-}
-
-.managerLogInButton {
-  font-size: 0.8rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 1375px;
-  top: 60px;
-}
-
-.managerLogInMessage {
-  text-align: center;
-  font-size: 1.5em;
-  color: #3d3333;
-  margin-bottom: 20px;
-  position: absolute;
-  left: 460px;
-  top: 200px;
-}
-
+/* Error message styling */
 .message {
   text-align: center;
   color: #f96f6f;
   margin-top: 10px;
-}
-
-.reservationMessage {
-  text-align: center;
-  font-size: 1.25em;
-  color: #555;
-  margin-bottom: 20px;
-  position: absolute;
-  left: 460px;
-  top: 235px;
-}
-
-.search {
-  font-size: 1rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 80px;
-  top: 80px;
-}
-
-.title {
-  text-align: center;
-  font-size: 1.5em;
-  color: #3d3333;
-  margin-bottom: 20px;
-}
-
-.welcomeMessage {
-  text-align: center;
-  font-size: 1.5em;
-  color: #3d3333;
-  margin-bottom: 20px;
-  position: absolute;
-  left: 460px;
-  top: 200px;
-
-
-.label {
-  font-size: 1rem;
-  color: #555;
-}
-
-.input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-
-.message {
-  text-align: center;
-  color: #f96f6f;
-  margin-top: 10px;
-}
 }

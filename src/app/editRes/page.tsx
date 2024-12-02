@@ -3,21 +3,24 @@
 import axios from "axios";
 import React from "react";
 
-
 export default function Home() {
 
     const [redraw, forceRedraw] = React.useState(0);
     const [resName, setResName] = React.useState('');
     const [resAddress, setResAddress] = React.useState('');
-    const [resNumTables, setResNumTables] = React.useState(0);
+    const [resNumTables, setResNumTables] = React.useState(Number);
     const [resSeatsPerTable, setResSeatsPerTable] = React.useState<number[]>([]);
     const [message, setMessage] = React.useState('');
-    const [resOpenTime, setResOpenTime] = React.useState(0);
-    const [resCloseTime, setResCloseTime] = React.useState(0);
+    const [resOpenTime, setResOpenTime] = React.useState(Number);
+    const [resCloseTime, setResCloseTime] = React.useState(Number);
     const [resClosedDays, setResClosedDays] = React.useState<string[]>([]);
+    const [resIsActive, setIsActive] = React.useState(Number);
+    const [resID, setRestaurantID] = React.useState('');  // Store the restaurantID
 
 
-
+    const instance = axios.create({
+        baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
+    });
 
     // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
@@ -30,44 +33,55 @@ export default function Home() {
         setResSeatsPerTable(updatedSeats);
     };
 
+    function getDetails() {
+        instance.post('/viewResDetails', {resID})
+        .then(function (response) {
+          console.log("raw response:", response)
+          let status = response.data.statusCode
+          let result = response.data.message
+          setRestaurantID(result[4])
+          setIsActive(result[5])
+        })
+      }
 
-    const editRes = async () => {
-        let payload = {
-            "name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable
-        }
-        try {
-            const response = await axios.post(
-            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial',
-            payload,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    timeout: 5000,  // Timeout in milliseconds (5 seconds)
-                }
-            );
+    function editRes() {
+        getDetails()
+        instance.post('/editRes', {"resID" : resID, "name": resName, "address": resAddress, "openTime":resOpenTime, "closeTime":resCloseTime, "tables":resNumTables, "seats":resSeatsPerTable,})
+        .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
     
+            console.log("response status:", status)
             if (response.status === 200) {
-                setMessage('Restaurant created successfully!');
-                console.log(response.data);  
+                setMessage('Restaurant edited successfully!');
+                console.log(response.data);
+                window.location.replace('/managerHomePage')
+                andRefreshDisplay()
             } else {
-                throw new Error('Failed to create restaurant');
+                console.log("Error editing restaurant:", result)
+                setMessage(result)
             }
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                console.error('Axios error:', error.message);
-            } else if (error instanceof Error) {
-                console.error('Error creating restaurant:', error.message);
-            } else {
-                console.error('Unexpected error:', error);
-            }
-            setMessage('Error creating restaurant');
-        }
-    };
+        })
+    }
+
+    const handleEditRes = (and:any) => {
+        and.preventDefault()
+        editRes()
+      }
 
     return (
         <div className="container">
-            <h1 className="title">Create Restaurant</h1>
+            <h1 className="title">Edit Restaurant</h1>
+            <label className="label">
+                Restaurant ID:
+                <input
+                    type="text"
+                    value={resID}
+                    onChange={(e) => setRestaurantID(e.target.value)}
+                    className="input"
+                />
+            </label>
             <label className="label">
                 Restaurant Name:
                 <input
@@ -128,20 +142,10 @@ export default function Home() {
                 </div>
             ))}
 
-            <label className="label">
-                Closed Days (format: YYYY-MM-DD):
-                <input
-                    type="text"
-                    value={resClosedDays.join(', ')} // Display closed days as comma-separated string
-                    onChange={(e) => setResClosedDays(e.target.value.split(',').map(day => day.trim()))}
-                    className="input"
-                />
-            </label>
-
             {/* Container for the buttons */}
             <div className="button-container">
-                <button onClick={editRes} className="button-editRes">
-                    Edit Restaurant
+                <button onClick={handleEditRes} className="button-editRes">
+                    Confirm Edits
                 </button>
             </div>
             {message && <p className="message">{message}</p>}
