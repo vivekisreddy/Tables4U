@@ -1,12 +1,6 @@
-Here’s a unified and consistently formatted README file for the **Tables4U Application** with all instructions presented under clear headings. 
 
-<<<<<<< HEAD
-# **Tables4U Application**
 
-Tables4U is a modern table management system designed to streamline restaurant and event organization processes. This document provides all the necessary steps to set up, work on, and contribute to the project.
-=======
 # Tables4U Repository
->>>>>>> 44705d9d852b6c19da0868a74ef2f0a4be7d0500
 
 ---
 

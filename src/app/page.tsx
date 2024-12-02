@@ -1,7 +1,8 @@
 'use client'
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+
 interface Restaurant {
   restaurantID: string;
   name: string;
@@ -12,54 +13,45 @@ interface Restaurant {
 }
 
 export default function Home() {
-  // initial instantiation of landing home page
-  const [redraw, forceRedraw] = React.useState(0)
-
-  const instance = axios.create({
-    baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
-  });
+  const [redraw, forceRedraw] = React.useState(0);
 
   const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
   const [showActiveOnly, setShowActiveOnly] = useState(false); 
   const [message, setMessage] = useState('');
 
-  // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
-    forceRedraw(redraw + 1)
+    forceRedraw(redraw + 1);
   }
 
   const listRestaurants = async () => {
     try {
-        const response = await axios.get(
-            'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
-            { headers: { 'Content-Type': 'application/json' } }
-        );
+      const response = await axios.get(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
+        { headers: { 'Content-Type': 'application/json' } }
+      );
 
-        if (response.status === 200) {
-            let restaurantData = response.data;
-            restaurantData = JSON.parse(restaurantData.body);
-
-            setRestaurantList(restaurantData);
-            setMessage('Restaurants loaded successfully!');
-        } else {
-            throw new Error('Failed to load restaurants.');
-        }
+      if (response.status === 200) {
+        let restaurantData = response.data;
+        restaurantData = JSON.parse(restaurantData.body);
+        setRestaurantList(restaurantData);
+        setMessage('Restaurants loaded successfully!');
+      } else {
+        throw new Error('Failed to load restaurants.');
+      }
     } catch (error) {
-        console.error('Error listing restaurants:', error);
-        setMessage('Error loading restaurants.');
+      console.error('Error listing restaurants:', error);
+      setMessage('Error loading restaurants.');
     }
-};
+  };
 
-// Toggle between showing all or only active restaurants
-const toggleActiveRestaurants = () => {
+  const toggleActiveRestaurants = () => {
     setShowActiveOnly(!showActiveOnly);
     setMessage(
-        showActiveOnly ? 'Showing all restaurants.' : 'Showing only active restaurants.'
+      showActiveOnly ? 'Showing all restaurants.' : 'Showing only active restaurants.'
     );
-};
+  };
 
-// Filter restaurants dynamically based on active status
-const displayedRestaurants = showActiveOnly
+  const displayedRestaurants = showActiveOnly
     ? restaurantList.filter((restaurant) => restaurant.isActive === 1)
     : restaurantList;
 
@@ -71,17 +63,15 @@ const displayedRestaurants = showActiveOnly
 
   // brings admin to the admin log in page
   function adminLogIn() {
-    window.location.replace("/adminLogIn")
-    andRefreshDisplay()
+    window.location.replace('/adminLogIn');
+    andRefreshDisplay();
   }
 
-  // brings manager to the manager log in page
   function managerLogIn() {
-    window.location.replace("/managerLogIn")
-    andRefreshDisplay()
+    window.location.replace('/managerLogIn');
+    andRefreshDisplay();
   }
 
-  // below is where the GUI for the landing home page is drawn
   return (
     <div>
       <button className="adminLogInButton" onClick={(e) => adminLogIn()} >Admin Log In</button>
@@ -98,50 +88,91 @@ const displayedRestaurants = showActiveOnly
 
       <div className="consumer-container">
             <h1 className="title">Consumer Dashboard</h1>
+    <div className="main-container">
+      {/* Header Rectangle */}
+      <header className="header">
+        <div className="header-left">
+          <button className="adminLogInButton" onClick={adminLogIn}>
+            Admin Log In
+          </button>
+          <button className="managerLogInButton" onClick={managerLogIn}>
+            Manager Log In
+          </button>
+        </div>
+        <div className="header-center">
+          <h1>Tables4U</h1>
+        </div>
+      </header>
 
-            <div className="button-container">
-                <button className="listRestaurantsButton" onClick={listRestaurants}>
-                    List Active Restaurants
-                </button>
-                {restaurantList.length > 0 && (
-                    <button className="toggleRestaurantsButton" onClick={toggleActiveRestaurants}>
-                        {showActiveOnly ? 'Show All Restaurants' : 'Show Active Restaurants'}
-                    </button>
-                )}
-            </div>
+      {/* Consumer Dashboard Section */}
+      <div className="consumer-dashboard">
+        <h2 className="title">Consumer Dashboard</h2>
 
-            {/* Display message */}
-            {message && <p className="message">{message}</p>}
+        {/* Buttons for listing restaurants */}
+        <div className="button-container">
+          <button className="listRestaurantsButton" onClick={listRestaurants}>
+            List Active Restaurants
+          </button>
+          {restaurantList.length > 0 && (
+            <button className="toggleRestaurantsButton" onClick={toggleActiveRestaurants}>
+              {showActiveOnly ? 'Show All Restaurants' : 'Show Active Restaurants'}
+            </button>
+          )}
+        </div>
 
-            {/* Display restaurants in tabular form */}
-            {restaurantList.length > 0 ? (
-                <table className="restaurant-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Open Time</th>
-                            <th>Close Time</th>
-                            {showActiveOnly && <th>Status</th>}
-                        </tr>
-                    </thead>
-                    <tbody>
-    {displayedRestaurants.map((restaurant, index) => (
-        <tr key={restaurant.restaurantID || index}> 
-            <td>{restaurant.name}</td>
-            <td>{restaurant.address}</td>
-            <td>{restaurant.openTime}</td>
-            <td>{restaurant.closeTime}</td>
-            {showActiveOnly && <td>Active</td>}
+        {/* Display message */}
+        {message && <p className="message">{message}</p>}
+
+        {/* Display restaurants */}
+        {restaurantList.length > 0 ? (
+  <table className="restaurant-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Open Time</th>
+        <th>Close Time</th>
+        {showActiveOnly && <th>Status</th>}
+      </tr>
+    </thead>
+    <tbody>
+      {displayedRestaurants.map((restaurant, index) => (
+        <tr key={restaurant.restaurantID || index}>
+          <td>{restaurant.name}</td>
+          <td>{restaurant.address}</td>
+          <td>{restaurant.openTime}</td>
+          <td>{restaurant.closeTime}</td>
+          {showActiveOnly && <td>Active</td>}
         </tr>
-    ))}
-</tbody>
-
-                </table>
-            ) : (
-                <p>No restaurants available.</p>
-            )}
-            </div>
-    </div>
+      ))}
+    </tbody>
+  </table>
+) : (
+  message && message !== 'Restaurants loaded successfully!' && (
+    <p className="message">{message}</p>
   )
+)}
+
+      </div>
+
+      {/* Reservation Confirmation Section */}
+      <div className="reservation-section">
+        <h3>Already have a reservation?</h3>
+        <p>Find your details here!</p>
+        <form className="handleConfirm" onSubmit={handleConfirm}>
+          <label htmlFor="code">Confirmation Code:</label>
+          <input
+            type="text"
+            id="code"
+            name="code"
+            value={code}
+            onChange={(and) => setCode(and.target.value)}
+          />
+          <button type="submit" className="enter">
+            Enter
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
