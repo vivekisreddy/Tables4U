@@ -6,8 +6,7 @@ export default function Home() {
     // initial instantiation for admin log in page
     const [redraw, forceRedraw] = React.useState(0)
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [code, setCode] = useState('');
 
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
@@ -18,11 +17,11 @@ export default function Home() {
     forceRedraw(redraw + 1)
   }
 
-  function adminCreateAccount() {
-    if (email && password) {
+  function confirmRes() {
+    if (code) {
       
       // Access the REST-based API and in response (on a 200 or 400) process.
-      instance.post('/adminCreateAccount', {"adminID":email, "password":password})
+      instance.post('', {"reservationID":code})
       .then(function (response) {
         console.log("raw response:", response)
         let status = response.data.statusCode
@@ -31,48 +30,39 @@ export default function Home() {
         console.log("response status:", status)
 
         if (status == 200) {
-          console.log("response status:", status)
-          console.log("Admin account successfully created")
-          window.location.replace('/adminLogIn')
+          // TO DO: show reservation details
           andRefreshDisplay()
         } else {
-          console.log("Error creating admin account:", result)
-          alert("Error creating admin account: " + result)
+          alert("Error confirming reservation: " + result)
         }
       })
       .catch(function (error) {
         console.log(error)
-        alert("An unexpected error occured.");
+        alert("An unexpected error occured. Please try again.")
       })
     }
   }
 
-  const handleCreate = (and:any) => {
-    and.preventDefault()
-    if (email == '') {
-      alert("Please enter an email address")
+  const handleConfirm = (and:any) => {
+    and.preventDefault();
+    if (code == '') {
+      alert("Please enter your reservation's confirmation code.")
     }
-    if (password == '') {
-      alert("Please create a password")
+    else {
+      confirmRes()
     }
-    console.log('Admine Email:', email)
-    console.log('Admin Password:', password)
-    adminCreateAccount()
+    andRefreshDisplay()
   }
 
-  // below is where the GUI for the admin log in page is drawn
+  // below is where the GUI for the consumer view reservation page is drawn
   return (
     <div>
-      <label className="adminCreateAccountMessage">{"Create an Admin Account:"}</label>
+      <label className="confirmResMessage">{"Confirm your reservation below:"}</label>
 
-      <form className="handleCreate" onSubmit={handleCreate}>
-        <label className="label" htmlFor="email">Email:</label>
-        <input type="text" style={{ color: 'black' }} id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)}/>
-        <br></br>
-        <br></br>
-        <label className="label" htmlFor="password">Password:</label>
-        <input type="text" style={{ color: 'black' }} id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)}/>
-        <button type="submit" className="createAdminAccount">Create</button>
+      <form className="handleConfirm" onSubmit={handleConfirm}>
+        <label className="label" htmlFor="code">Confirmation Code:</label>
+        <input type="text" style={{ color: 'black' }} id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
+        <button type="submit" className="enter">Enter</button>
       </form>
     </div>
   )

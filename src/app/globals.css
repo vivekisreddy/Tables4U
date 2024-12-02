@@ -247,6 +247,14 @@ body {
   top: 775px;
 }
 
+.confirmResMessage {
+  font-size: 1rem;
+  color: #555;
+  position: absolute;
+  left: 25px;
+  top: 50px;
+}
+
 .consumerListRestaurantsButton {
   font-size: 0.8rem;
   color: #555;
@@ -365,6 +373,20 @@ body {
   top: 100px;
 }
 
+.enter {
+  font-size: 0.8rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 310px;
+  top: 2px;
+}
+
 .findReservationDetailsButton {
   font-size: 1rem;
   color: #555;
@@ -394,11 +416,8 @@ body {
   padding: 2px 6px 2px 6px;
   position: absolute;
   left: 25px;
-  top: 800px;
-  left: 25px;
-  top: 800px;
+  top: 75px;
 }
-
 
 .handleCreate {
   font: bold 11px Arial;

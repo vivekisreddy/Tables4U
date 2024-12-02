@@ -19,7 +19,6 @@ export default function Home() {
     baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
   });
 
-  const [code, setCode] = useState('');
   const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
   const [showActiveOnly, setShowActiveOnly] = useState(false); 
   const [message, setMessage] = useState('');
