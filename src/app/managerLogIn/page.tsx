@@ -31,11 +31,11 @@ export default function Home() {
         if (status == 200) {
           console.log("response status:", status)
           console.log("Manager successfully logged in")
-          setMessage("Successfully logging in")
+          setMessage("Logging in")
           window.location.replace('/managerHomePage')
           andRefreshDisplay()
         } else {
-          setMessage("Incorrect Log In Information")
+          setMessage("Incorrect log in information or account does not exist.")
           console.log("Error logging in:", result)
         }
       })

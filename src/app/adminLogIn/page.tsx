@@ -33,7 +33,6 @@ export default function Home() {
         console.log("response status:", status)
 
         if (status == 200) {
-          console.log("response status:", status)
           console.log("Admin successfully logged in")
           window.location.replace('/adminHomePage')
           andRefreshDisplay()
