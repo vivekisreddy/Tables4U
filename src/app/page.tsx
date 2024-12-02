@@ -73,21 +73,6 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <button className="adminLogInButton" onClick={(e) => adminLogIn()} >Admin Log In</button>
-      <button className="managerLogInButton" onClick={(e) => managerLogIn()} >Manager Log In</button>
-
-      <label className="welcomeMessage">{"Welcome to Tables4U!"}</label>
-      <label className="reservationMessage">{"Make a reservation:"}</label>
-
-      <label className="confirmMessage">{"Already have a reservation? Find details here!"}</label>
-
-      <form className="handleFindDetails" onSubmit={handleFindDetails}>
-        <button type="submit" className="findReservationDetailsButton">Find Reservation Details</button>
-      </form>
-
-      <div className="consumer-container">
-            <h1 className="title">Consumer Dashboard</h1>
     <div className="main-container">
       {/* Header Rectangle */}
       <header className="header">
@@ -159,19 +144,9 @@ export default function Home() {
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
         <p>Find your details here!</p>
-        <form className="handleConfirm" onSubmit={handleConfirm}>
-          <label htmlFor="code">Confirmation Code:</label>
-          <input
-            type="text"
-            id="code"
-            name="code"
-            value={code}
-            onChange={(and) => setCode(and.target.value)}
-          />
-          <button type="submit" className="enter">
-            Enter
+        <button className="findReservationDetailsButton" onClick={handleFindDetails}>
+          Find Restaurant Details
           </button>
-        </form>
       </div>
     </div>
   );
