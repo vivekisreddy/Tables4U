@@ -322,6 +322,20 @@ body {
   color: #555;
 }
 
+.deleteReservationButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 300px;
+  top: -8px;
+}
+
 .deleteRestaurantButton {
   font-size: 1rem;
   color: #555;
@@ -402,6 +416,15 @@ body {
   position: absolute;
   left: 25px;
   top: 800px;
+}
+
+.handleDeleteReservation {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 750px;
 }
 
 .handleEditRestaurant {

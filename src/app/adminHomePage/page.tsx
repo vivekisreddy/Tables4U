@@ -19,6 +19,7 @@ export default function AdminHomePage() {
     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
     const [message, setMessage] = useState(''); // For success or error messages
     const [resID, setResID] = useState(''); // For success or error messages
+    const [reservation, setReservation] = useState('');
 
     const instance = axios.create({
         baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
@@ -90,6 +91,34 @@ export default function AdminHomePage() {
           })
         }
       }
+
+      function deleteReservation() {
+        if (reservation) {
+          
+          // Access the REST-based API and in response (on a 200 or 400) process.
+          instance.post('', {"reservationID":reservation})
+          .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
+    
+            console.log("response status:", status)
+    
+            if (status == 200) {
+              //console.log("Reservation successfully deleted.")
+              alert("Successfully deleted reservation.")
+              andRefreshDisplay()
+            } else {
+              //console.log("Error deleting reservation:", result)
+              alert("Error deleting reservation: " + result)
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            alert("An unexpected error occured")
+          })
+        }
+      }
   
       function adminAccount() {
         // displays account information
@@ -100,6 +129,16 @@ export default function AdminHomePage() {
       const handleDeleteRestaurant = (and:any) => {
         and.preventDefault()
         deleteRestaurant()
+      }
+
+      const handleDeleteReservation = (and:any) => {
+        and.preventDefault()
+        if (reservation == '') {
+          alert("Please enter a reservation code to delete a reservation.")
+        }
+        else {
+          deleteReservation()
+        }
       }
 
     return (
@@ -145,13 +184,19 @@ export default function AdminHomePage() {
             ) : (
                 <p>No restaurants available.</p>
             )}
-            
+
             <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
             
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
                 <label className="label" htmlFor="resID">Restaurant ID:</label>
                 <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
                 <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
+            </form>
+
+            <form className="handleDeleteReservation" onSubmit={handleDeleteReservation}>
+                <label className="label" htmlFor="reservation">Reservation Code:</label>
+                <input type="text" style={{ color: 'black' }} id="reservation" name="reservation" value={reservation} onChange={(and) => setReservation(and.target.value)}/>
+                <button type="submit" className="deleteReservationButton">Delete Reservation</button>
             </form>
         </div>
     );
