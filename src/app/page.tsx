@@ -190,6 +190,9 @@ export default function Home() {
   // helper function that forces React app to redraw whenever this is called.
   function andRefreshDisplay() {
     forceRedraw(redraw + 1)
+
+    //test comment
+
   }
 
   function confirmRes(code:String) {
