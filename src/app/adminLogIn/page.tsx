@@ -34,6 +34,7 @@ export default function Home() {
 
         if (status == 200) {
           console.log("Admin successfully logged in")
+          // setMessage("Logging in . . .")
           window.location.replace('/adminHomePage')
           andRefreshDisplay()
         } else {
@@ -43,7 +44,7 @@ export default function Home() {
       })
       .catch(function (error) {
         console.log(error);
-        alert("An unexpected error occured.");
+        alert("An unexpected error occured. Please try again.");
       })
     }
   }

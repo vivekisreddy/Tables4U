@@ -75,7 +75,6 @@ export default function AdminHomePage() {
             console.log("response status:", status)
     
             if (status == 200) {
-              console.log("response status:", status)
               console.log("Restaurant successfully deleted")
               alert("Successfully deleted restaurant!")
               listRestaurants()
