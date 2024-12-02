@@ -145,6 +145,7 @@ export default function AdminHomePage() {
             ) : (
                 <p>No restaurants available.</p>
             )}
+            
             <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
             
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>

@@ -332,8 +332,8 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 300px;
-  top: 0px;
+  left: 275px;
+  top: -8px;
 }
 
 .editRestaurantButton {
