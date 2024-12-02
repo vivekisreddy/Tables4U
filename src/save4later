@@ -14,3 +14,8 @@
         <form className="handleSearch" onSubmit={handleSearch}>
         <button type="submit" className="search">Search</button>
       </form>
+
+
+
+<label className="label" htmlFor="code">Confirmation Code:</label>
+        <input type="text" style={{ color: 'black' }} id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>

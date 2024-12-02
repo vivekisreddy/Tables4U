@@ -365,7 +365,7 @@ body {
   top: 100px;
 }
 
-.enter {
+.findReservationDetailsButton {
   font-size: 1rem;
   color: #555;
   background-color: #EEEEEE;
@@ -375,8 +375,8 @@ body {
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
   position: absolute;
-  left: 130px;
-  top: 30px;
+  left: 100px;
+  top: 5px;
 }
 
 .handleActivateRestaurant {
@@ -434,6 +434,17 @@ body {
   position: absolute;
   left: 25px;
   top: 700px;
+}
+
+.handleFindDetails {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 800px;
+  left: 25px;
+  top: 800px;
 }
 
 .handleLogIn {
