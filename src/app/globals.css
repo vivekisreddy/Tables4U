@@ -239,6 +239,20 @@ body {
   top: 200px;
 }
 
+.availabilityReportButton {
+  font-size: 0.8rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 25px;
+  top: 65px;
+}
+
 .confirmMessage {
   font-size: 1rem;
   color: #555;

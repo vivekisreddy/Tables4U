@@ -141,6 +141,10 @@ export default function AdminHomePage() {
         }
       }
 
+      function generateReport() {
+        window.location.replace("/generateReport")
+      }
+
     return (
         <div className="admin-container">
             <h1 className="title">Admin Dashboard</h1>
@@ -186,6 +190,7 @@ export default function AdminHomePage() {
             )}
 
             <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
+            <button className="availabilityReportButton" onClick={(e) => generateReport()} >Generate Availability Report</button>
             
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
                 <label className="label" htmlFor="resID">Restaurant ID:</label>
