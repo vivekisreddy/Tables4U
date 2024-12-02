@@ -196,7 +196,7 @@ export default function Home() {
     let payload = {
       "confirmationCode":code,
     }
-    // TO DO: confirmRes lambda function
+    
     fetch("url", {
       method: "POST",
       body: JSON.stringify(payload)
