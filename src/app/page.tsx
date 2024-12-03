@@ -1,6 +1,8 @@
 'use client'
 
+// pages/index.tsx or any page component inside pages/
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 import axios from 'axios';
 
 interface Restaurant {
@@ -13,25 +15,11 @@ interface Restaurant {
 }
 
 export default function Home() {
-  const [redraw, forceRedraw] = React.useState(0);
-
-  const [code, setCode] = useState('');
-  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]);
-  const [showActiveOnly, setShowActiveOnly] = useState(false);
+  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
+  const [showActiveOnly, setShowActiveOnly] = useState(false); 
   const [message, setMessage] = useState('');
 
-  function andRefreshDisplay() {
-    forceRedraw(redraw + 1);
-  }
-
-
-  function confirmRes(code: String) {
-    const payload = { confirmationCode: code };
-    fetch('url', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    });
-  }
+  const router = useRouter(); // instance for page routing programmatically 
 
   const listRestaurants = async () => {
     try {
@@ -65,20 +53,20 @@ export default function Home() {
     ? restaurantList.filter((restaurant) => restaurant.isActive === 1)
     : restaurantList;
 
-  const handleConfirm = (and: any) => {
+  const handleFindDetails = (and: any) => {
     and.preventDefault();
-    confirmRes(code);
-    andRefreshDisplay();
+    router.push("/consumerViewReservation");  // Correct usage of router.push() for navigation
   };
 
+  // brings admin to the admin log in page
   function adminLogIn() {
-    window.location.replace('/adminLogIn');
-    andRefreshDisplay();
+    router.push('/adminLogIn');  // Correct usage of router.push()
   }
 
   function managerLogIn() {
-    window.location.replace('/managerLogIn');
-    andRefreshDisplay();
+    router.push('/managerLogIn');  // Correct usage of router.push()
+    //submit comment comment comment
+    // whatever comment comment
   }
 
   return (
@@ -119,53 +107,42 @@ export default function Home() {
 
         {/* Display restaurants */}
         {restaurantList.length > 0 ? (
-  <table className="restaurant-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Open Time</th>
-        <th>Close Time</th>
-        {showActiveOnly && <th>Status</th>}
-      </tr>
-    </thead>
-    <tbody>
-      {displayedRestaurants.map((restaurant, index) => (
-        <tr key={restaurant.restaurantID || index}>
-          <td>{restaurant.name}</td>
-          <td>{restaurant.address}</td>
-          <td>{restaurant.openTime}</td>
-          <td>{restaurant.closeTime}</td>
-          {showActiveOnly && <td>Active</td>}
-        </tr>
-      ))}
-    </tbody>
-  </table>
-) : (
-  message && message !== 'Restaurants loaded successfully!' && (
-    <p className="message">{message}</p>
-  )
-)}
-
+          <table className="restaurant-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Open Time</th>
+                <th>Close Time</th>
+                {showActiveOnly && <th>Status</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {displayedRestaurants.map((restaurant, index) => (
+                <tr key={restaurant.restaurantID || index}>
+                  <td>{restaurant.name}</td>
+                  <td>{restaurant.address}</td>
+                  <td>{restaurant.openTime}</td>
+                  <td>{restaurant.closeTime}</td>
+                  {showActiveOnly && <td>Active</td>}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          message && message !== 'Restaurants loaded successfully!' && (
+            <p className="message">{message}</p>
+          )
+        )}
       </div>
 
       {/* Reservation Confirmation Section */}
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
         <p>Find your details here!</p>
-        <form className="handleConfirm" onSubmit={handleConfirm}>
-          <label htmlFor="code">Confirmation Code:</label>
-          <input
-            type="text"
-            id="code"
-            name="code"
-            value={code}
-            onChange={(and) => setCode(and.target.value)}
-          />
-          <button type="submit" className="enter">
-            Enter
-          </button>
-        </form>
+        <button className="findReservationDetailsButton" onClick={handleFindDetails}>
+          Find Restaurant Details
+        </button>
       </div>
     </div>
   );

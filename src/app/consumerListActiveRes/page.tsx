@@ -1,6 +1,7 @@
 'use client'; 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 // Define the type for Restaurant
 interface Restaurant {
@@ -13,7 +14,6 @@ interface Restaurant {
 }
 
 export default function Home() {
-    // State variables
     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
     const [showActiveOnly, setShowActiveOnly] = useState(false); 
     const [message, setMessage] = useState(''); 
