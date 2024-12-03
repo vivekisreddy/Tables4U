@@ -2,10 +2,10 @@
 
 import axios from "axios";
 import React from "react";
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+
 
 export default function Home() {
-
-    const [redraw, forceRedraw] = React.useState(0);
     const [resName, setResName] = React.useState('');
     const [resAddress, setResAddress] = React.useState('');
     const [resNumTables, setResNumTables] = React.useState(Number);
@@ -18,14 +18,11 @@ export default function Home() {
     const [resID, setRestaurantID] = React.useState('');  // Store the restaurantID
 
 
+    const router = useRouter(); 
+
     const instance = axios.create({
         baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
-
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1)
-    }
 
     const handleAddSeats = (index: number, value: number) => {
         const updatedSeats = [...resSeatsPerTable];
@@ -56,7 +53,7 @@ export default function Home() {
             if (response.status === 200) {
                 setMessage('Restaurant edited successfully!');
                 console.log(response.data);
-                andRefreshDisplay()
+                router.push('/managerHomePage')
             } else {
                 console.log("Error editing restaurant:", result)
                 setMessage(result)
@@ -160,5 +157,3 @@ export default function Home() {
         </div>
     );
 }
-
-

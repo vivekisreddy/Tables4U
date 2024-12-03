@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 // Define the type for Restaurant
 interface Restaurant {
     restaurantID: string;
@@ -13,21 +14,14 @@ interface Restaurant {
 }
 
 export default function AdminHomePage() {
-    const [redraw, forceRedraw] = React.useState(0)
-
-    // State variables
     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
     const [message, setMessage] = useState(''); // For success or error messages
     const [resID, setResID] = useState(''); // For success or error messages
-
+     
+    
     const instance = axios.create({
         baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
       });
-
-      // helper function that forces React app to redraw whenever this is called.
-      function andRefreshDisplay() {
-        forceRedraw(redraw + 1)
-      }
 
       function listRestaurants() {
         // Access the REST-based API and in response (on a 200 or 400) process.
@@ -79,7 +73,6 @@ export default function AdminHomePage() {
               console.log("Restaurant successfully deleted")
               alert("Successfully deleted restaurant!")
               listRestaurants()
-              andRefreshDisplay()
             } else {
               console.log("Error deleting restaurant:", result)
               alert("Error deleting restaurant: " + result)
@@ -95,7 +88,6 @@ export default function AdminHomePage() {
       function adminAccount() {
         // displays account information
         // log out button
-        andRefreshDisplay()
       }
 
       const handleDeleteRestaurant = (and:any) => {
