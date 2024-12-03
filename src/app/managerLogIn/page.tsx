@@ -1,9 +1,9 @@
 'use client'; // directive to clarify client-side. Place at top of ALL .tsx files
 import React from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 export default function ManagerLogin() {
-    const [redraw, forceRedraw] = React.useState(0);
     const [name, setName] = React.useState('');
     const [ID, setID] = React.useState('');
     const [message, setMessage] = React.useState('');
@@ -12,9 +12,7 @@ export default function ManagerLogin() {
         baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial',
     });
 
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1);
-    }
+    const router = useRouter(); 
 
     function managerLogIn() {
         if (name && ID) {
@@ -27,23 +25,21 @@ export default function ManagerLogin() {
 
                     console.log('response status:', status);
 
-        if (status == 200) {
-          console.log("response status:", status)
-          console.log("Manager successfully logged in")
-          setMessage("Logging in")
-          window.location.replace('/managerHomePage')
-          andRefreshDisplay()
+                    if (status == 200) {
+                        console.log('Manager successfully logged in');
+                        setMessage('Successfully logging in');
+                        router.push('/managerHomePage');
+                    } else {
+                        setMessage('Incorrect Log In Information');
+                        console.log('Error logging in:', result);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         } else {
-          setMessage("Incorrect log in information or account does not exist.")
-          console.log("Error logging in:", result)
+            setMessage('Please complete all fields');
         }
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    } else {
-      setMessage("Please complete all fields")
-    }
     }
 
     const handleLogIn = (and: any) => {
@@ -52,8 +48,7 @@ export default function ManagerLogin() {
     };
 
     function createAccount() {
-        window.location.replace('/createRes');
-        andRefreshDisplay();
+        router.push('/createRes');
     }
 
     return (

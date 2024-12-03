@@ -1,22 +1,17 @@
 'use client'  // directive to clarify client-side. Place at top of ALL .tsx files
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 export default function Home() {
-    // initial instantiation for admin create account page
-    const [redraw, forceRedraw] = React.useState(0);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const router = useRouter();
 
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
-
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1);
-    }
 
     function adminCreateAccount() {
         if (email && password) {
@@ -29,8 +24,7 @@ export default function Home() {
 
                     if (status === 200) {
                         console.log("Admin account successfully created");
-                        window.location.replace('/adminLogIn');
-                        andRefreshDisplay();
+                        router.push('/adminLogIn');
                     } else {
                         console.log("Error creating admin account:", result);
                         alert("Error creating admin account: " + result);

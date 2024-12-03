@@ -2,23 +2,18 @@
 
 import React from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 export default function Home() {
-    // initial instantiation for admin log in page
-    const [redraw, forceRedraw] = React.useState(0)
-
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [message, setMessage] = React.useState('')
 
+    const router = useRouter(); 
+
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
-
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1)
-    }
 
     function adminLogIn() {
         if (email && password) {
@@ -30,22 +25,21 @@ export default function Home() {
 
                 console.log("response status:", status)
 
-        if (status == 200) {
-          console.log("Admin successfully logged in")
-          // setMessage("Logging in . . .")
-          window.location.replace('/adminHomePage')
-          andRefreshDisplay()
-        } else {
-          console.log("Error logging in:", result);
-          alert("Error logging in: " + result);
+                if (status == 200) {
+                    console.log("response status:", status)
+                    console.log("Admin successfully logged in")
+                    router.push('/adminHomePage')
+                } else {
+                    console.log("Error logging in:", result);
+                    alert("Error logging in: " + result);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("An unexpected error occurred.");
+            })
         }
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("An unexpected error occured. Please try again.");
-      })
     }
-  }
 
     const handleLogIn = (and:any) => {
         and.preventDefault()
@@ -53,8 +47,7 @@ export default function Home() {
     }
 
     function createAccount() {
-        window.location.replace("/adminCreateAccount")
-        andRefreshDisplay()
+        router.push("/adminCreateAccount")
     }
 
     // below is where the GUI for the admin log in page is drawn
