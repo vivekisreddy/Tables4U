@@ -1,10 +1,10 @@
-'use client'; // Add this at the top of your component file
+'use client';
 
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 import axios from "axios";
 
 export default function ActivateRestaurantPage() {
-  const [redraw, forceRedraw] = React.useState(0)
     const [restaurantID, setRestaurantID] = useState<string>('');
     const [message, setMessage] = useState<string>('');
     const [resID, setResID] = useState(''); 
@@ -14,10 +14,7 @@ export default function ActivateRestaurantPage() {
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
 
-      // helper function that forces React app to redraw whenever this is called.
-      function andRefreshDisplay() {
-        forceRedraw(redraw + 1)
-      }
+    const router = useRouter(); 
 
     // Function to activate the restaurant
     const handleActivateRestaurant = async () => {
@@ -66,8 +63,7 @@ export default function ActivateRestaurantPage() {
           if (status == 200) {
             console.log("response status:", status)
             console.log("Restaurant successfully deleted")
-            window.location.replace('/managerLogIn')
-            andRefreshDisplay()
+            router.push('/managerLogIn')
           } else {
             console.log("Error deleting restaurant:", result)
           }
@@ -81,12 +77,10 @@ export default function ActivateRestaurantPage() {
     function managerAccount() {
       // displays account information
       // log out button
-      andRefreshDisplay()
     }
   
   function editRestaurant() {
-      window.location.replace('/editRes')
-      andRefreshDisplay()
+      router.push('/editRes')
     }
 
     const handleDeleteRestaurant = (and:any) => {
