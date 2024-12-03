@@ -30,21 +30,19 @@ export default function Home() {
                 console.log("response status:", status)
 
                 if (status == 200) {
-                console.log("response status:", status)
-                console.log("Successfully closed Date")
-                setMessage("Successfully closed Date")
-                window.location.replace('/managerHomePage')
-                andRefreshDisplay()
+                    console.log("response status:", status)
+                    console.log("Successfully closed Date")
+                    setMessage("Successfully closed Date")
+                    andRefreshDisplay()
                 } else {
-                setMessage("Invalid Information")
-                console.log("Error closing date:", result)
+                    setMessage("Invalid Information")
+                    console.log("Error closing date:", result)
                 }
-            })
-            .catch(function (error) {
+            }) .catch(function (error) {
                 console.log(error)
             })
         } else {
-        setMessage("Please verify input information")
+            setMessage("Please verify input information")
         }
     }
 
@@ -62,7 +60,6 @@ export default function Home() {
               console.log("response status:", status)
               console.log("Successfully opened Date")
               setMessage("Successfully opened Date")
-              window.location.replace('/managerHomePage')
               andRefreshDisplay()
             } else {
               setMessage("Invalid Information")
@@ -91,7 +88,6 @@ export default function Home() {
               console.log("response status:", status)
               console.log("Successfully opened Date")
               setMessage("Successfully opened Date")
-              window.location.replace('/managerHomePage')
               andRefreshDisplay()
             } else {
               setMessage("Invalid Information")
@@ -121,6 +117,10 @@ export default function Home() {
         viewAvailability()
     }
 
+    const handleHome = async() => {
+        window.location.replace('/managerHomePage')
+    }
+
   // below is where the GUI for the manager log in page is drawn
   return (
     <div className="container">
@@ -144,7 +144,7 @@ export default function Home() {
           />
       </label>
       <label className="label">
-          Enter Date:
+          Enter Date (format: YYYY-MM-DD):
           <input
               type="string"
               value={ID}
@@ -160,6 +160,11 @@ export default function Home() {
       <div className="button-container">
           <button onClick={handleOpenDate} className="button-logIn">
               Open Date
+          </button>
+      </div>
+      <div className="button-container">
+          <button onClick={handleHome} className="button-logIn">
+              Back To Home Page
           </button>
       </div>
 
