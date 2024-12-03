@@ -24,6 +24,7 @@ export default function Home() {
     forceRedraw(redraw + 1);
   }
 
+
   function confirmRes(code: String) {
     const payload = { confirmationCode: code };
     fetch('url', {
