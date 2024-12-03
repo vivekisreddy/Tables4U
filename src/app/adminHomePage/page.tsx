@@ -96,7 +96,7 @@ export default function AdminHomePage() {
         if (reservation) {
           
           // Access the REST-based API and in response (on a 200 or 400) process.
-          instance.post('', {"reservationID":reservation})
+          instance.post('/adminDeleteReservation', {"confirmationCode":reservation})
           .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode
