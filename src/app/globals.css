@@ -217,6 +217,14 @@
   top: 25px;
 }
 
+.dateMessage {
+  font-size: 0.8rem;
+  color: #f70606;
+  position: absolute;
+  left: 0px;
+  top: 175px;
+}
+
 .deleteResButton {
   font-size: 0.8rem;
   color: #555;
