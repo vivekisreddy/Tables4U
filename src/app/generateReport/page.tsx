@@ -6,6 +6,9 @@ export default function Home() {
     // initial instantiation for admin log in page
     const [redraw, forceRedraw] = React.useState(0)
 
+    const currentDate = new Date();
+    const formattedCurrentDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
+
     const [restaurant, setRestaurant] = useState('')
     const [start, setStart] = useState('')
     const [end, setEnd] = useState('')
@@ -48,6 +51,7 @@ export default function Home() {
     if (restaurant == '') {
       alert("Please enter the restaurant ID.")
     }
+    // date format: YYYY-MM-DD
     // TO DO: make sure start date is not in the future
     if (start == '') {
       alert("Please input a start date for the report.")
