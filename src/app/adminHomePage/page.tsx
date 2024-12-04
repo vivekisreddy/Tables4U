@@ -100,10 +100,10 @@ export default function AdminHomePage() {
             console.log("response status:", status)
     
             if (status == 200) {
-              //console.log("Reservation successfully deleted.")
+              console.log("Reservation successfully deleted.")
               alert("Successfully deleted reservation.")
             } else {
-              //console.log("Error deleting reservation:", result)
+              console.log("Error deleting reservation:", result)
               alert("Error deleting reservation: " + result)
             }
           })
