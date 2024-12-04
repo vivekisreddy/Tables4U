@@ -72,6 +72,8 @@ export default function Home() {
         <input type="text" style={{ color: 'black' }} id="restaurant" name="restaurant" value={restaurant} onChange={(and) => setRestaurant(and.target.value)}/>
         <br></br>
         <br></br>
+        <label className="dateFormat">{"Date Format: YYYY-MM-DD"}</label>
+        <br></br>
         <label className="label" htmlFor="start">Start Date:</label>
         <input type="text" style={{ color: 'black' }} id="start" name="start" value={start} onChange={(and) => setStart(and.target.value)}/>
         <br></br>
