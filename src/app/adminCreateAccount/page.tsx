@@ -52,7 +52,6 @@ export default function Home() {
     return (
         <div className="admin-container">
             <label className="adminCreateAccountMessage">{"Create an Admin Account:"}</label>
-            <div className="form-container">
                 <form className="handleCreate" onSubmit={handleCreate}>
                     <label className="label" htmlFor="email">Email:</label>
                     <input type="text" style={{ color: 'black' }} id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)} className="input" />
@@ -63,7 +62,6 @@ export default function Home() {
                     <br />
                     <button type="submit" className="createAdminAccount">Create</button>
                 </form>
-            </div>
         </div>
     )
 }
