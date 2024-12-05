@@ -1,8 +1,6 @@
-'use client'
-
-// pages/index.tsx or any page component inside pages/
+'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 interface Restaurant {
@@ -15,58 +13,40 @@ interface Restaurant {
 }
 
 export default function Home() {
-  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
-  const [showActiveOnly, setShowActiveOnly] = useState(false); 
+  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]);
   const [message, setMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const router = useRouter();
 
-  const router = useRouter(); // instance for page routing programmatically 
-
-  const listRestaurants = async () => {
-    try {
-      const response = await axios.get(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-
-      if (response.status === 200) {
-        let restaurantData = response.data;
-        restaurantData = JSON.parse(restaurantData.body);
-        setRestaurantList(restaurantData);
-        setMessage('Restaurants loaded successfully!');
-      } else {
-        throw new Error('Failed to load restaurants.');
-      }
-    } catch (error) {
-      console.error('Error listing restaurants:', error);
-      setMessage('Error loading restaurants.');
+  // Handle Search for restaurant by name
+  const handleSearch = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!searchQuery.trim()) {
+      setMessage('Please enter a restaurant name to search.');
+      return;
     }
+    // Existing name search logic
   };
 
-  const toggleActiveRestaurants = () => {
-    setShowActiveOnly(!showActiveOnly);
-    setMessage(
-      showActiveOnly ? 'Showing all restaurants.' : 'Showing only active restaurants.'
-    );
+  const handleSearchByDateTime = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!date || !time) {
+      setMessage('Please enter both date and time to search.');
+      return;
+    }
+    // Navigating to the search results page with query parameters
+    router.push(`/searchResDateTime?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`);
   };
+  
 
-  const displayedRestaurants = showActiveOnly
-    ? restaurantList.filter((restaurant) => restaurant.isActive === 1)
-    : restaurantList;
-
-  const handleFindDetails = (and: any) => {
-    and.preventDefault();
-    router.push("/consumerViewReservation");  // Correct usage of router.push() for navigation
-  };
-
-  // brings admin to the admin log in page
   function adminLogIn() {
-    router.push('/adminLogIn');  // Correct usage of router.push()
+    router.push('/adminLogIn');
   }
 
   function managerLogIn() {
-    router.push('/managerLogIn');  // Correct usage of router.push()
-    //submit comment comment comment
-    // whatever comment comment
+    router.push('/managerLogIn');
   }
 
   return (
@@ -86,61 +66,80 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Search Section */}
+      <div className="search-section">
+        <form onSubmit={handleSearch} className="search-form">
+          <input
+            type="text"
+            placeholder="Search for a restaurant..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button type="submit" className="search-button">
+            Search
+          </button>
+        </form>
+      </div>
+
+      {/* Date and Time Input Section */}
+      <div className="date-time-container">
+        <h2>Search by Date and Time</h2>
+        <form onSubmit={handleSearchByDateTime} className="date-time-form">
+          <div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="date-input"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="time">Time:</label>
+            <input
+              type="number"
+              id="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="time-input"
+              min="0"
+              max="24"
+              placeholder="Enter time (0-24)"
+              required
+            />
+          </div>
+          <button type="submit" className="search-button">
+            Submit
+          </button>
+        </form>
+      </div>
+
+      {/* Display Message */}
+      {message && <p className="message">{message}</p>}
+
       {/* Consumer Dashboard Section */}
       <div className="consumer-dashboard">
         <h2 className="title">Consumer Dashboard</h2>
 
         {/* Buttons for listing restaurants */}
         <div className="button-container">
-          <button className="listRestaurantsButton" onClick={listRestaurants}>
+          <button
+            className="listRestaurantsButton"
+            onClick={() => router.push('/consumerListActiveRes')}
+          >
             List Active Restaurants
           </button>
-          {restaurantList.length > 0 && (
-            <button className="toggleRestaurantsButton" onClick={toggleActiveRestaurants}>
-              {showActiveOnly ? 'Show All Restaurants' : 'Show Active Restaurants'}
-            </button>
-          )}
         </div>
-
-        {/* Display message */}
-        {message && <p className="message">{message}</p>}
-
-        {/* Display restaurants */}
-        {restaurantList.length > 0 ? (
-          <table className="restaurant-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Open Time</th>
-                <th>Close Time</th>
-                {showActiveOnly && <th>Status</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {displayedRestaurants.map((restaurant, index) => (
-                <tr key={restaurant.restaurantID || index}>
-                  <td>{restaurant.name}</td>
-                  <td>{restaurant.address}</td>
-                  <td>{restaurant.openTime}</td>
-                  <td>{restaurant.closeTime}</td>
-                  {showActiveOnly && <td>Active</td>}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          message && message !== 'Restaurants loaded successfully!' && (
-            <p className="message">{message}</p>
-          )
-        )}
       </div>
 
       {/* Reservation Confirmation Section */}
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
         <p>Find your details here!</p>
-        <button className="findReservationDetailsButton" onClick={handleFindDetails}>
+        <button className="findReservationDetailsButton">
           Find Restaurant Details
         </button>
       </div>
