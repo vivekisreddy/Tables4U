@@ -1,6 +1,4 @@
 'use client'
-
-// pages/index.tsx or any page component inside pages/
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 import axios from 'axios';
@@ -15,58 +13,63 @@ interface Restaurant {
 }
 
 export default function Home() {
-  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
-  const [showActiveOnly, setShowActiveOnly] = useState(false); 
+  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]);
   const [message, setMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // State for the search input
+  const router = useRouter(); // instance for page routing programmatically
 
-  const router = useRouter(); // instance for page routing programmatically 
+  // Handle Search for restaurant by name
+  const handleSearch = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-  const listRestaurants = async () => {
+    if (!searchQuery.trim()) {
+      setMessage('Please enter a restaurant name to search.');
+      return;
+    }
+
     try {
-      const response = await axios.get(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
-        { headers: { 'Content-Type': 'application/json' } }
+      // Sending the name directly in the body of the request
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerSearchByRes',
+        { name: searchQuery }, // Directly send the name in the body
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
       );
 
+      // Check if the response status is OK and process the response
       if (response.status === 200) {
-        let restaurantData = response.data;
-        restaurantData = JSON.parse(restaurantData.body);
-        setRestaurantList(restaurantData);
-        setMessage('Restaurants loaded successfully!');
+        const restaurantData = JSON.parse(response.data.body);
+
+        if (restaurantData && restaurantData.restaurant) {
+          setRestaurantList([restaurantData.restaurant]); // Show the searched restaurant
+          setMessage('');
+
+          // Use URL constructor to build the URL with query params
+          const url = new URL('/consumerSearchResDetails', window.location.origin);
+          url.searchParams.append('restaurantData', JSON.stringify(restaurantData.restaurant));
+
+          // Redirect to the consumerSearchResDetails page
+          router.push(url.toString());
+        } else {
+          setRestaurantList([]);
+          setMessage('No restaurant found with that name.');
+        }
       } else {
-        throw new Error('Failed to load restaurants.');
+        setMessage('Failed to search for the restaurant.');
       }
     } catch (error) {
-      console.error('Error listing restaurants:', error);
-      setMessage('Error loading restaurants.');
+      console.error('Error searching for the restaurant:', error);
+      setMessage('Error searching for the restaurant.');
     }
   };
 
-  const toggleActiveRestaurants = () => {
-    setShowActiveOnly(!showActiveOnly);
-    setMessage(
-      showActiveOnly ? 'Showing all restaurants.' : 'Showing only active restaurants.'
-    );
-  };
-
-  const displayedRestaurants = showActiveOnly
-    ? restaurantList.filter((restaurant) => restaurant.isActive === 1)
-    : restaurantList;
-
-  const handleFindDetails = (and: any) => {
-    and.preventDefault();
-    router.push("/consumerViewReservation");  // Correct usage of router.push() for navigation
-  };
-
-  // brings admin to the admin log in page
   function adminLogIn() {
-    router.push('/adminLogIn');  // Correct usage of router.push()
+    router.push('/adminLogIn');
   }
 
   function managerLogIn() {
-    router.push('/managerLogIn');  // Correct usage of router.push()
-    //submit comment comment comment
-    // whatever comment comment
+    router.push('/managerLogIn');
   }
 
   return (
@@ -86,61 +89,45 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Search Section */}
+      <div className="search-section">
+        <form onSubmit={handleSearch} className="search-form">
+          <input
+            type="text"
+            placeholder="Search for a restaurant..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button type="submit" className="search-button">
+            Search
+          </button>
+        </form>
+      </div>
+
+      {/* Display Message */}
+      {message && <p className="message">{message}</p>}
+
       {/* Consumer Dashboard Section */}
       <div className="consumer-dashboard">
         <h2 className="title">Consumer Dashboard</h2>
 
         {/* Buttons for listing restaurants */}
         <div className="button-container">
-          <button className="listRestaurantsButton" onClick={listRestaurants}>
+          <button
+            className="listRestaurantsButton"
+            onClick={() => router.push('/consumerListActiveRes')} // Navigate to ActiveRestaurants page
+          >
             List Active Restaurants
           </button>
-          {restaurantList.length > 0 && (
-            <button className="toggleRestaurantsButton" onClick={toggleActiveRestaurants}>
-              {showActiveOnly ? 'Show All Restaurants' : 'Show Active Restaurants'}
-            </button>
-          )}
         </div>
-
-        {/* Display message */}
-        {message && <p className="message">{message}</p>}
-
-        {/* Display restaurants */}
-        {restaurantList.length > 0 ? (
-          <table className="restaurant-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Open Time</th>
-                <th>Close Time</th>
-                {showActiveOnly && <th>Status</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {displayedRestaurants.map((restaurant, index) => (
-                <tr key={restaurant.restaurantID || index}>
-                  <td>{restaurant.name}</td>
-                  <td>{restaurant.address}</td>
-                  <td>{restaurant.openTime}</td>
-                  <td>{restaurant.closeTime}</td>
-                  {showActiveOnly && <td>Active</td>}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          message && message !== 'Restaurants loaded successfully!' && (
-            <p className="message">{message}</p>
-          )
-        )}
       </div>
 
       {/* Reservation Confirmation Section */}
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
         <p>Find your details here!</p>
-        <button className="findReservationDetailsButton" onClick={handleFindDetails}>
+        <button className="findReservationDetailsButton">
           Find Restaurant Details
         </button>
       </div>
