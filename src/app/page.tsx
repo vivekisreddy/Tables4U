@@ -1,6 +1,6 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 interface Restaurant {
@@ -15,54 +15,31 @@ interface Restaurant {
 export default function Home() {
   const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]);
   const [message, setMessage] = useState('');
-  const [searchQuery, setSearchQuery] = useState(''); // State for the search input
-  const router = useRouter(); // instance for page routing programmatically
+  const [searchQuery, setSearchQuery] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const router = useRouter();
 
   // Handle Search for restaurant by name
   const handleSearch = async (event: React.FormEvent) => {
     event.preventDefault();
-
     if (!searchQuery.trim()) {
       setMessage('Please enter a restaurant name to search.');
       return;
     }
-
-    try {
-      // Sending the name directly in the body of the request
-      const response = await axios.post(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerSearchByRes',
-        { name: searchQuery }, // Directly send the name in the body
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-
-      // Check if the response status is OK and process the response
-      if (response.status === 200) {
-        const restaurantData = JSON.parse(response.data.body);
-
-        if (restaurantData && restaurantData.restaurant) {
-          setRestaurantList([restaurantData.restaurant]); // Show the searched restaurant
-          setMessage('');
-
-          // Use URL constructor to build the URL with query params
-          const url = new URL('/consumerSearchResDetails', window.location.origin);
-          url.searchParams.append('restaurantData', JSON.stringify(restaurantData.restaurant));
-
-          // Redirect to the consumerSearchResDetails page
-          router.push(url.toString());
-        } else {
-          setRestaurantList([]);
-          setMessage('No restaurant found with that name.');
-        }
-      } else {
-        setMessage('Failed to search for the restaurant.');
-      }
-    } catch (error) {
-      console.error('Error searching for the restaurant:', error);
-      setMessage('Error searching for the restaurant.');
-    }
+    // Existing name search logic
   };
+
+  const handleSearchByDateTime = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!date || !time) {
+      setMessage('Please enter both date and time to search.');
+      return;
+    }
+    // Navigating to the search results page with query parameters
+    router.push(`/searchResDateTime?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`);
+  };
+  
 
   function adminLogIn() {
     router.push('/adminLogIn');
@@ -105,6 +82,41 @@ export default function Home() {
         </form>
       </div>
 
+      {/* Date and Time Input Section */}
+      <div className="date-time-container">
+        <h2>Search by Date and Time</h2>
+        <form onSubmit={handleSearchByDateTime} className="date-time-form">
+          <div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="date-input"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="time">Time:</label>
+            <input
+              type="number"
+              id="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="time-input"
+              min="0"
+              max="24"
+              placeholder="Enter time (0-24)"
+              required
+            />
+          </div>
+          <button type="submit" className="search-button">
+            Submit
+          </button>
+        </form>
+      </div>
+
       {/* Display Message */}
       {message && <p className="message">{message}</p>}
 
@@ -116,7 +128,7 @@ export default function Home() {
         <div className="button-container">
           <button
             className="listRestaurantsButton"
-            onClick={() => router.push('/consumerListActiveRes')} // Navigate to ActiveRestaurants page
+            onClick={() => router.push('/consumerListActiveRes')}
           >
             List Active Restaurants
           </button>

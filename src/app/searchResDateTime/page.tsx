@@ -27,15 +27,24 @@ export default function SearchResDateTime() {
           { headers: { 'Content-Type': 'application/json' } }
         );
 
-        if (response.status === 200) {
-          setRestaurants(response.data);
+        console.log('Raw Backend Response:', response.data); // Debugging step
+
+        // Parse the body of the backend response
+        const parsedBody = JSON.parse(response.data.body);
+
+        if (response.status === 200 && Array.isArray(parsedBody)) {
+          setRestaurants(parsedBody); // Successfully parse and set the restaurants
           setMessage('');
+        } else if (parsedBody.message) {
+          setRestaurants([]);
+          setMessage(parsedBody.message); // Show the backend message
         } else {
           setRestaurants([]);
           setMessage('No restaurants found for the selected date and time.');
         }
       } catch (error) {
         console.error('Error fetching restaurants:', error);
+        setRestaurants([]);
         setMessage('Error fetching restaurants.');
       }
     };
@@ -50,17 +59,21 @@ export default function SearchResDateTime() {
       <h1>Available Restaurants</h1>
       {message && <p className="message">{message}</p>}
       <div className="restaurants-list">
-        {restaurants.map((restaurant, index) => (
-          <div key={index} className="restaurant-card">
-            <h2>{restaurant.name}</h2>
-            <p>Address: {restaurant.address}</p>
-            <p>
-              Open Time: {restaurant.openTime} | Close Time: {restaurant.closeTime}
-            </p>
-            <p>Available Tables: {restaurant.availableTables.join(', ')}</p>
-            <button className="make-reservation-button">Make Reservation</button>
-          </div>
-        ))}
+        {restaurants.length > 0 ? (
+          restaurants.map((restaurant, index) => (
+            <div key={index} className="restaurant-card">
+              <h2>{restaurant.name}</h2>
+              <p>Address: {restaurant.address}</p>
+              <p>
+                Open Time: {restaurant.openTime} | Close Time: {restaurant.closeTime}
+              </p>
+              <p>Available Tables: {restaurant.availableTables.join(', ')}</p>
+              <button className="make-reservation-button">Make Reservation</button>
+            </div>
+          ))
+        ) : (
+          !message && <p className="message">Loading restaurants...</p>
+        )}
       </div>
     </div>
   );
