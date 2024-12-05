@@ -52,12 +52,19 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.consumer-dashboard .title {
+.consumer-dashboard {
   font-size: 1.8rem;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
   color: #333;
   text-align: center;
   
+}
+
+.title {
+  position: absolute;
+  top: 100px;
+  right: 750px;
+
 }
 
 /* Button container */
@@ -75,6 +82,7 @@
   padding: 10px 15px;
   font-size: 1rem;
   position: absolute;
+  top: 190px;
   left: 815px;
   border-radius: 5px;
   border: none;
@@ -89,6 +97,9 @@
 /* Reservation confirmation section */
 .reservation-section {
   margin: 20px auto;
+  position: absolute;
+  top: 500px;
+  right: 750px;
   padding: 20px;
   max-width: 600px;
   background-color: white;
@@ -113,10 +124,44 @@
   align-items: center;
 }
 
+.adminLogInMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: #3d3333;
+  margin-bottom: 20px;
+  position: absolute;
+  left: 460px;
+  top: 200px;
+}
+
+.availabilityReportButton {
+  font-size: 0.8rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 25px;
+  top: 65px;
+}
+
+.confirmMessage {
 .reservation-section form label {
   margin-bottom: 10px;
   font-size: 1rem;
   color: #555;
+}
+}
+
+.confirmResMessage {
+  font-size: 1rem;
+  color: #555;
+  position: absolute;
+  left: 25px;
+  top: 50px;
 }
 
 .reservation-section form input {
@@ -175,10 +220,210 @@
   color: #f44336; /* Red for error messages */
 }
 
+.dateFormat {
+  font-size: 1rem;
+  color: #555;
+  position: absolute;
+  left: 25px;
+  top: 25px;
+}
+
+.dateMessage {
+  font-size: 0.8rem;
+  color: #f70606;
+  position: absolute;
+  left: 0px;
+  top: 175px;
+}
+
+.deleteResButton {
+  font-size: 0.8rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 335px;
+  top: 2px;
+}
+
+.deleteResMessage {
+  font-size: 1rem;
+  color: #555;
+  position: absolute;
+  left: 25px;
+  top: 125px;
+}
+
+.deleteReservationButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 325px;
+  top: -8px;
+}
+
+.deleteRestaurantButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 295px;
+  top: -8px;
+}
+
+.editRestaurantButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 1325px;
+  top: 100px;
+  top: 100px;
+}
+
+.enter {
+  font-size: 0.8rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 335px;
+  top: 2px;
+}
+
+.findReservationDetailsButton {
+  font-size: 1rem;
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 650px;
+  top: 380px;
 .message.success {
   color: #4CAF50; /* Green for success messages */
 }
+}
 
+.generateReportButton {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.generateReportMessage {
+  font-size: 1rem;
+  color: #555;
+  position: absolute;
+  left: 25px;
+  top: 25px;
+}
+
+/* Styling for the search section */
+.search-section {
+  display: flex;
+  position: absolute;
+  top: 225px;
+  right: 600px;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.search-form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search-input {
+  width: 400px;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-weight: 300; /* Lighter font */
+}
+
+.search-input::placeholder {
+  color: #aaa; /* Light color for placeholder */
+}
+
+.search-button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+/* For the restaurant details page */
+.restaurant-details {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.restaurant-details h1 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.restaurant-details p {
+  margin-bottom: 0.5rem;
+}
+
+.make-reservation-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.make-reservation-button:hover {
+  background-color: #218838;
+}
 
 
 /* This is all managerLogin Page stuff */ 
@@ -192,6 +437,116 @@
   background-color: var(--background);
   color: var(--foreground);
   border: 10px solid #001694;
+}
+
+.handleActivateRestaurant {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 500px;
+}
+
+.handleFindDetails {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 75px;
+}
+
+.handleGenerate {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 50px;
+}
+
+.handleConfirm {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 75px;
+}
+
+.handleCreate {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
+}
+
+.handleDelete {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 150px;
+}
+
+.handleDeleteRestaurant {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 800px;
+}
+
+.handleDeleteReservation {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 750px;
+}
+
+.handleEditRestaurant {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 700px;
+}
+
+.handleFindDetails {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 25px;
+  top: 800px;
+  left: 25px;
+  top: 800px;
+}
+
+.handleLogIn {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
+}
+
+.handleSearch {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 460px;
+  top: 300px;
 }
 
 /* Box to wrap input fields and login button */
@@ -311,6 +666,9 @@
   margin: 20px auto;
   width: 400px;
 }
+
+
+
 
 /* This is all the CSS stuff for the adminLogin pgae */ 
 /* Admin Login Page Specific Styles */
@@ -471,4 +829,78 @@
   text-align: center;
   color: #f96f6f;
   margin-top: 10px;
+}
+
+/* This is styling stuff for consumerListActiveRestaurant */
+.header-center { 
+  position: absolute;
+  right: 600px;
+}
+
+.restaurant-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 800px;
+}
+
+.restaurant-table th, .restaurant-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.restaurant-table th {
+  background-color: #f2f2f2;
+}
+
+.restaurant-item {
+  margin-bottom: 20px;
+}
+
+.deleteRestaurantButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteRestaurantButton:hover {
+  background-color: rgb(31, 116, 91);
+}
+
+/* Manager View Day Availability Page section */
+.table {
+  display: flex;
+  flex-direction: column; /* Arrange rows vertically */
+  border: 1px solid #ccc;
+  width: 80%;
+  margin: auto;
+}
+
+/* Row styling */
+.table-row {
+  display: flex;
+  flex-direction: row; /* Arrange cells horizontally */
+  border-bottom: 1px solid #ccc;
+}
+
+/* Cell styling */
+.table-cell {
+  flex: 1; /* Cells take equal width */
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #ccc;
+}
+
+/* Remove the last cell's border in each row */
+.table-cell:last-child {
+  border-right: none;
+}
+
+/* Header row styling */
+.table-header {
+  background-color: #f4f4f4;
+  font-weight: bold;
 }

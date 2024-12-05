@@ -64,7 +64,11 @@ export default function Home() {
     const handleEditRes = (and:any) => {
         and.preventDefault()
         editRes()
-      }
+    }
+
+    const handleHome = async() => {
+        router.push('/managerHomePage')
+    }
 
     return (
         <div className="container">
@@ -142,6 +146,11 @@ export default function Home() {
             <div className="button-container">
                 <button onClick={handleEditRes} className="button-editRes">
                     Confirm Edits
+                </button>
+            </div>
+            <div className="button-container">
+                <button onClick={handleHome} className="button-editRes">
+                    Back to Home
                 </button>
             </div>
             {message && <p className="message">{message}</p>}
