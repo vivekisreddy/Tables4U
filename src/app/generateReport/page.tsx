@@ -56,14 +56,12 @@ export default function Home() {
     if (restaurant == '') {
       alert("Please enter the restaurant ID.")
     }
-
     if (startString == '') {
       alert("Please input a start date for the report.")
     }
     if (startDate >= today) {
       alert("Start date must be in the past.")
     }
-
     if (endString == '') {
       alert("Please input an end date for the report.")
     }
