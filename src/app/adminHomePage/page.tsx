@@ -1,7 +1,6 @@
-'use client'; 
+'use client';
 import React, { useState } from 'react';
 import axios from 'axios';
-
 
 // Define the type for Restaurant
 interface Restaurant {
@@ -16,84 +15,74 @@ interface Restaurant {
 export default function AdminHomePage() {
     const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); // Store the list of restaurants
     const [message, setMessage] = useState(''); // For success or error messages
-    const [resID, setResID] = useState(''); // For success or error messages
-     
-    
+    const [resID, setResID] = useState(''); // For deleting restaurants
+    const [loading, setLoading] = useState<boolean>(false); // For loading state
+
     const instance = axios.create({
         baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
-      });
+    });
 
-      function listRestaurants() {
-        // Access the REST-based API and in response (on a 200 or 400) process.
+    function listRestaurants() {
+        setLoading(true); // Set loading to true before making the API request
+        // Access the REST-based API and process the response.
         instance.get('/adminList')
         .then(function (response) {
-          console.log("raw response:", response)
-          let status = response.data.statusCode
-          let result = response.data.body
-  
-          console.log("response status:", status)
-  
-          if (status == 200) {
-              let restaurantData = response.data;
+            console.log("raw response:", response);
+            let status = response.data.statusCode;
+            let result = response.data.body;
 
-              // Log the raw response body
-              console.log("Raw Data from Lambda:", restaurantData);
+            console.log("response status:", status);
 
-              // If the data is a string, parse it
-              restaurantData = JSON.parse(restaurantData.body);
+            if (status === 200) {
+                let restaurantData = response.data;
+                // If the data is a string, parse it
+                restaurantData = JSON.parse(restaurantData.body);
 
-              console.log("Parsed Restaurant Data:", restaurantData);
-
-              // Update the restaurant list state
-              setRestaurantList(restaurantData);
-              setMessage('Restaurants loaded successfully!');
-          } else {
-            console.log("Error listing restaurants:", result)
-          }
+                // Update the restaurant list state
+                setRestaurantList(restaurantData);
+                setMessage('Restaurants loaded successfully!');
+            } else {
+                console.log("Error listing restaurants:", result);
+                setMessage('Error loading restaurants.');
+            }
         })
         .catch(function (error) {
-          console.log(error)
+            console.log(error);
+            setMessage('Error loading restaurants.');
         })
-      }
+        .finally(() => {
+            setLoading(false); // Set loading to false after the request completes
+        });
+    }
 
-      function deleteRestaurant() {
+    function deleteRestaurant() {
         if (resID) {
-          
-          // Access the REST-based API and in response (on a 200 or 400) process.
-          instance.post('/adminDeleteRes', {"restaurantID":resID})
-          .then(function (response) {
-            console.log("raw response:", response)
-            let status = response.data.statusCode
-            let result = response.data.body
-    
-            console.log("response status:", status)
-    
-            if (status == 200) {
-              console.log("response status:", status)
-              console.log("Restaurant successfully deleted")
-              alert("Successfully deleted restaurant!")
-              listRestaurants()
-            } else {
-              console.log("Error deleting restaurant:", result)
-              alert("Error deleting restaurant: " + result)
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-            alert("An unexpected error occured")
-          })
-        }
-      }
-  
-      function adminAccount() {
-        // displays account information
-        // log out button
-      }
+            instance.post('/adminDeleteRes', { "restaurantID": resID })
+            .then(function (response) {
+                console.log("raw response:", response);
+                let status = response.data.statusCode;
+                let result = response.data.body;
 
-      const handleDeleteRestaurant = (and:any) => {
-        and.preventDefault()
-        deleteRestaurant()
-      }
+                console.log("response status:", status);
+
+                if (status === 200) {
+                    alert("Successfully deleted restaurant!");
+                    listRestaurants(); // Reload restaurant list after deletion
+                } else {
+                    alert("Error deleting restaurant: " + result);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("An unexpected error occurred");
+            });
+        }
+    }
+
+    const handleDeleteRestaurant = (event: React.FormEvent) => {
+        event.preventDefault();
+        deleteRestaurant();
+    }
 
     return (
         <div className="admin-container">
@@ -108,41 +97,43 @@ export default function AdminHomePage() {
             {/* Display message */}
             {message && <p className="message">{message}</p>}
 
-            {/* Display each restaurant */}
-            {restaurantList.length > 0 ? (
-                <div className="restaurant-list">
-                    {restaurantList.map((restaurant) => (
-                        <div key={restaurant.restaurantID} className="restaurant-item">
-                            <p>
-                                <strong>ID:</strong> {restaurant.restaurantID}
-                            </p>
-                            <p>
-                                <strong>Name:</strong> {restaurant.name}
-                            </p>
-                            <p>
-                                <strong>Address:</strong> {restaurant.address}
-                            </p>
-                            <p>
-                                <strong>Open Time:</strong> {restaurant.openTime}
-                            </p>
-                            <p>
-                                <strong>Close Time:</strong> {restaurant.closeTime}
-                            </p>
-                            <p>
-                                <strong>Status:</strong> {restaurant.isActive === 1 ? 'Active' : 'Inactive'}
-                            </p>
-                            <hr />
-                        </div>
-                    ))}
-                </div>
-            ) : (
+            {/* Display loading state */}
+            {loading && <p>Loading...</p>}
+
+            {/* Display restaurants in a table format */}
+            {!loading && restaurantList.length > 0 ? (
+                <table className="restaurant-table">
+                    <thead>
+                        <tr>
+                            <th>Restaurant ID</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Open Time</th>
+                            <th>Close Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {restaurantList.map((restaurant) => (
+                            <tr key={restaurant.restaurantID}>
+                                <td>{restaurant.restaurantID}</td>
+                                <td>{restaurant.name}</td>
+                                <td>{restaurant.address}</td>
+                                <td>{restaurant.openTime}</td>
+                                <td>{restaurant.closeTime}</td>
+                                <td>{restaurant.isActive === 1 ? 'Active' : 'Inactive'}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : !loading && restaurantList.length === 0 ? (
                 <p>No restaurants available.</p>
-            )}
-            <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
-            
+            ) : null}
+
+            {/* Delete restaurant form */}
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
                 <label className="label" htmlFor="resID">Restaurant ID:</label>
-                <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
+                <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(event) => setResID(event.target.value)} />
                 <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
             </form>
         </div>
