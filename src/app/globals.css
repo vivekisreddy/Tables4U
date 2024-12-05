@@ -564,3 +564,36 @@
   position: absolute;
   right: 600px;
 }
+
+.restaurant-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 800px;
+}
+
+.restaurant-table th, .restaurant-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.restaurant-table th {
+  background-color: #f2f2f2;
+}
+
+.restaurant-item {
+  margin-bottom: 20px;
+}
+
+.deleteRestaurantButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteRestaurantButton:hover {
+  background-color: rgb(31, 116, 91);
+}
