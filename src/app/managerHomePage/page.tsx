@@ -83,6 +83,10 @@ export default function ActivateRestaurantPage() {
       router.push('/editRes')
     }
 
+  function viewAvailability() {
+    router.push('/managerViewDay')
+  }
+
     const handleDeleteRestaurant = (and:any) => {
       and.preventDefault()
       if (resID == '') {
@@ -119,6 +123,7 @@ export default function ActivateRestaurantPage() {
             {message && <p className="message">{message}</p>} {/* Display the message */}
 
             <button className="editRestaurantButton" onClick={() => editRestaurant()} >Edit Restaurant</button>
+            <button className="editRestaurantButton" onClick={() => viewAvailability()} >View Day Availability</button>
             <button className="managerAccountButton" onClick={(e) => managerAccount()} >Account Information</button>
 
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>

@@ -67,7 +67,7 @@ export default function Home() {
     }
 
     const handleHome = async() => {
-        window.location.replace('/managerHomePage')
+        router.push('/managerHomePage')
     }
 
     return (

@@ -1,27 +1,26 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
 import React from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 export default function Home() {
-    // initial instantiation for admin log in page
-    const [redraw, forceRedraw] = React.useState(0)
 
     const [availability, setAvailability] = React.useState('')
     const [date, setDate] = React.useState('')
     const [ID, setID] = React.useState('')
     const [message, setMessage] = React.useState('');
 
+    const router = useRouter(); 
+
+
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
 
-    function andRefreshDisplay() {
-      forceRedraw(redraw + 1)
-    }
 
     function closeDate() {
         if (date && ID) {
-            instance.post('/managerCloseDate', {"restaurantID":ID, "closedDate":date})
+            instance.post('/managerCloseDate', {"resID":ID, "dateToClose":date})
             .then(function (response) {
                 console.log("raw response:", response)
                 let status = response.data.statusCode
@@ -33,7 +32,6 @@ export default function Home() {
                     console.log("response status:", status)
                     console.log("Successfully closed Date")
                     setMessage("Successfully closed Date")
-                    andRefreshDisplay()
                 } else {
                     setMessage("Invalid Information")
                     console.log("Error closing date:", result)
@@ -48,7 +46,7 @@ export default function Home() {
 
     function openDate() {
         if (date && ID) {
-          instance.post('/managerCloseDate', {"restaurantID":ID, "openDate":date})
+          instance.post('/managerOpenDate', {"resID":ID, "dateToClose":date})
           .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode
@@ -60,7 +58,6 @@ export default function Home() {
               console.log("response status:", status)
               console.log("Successfully opened Date")
               setMessage("Successfully opened Date")
-              andRefreshDisplay()
             } else {
               setMessage("Invalid Information")
               console.log("Error opening date:", result)
@@ -76,22 +73,23 @@ export default function Home() {
 
     function viewAvailability() {
         if (date) {
-          instance.post('/managerCloseDate', {"restaurantID":ID, "openDate":date})
+          instance.post('/managerViewDay', {"resID":ID, "date":date})
           .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode
             let result = response.data.body
     
             console.log("response status:", status)
+            let availabilityInfo = result;
     
             if (status == 200) {
-              console.log("response status:", status)
-              console.log("Successfully opened Date")
-              setMessage("Successfully opened Date")
-              andRefreshDisplay()
+                setAvailability(availabilityInfo)
+                console.log("response status:", status)
+                console.log("Showing Day Availability")
+                setMessage("Showing Day Availability")
             } else {
-              setMessage("Invalid Information")
-              console.log("Error opening date:", result)
+                setMessage("Invalid Information")
+                console.log("Error Showing Availability:", result)
             }
           })
           .catch(function (error) {
@@ -118,7 +116,7 @@ export default function Home() {
     }
 
     const handleHome = async() => {
-        window.location.replace('/managerHomePage')
+        router.push('/managerHomePage')
     }
 
   // below is where the GUI for the manager log in page is drawn
@@ -126,14 +124,19 @@ export default function Home() {
     <div className="container">
       <h1 className="title">Manager Log In</h1>
       <label className="label">
-          Day Availability
+          Enter Date (format: YYYY-MM-DD):
           <input
               type="string"
-              value={availability}
-              onChange={(e) => handleSetAvailability(e.target.value)}
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
               className="input"
           />
       </label>
+      <div className="button-container">
+        <button onClick={(e) => handleSetAvailability(e)} className={"button-logIn"}>
+            View Availability
+            </button>
+      </div>
       <label className="label">
           Restaurant ID:
           <input
@@ -143,15 +146,7 @@ export default function Home() {
               className="input"
           />
       </label>
-      <label className="label">
-          Enter Date (format: YYYY-MM-DD):
-          <input
-              type="string"
-              value={ID}
-              onChange={(e) => setDate(e.target.value)}
-              className="input"
-          />
-      </label>
+      
       <div className="button-container">
           <button onClick={handleCloseDate} className="button-logIn">
               Close Date

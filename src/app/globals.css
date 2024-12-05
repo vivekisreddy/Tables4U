@@ -472,3 +472,38 @@
   color: #f96f6f;
   margin-top: 10px;
 }
+
+/* Manager View Day Availability Page section */
+.table {
+  display: flex;
+  flex-direction: column; /* Arrange rows vertically */
+  border: 1px solid #ccc;
+  width: 80%;
+  margin: auto;
+}
+
+/* Row styling */
+.table-row {
+  display: flex;
+  flex-direction: row; /* Arrange cells horizontally */
+  border-bottom: 1px solid #ccc;
+}
+
+/* Cell styling */
+.table-cell {
+  flex: 1; /* Cells take equal width */
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #ccc;
+}
+
+/* Remove the last cell's border in each row */
+.table-cell:last-child {
+  border-right: none;
+}
+
+/* Header row styling */
+.table-header {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
