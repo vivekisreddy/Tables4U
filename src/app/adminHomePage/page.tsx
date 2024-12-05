@@ -121,7 +121,12 @@ export default function AdminHomePage() {
 
       const handleDeleteRestaurant = (and:any) => {
         and.preventDefault()
-        deleteRestaurant()
+        if (resID == '') {
+          alert("Please enter the restaurant ID to delete a restaurant.")
+        }
+        else {
+          deleteRestaurant()
+        }
       }
 
       const handleDeleteReservation = (and:any) => {
