@@ -1,105 +1,88 @@
-'use client'; 
-import React, { useState } from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; // To handle navigation
 
-// Define the type for Restaurant
 interface Restaurant {
-    restaurantID: string;
-    name: string;
-    address: string;
-    openTime: number;
-    closeTime: number;
-    isActive: number;
+  name: string;
+  address: string;
+  openTime: number;
+  closeTime: number;
+  isActive: number;
 }
 
-export default function Home() {
-    // State variables
-    const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]); 
-    const [showActiveOnly, setShowActiveOnly] = useState(false); 
-    const [message, setMessage] = useState(''); 
+const ActiveRestaurantsPage = () => {
+  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]);
+  const [message, setMessage] = useState('');
+  const router = useRouter();
 
-    // Function to list all restaurants from the API
-    const listRestaurants = async () => {
-        try {
-            const response = await axios.get(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
-                { headers: { 'Content-Type': 'application/json' } }
-            );
+  // List active restaurants from API
+  const listRestaurants = async () => {
+    try {
+      const response = await axios.get(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerListRes',
+        { headers: { 'Content-Type': 'application/json' } }
+      );
 
-            if (response.status === 200) {
-                let restaurantData = response.data;
-                restaurantData = JSON.parse(restaurantData.body);
+      if (response.status === 200) {
+        let restaurantData = response.data;
+        restaurantData = JSON.parse(restaurantData.body);
+        setRestaurantList(restaurantData);
+      } else {
+        throw new Error('Failed to load restaurants.');
+      }
+    } catch (error) {
+      console.error('Error listing restaurants:', error);
+      setMessage('Error loading restaurants.');
+    }
+  };
 
-                setRestaurantList(restaurantData);
-                setMessage('Restaurants loaded successfully!');
-            } else {
-                throw new Error('Failed to load restaurants.');
-            }
-        } catch (error) {
-            console.error('Error listing restaurants:', error);
-            setMessage('Error loading restaurants.');
-        }
-    };
+  useEffect(() => {
+    listRestaurants();
+  }, []);
 
-    // Toggle between showing all or only active restaurants
-    const toggleActiveRestaurants = () => {
-        setShowActiveOnly(!showActiveOnly);
-        setMessage(
-            showActiveOnly ? 'Showing all restaurants.' : 'Showing only active restaurants.'
-        );
-    };
-
-    // Filter restaurants dynamically based on active status
-    const displayedRestaurants = showActiveOnly
-        ? restaurantList.filter((restaurant) => restaurant.isActive === 1)
-        : restaurantList;
-
-    return (
-        <div className="consumer-container">
-            <h1 className="title">Consumer Dashboard</h1>
-
-            <div className="button-container">
-                <button className="listRestaurantsButton" onClick={listRestaurants}>
-                    List Active Restaurants
-                </button>
-                {restaurantList.length > 0 && (
-                    <button className="toggleRestaurantsButton" onClick={toggleActiveRestaurants}>
-                        {showActiveOnly ? 'Show All Restaurants' : 'Show Active Restaurants'}
-                    </button>
-                )}
-            </div>
-
-            {/* Display message */}
-            {message && <p className="message">{message}</p>}
-
-            {/* Display restaurants in tabular form */}
-            {restaurantList.length > 0 ? (
-                <table className="restaurant-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Open Time</th>
-                            <th>Close Time</th>
-                            {showActiveOnly && <th>Status</th>}
-                        </tr>
-                    </thead>
-                    <tbody>
-    {displayedRestaurants.map((restaurant, index) => (
-        <tr key={restaurant.restaurantID || index}> 
-            <td>{restaurant.name}</td>
-            <td>{restaurant.address}</td>
-            <td>{restaurant.openTime}</td>
-            <td>{restaurant.closeTime}</td>
-            {showActiveOnly && <td>Active</td>}
-        </tr>
-    ))}
-</tbody>
-
-                </table>
-            ) : (
-                <p>No restaurants available.</p>
-            )}
+  return (
+    <div className="active-restaurants-container">
+      <header className="header">
+        <div className="header-left">
+          <button onClick={() => router.push('/')}>Back to Home</button>
         </div>
-    );
-}
+        <div className="header-center">
+          <h1>Active Restaurants</h1>
+        </div>
+      </header>
+
+      {/* Display Message */}
+      {message && <p className="message">{message}</p>}
+
+      {/* Display restaurants */}
+      {restaurantList.length > 0 ? (
+        <table className="restaurant-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Open Time</th>
+              <th>Close Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {restaurantList.map((restaurant, index) => (
+              <tr key={index}> {/* Use index as the key */}
+                <td>{restaurant.name}</td>
+                <td>{restaurant.address}</td>
+                <td>{restaurant.openTime}</td>
+                <td>{restaurant.closeTime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No active restaurants available.</p>
+      )}
+    </div>
+  );
+};
+
+export default ActiveRestaurantsPage;

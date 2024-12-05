@@ -1,10 +1,10 @@
-'use client'; // directive to clarify client-side. Place at top of ALL .tsx files
+'use client';
 
 import React from "react";
 import axios from "axios";
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 export default function Home() {
-    const [redraw, forceRedraw] = React.useState(0);
     const [resName, setResName] = React.useState('');
     const [resAddress, setResAddress] = React.useState('');
     const [resNumTables, setResNumTables] = React.useState(0);
@@ -14,10 +14,6 @@ export default function Home() {
     const [resCloseTime, setResCloseTime] = React.useState(0);
     const [resClosedDays, setResClosedDays] = React.useState<string[]>([]);
     const [isRestaurantActive, setIsRestaurantActive] = React.useState(false);
-
-    function andRefreshDisplay() {
-        forceRedraw(redraw + 1);
-    }
 
     const handleAddSeats = (index: number, value: number) => {
         const updatedSeats = [...resSeatsPerTable];
