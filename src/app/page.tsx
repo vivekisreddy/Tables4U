@@ -73,6 +73,11 @@ export default function Home() {
     router.push('/managerLogIn');
   }
 
+  // Redirect to the 'consumerViewReservation' page when 'Find Reservation Details' is clicked
+  const handleFindReservationDetails = () => {
+    router.push('/consumerViewReservation');
+  };
+
   return (
     <div className="main-container">
       {/* Header Rectangle */}
@@ -157,13 +162,16 @@ export default function Home() {
         </div>
       </div>
 
-      
-
       {/* Reservation Confirmation Section */}
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
         <p>Find your details here!</p>
-        <button className="findReservationDetailsButton">Find Restaurant Details</button>
+        <button
+          className="findReservationDetailsButton"
+          onClick={handleFindReservationDetails} // Trigger navigation here
+        >
+          Find Reservation Details
+        </button>
       </div>
     </div>
   );
