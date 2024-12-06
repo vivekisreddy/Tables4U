@@ -24,7 +24,6 @@ const ConsumerSearchResDetails = () => {
           <p>Address: {restaurant.address}</p>
           <p>Open Time: {restaurant.openTime}</p>
           <p>Close Time: {restaurant.closeTime}</p>
-
           <button className="make-reservation-button">Make Reservation</button>
         </div>
       ) : (

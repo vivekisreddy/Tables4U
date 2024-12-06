@@ -12,6 +12,8 @@ interface Restaurant {
 }
 
 export default function SearchResDateTime() {
+  const router = useRouter();
+
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [message, setMessage] = useState('');
   const searchParams = useSearchParams();
@@ -81,7 +83,11 @@ export default function SearchResDateTime() {
                 <td>
                   <button
                     className="make-reservation-button"
-                    onClick={() => alert(`Make reservation for ${restaurant.name}`)}
+                    onClick={() =>
+                      router.push(
+                        `/makeReservation?name=${encodeURIComponent(restaurant.name)}`
+                      )
+                    }
                   >
                     Make Reservation
                   </button>
