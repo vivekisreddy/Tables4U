@@ -51,10 +51,10 @@ const ActiveRestaurantsPage = () => {
           <h1>Active Restaurants</h1>
         </div>
       </header>
-
+  
       {/* Display Message */}
       {message && <p className="message">{message}</p>}
-
+  
       {/* Display restaurants */}
       {restaurantList.length > 0 ? (
         <table className="restaurant-table">
@@ -77,7 +77,13 @@ const ActiveRestaurantsPage = () => {
                 <td>
                   <button
                     className="make-reservation-button"
-                    onClick={() => router.push(`/makeReservation?name=${encodeURIComponent(restaurant.name)}`)}
+                    onClick={() =>
+                      router.push(
+                        `/makeReservation?name=${encodeURIComponent(
+                          restaurant.name
+                        )}`
+                      )
+                    }
                   >
                     Make Reservation
                   </button>

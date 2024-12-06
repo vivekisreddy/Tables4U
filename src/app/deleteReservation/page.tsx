@@ -52,7 +52,10 @@ export default function DeleteReservation() {
         <button onClick={handleDelete} className="submit-button">
           Delete Reservation
         </button>
+
         {message && <p className="message">{message}</p>}
+
+        
       </div>
     </div>
   );

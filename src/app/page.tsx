@@ -178,7 +178,7 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Cancel Reservation Section */}
+     {/* Cancel Reservation Section */}
       <div className="cancel-reservation-section">
         <h3>Want to cancel your reservation?</h3>
         <p>
@@ -186,18 +186,6 @@ export default function Home() {
           <button
             className="cancel-reservation-button"
             onClick={handleCancelReservation}
-            style={{
-              fontWeight: 'bold',
-              color: '#fff',
-              backgroundColor: '#3498db',
-              border: 'none',
-              borderRadius: '5px',
-              padding: '8px 15px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2980b9'}
-            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3498db'}
           >
             here
           </button>{' '}
