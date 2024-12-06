@@ -17,6 +17,7 @@ export default function SearchResDateTime() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const time = searchParams.get('time');
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -27,17 +28,14 @@ export default function SearchResDateTime() {
           { headers: { 'Content-Type': 'application/json' } }
         );
 
-        console.log('Raw Backend Response:', response.data); // Debugging step
-
-        // Parse the body of the backend response
         const parsedBody = JSON.parse(response.data.body);
 
         if (response.status === 200 && Array.isArray(parsedBody)) {
-          setRestaurants(parsedBody); // Successfully parse and set the restaurants
+          setRestaurants(parsedBody);
           setMessage('');
         } else if (parsedBody.message) {
           setRestaurants([]);
-          setMessage(parsedBody.message); // Show the backend message
+          setMessage(parsedBody.message);
         } else {
           setRestaurants([]);
           setMessage('No restaurants found for the selected date and time.');
@@ -58,6 +56,7 @@ export default function SearchResDateTime() {
     <div className="restaurants-container">
       <h1>Available Restaurants</h1>
       {message && <p className="message">{message}</p>}
+      
       <div className="restaurants-list">
         {restaurants.length > 0 ? (
           restaurants.map((restaurant, index) => (
@@ -68,7 +67,18 @@ export default function SearchResDateTime() {
                 Open Time: {restaurant.openTime} | Close Time: {restaurant.closeTime}
               </p>
               <p>Available Tables: {restaurant.availableTables.join(', ')}</p>
-              <button className="make-reservation-button">Make Reservation</button>
+
+              {/* Make Reservation Button */}
+              <button
+                className="make-reservation-button"
+                onClick={() =>
+                  router.push(
+                    `/makeReservation?name=${encodeURIComponent(restaurant.name)}`
+                  )
+                }
+              >
+                Make Reservation
+              </button>
             </div>
           ))
         ) : (
