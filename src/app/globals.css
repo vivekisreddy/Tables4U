@@ -840,7 +840,7 @@
 .restaurant-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 800px;
+  margin: 20px 0;
 }
 
 .restaurant-table th, .restaurant-table td {
@@ -850,12 +850,34 @@
 }
 
 .restaurant-table th {
-  background-color: #f2f2f2;
+  background-color: #ffffff8e;
+  color: black; 
+  font-weight: bold;
 }
 
 .restaurant-item {
   margin-bottom: 20px;
 }
+
+.make-reservation-button {
+  background-color: #007BFF;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.make-reservation-button:hover {
+  background-color: #0056b3;
+}
+
+.active-restaurants-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
 
 .deleteRestaurantButton {
   background-color: #4CAF50;
@@ -905,6 +927,44 @@
   font-weight: bold;
 }
 
+
+/* This is the CSS styling stuff for the searchResDateTime */
+
+.restaurant-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.restaurant-table th, .restaurant-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.restaurant-table th {
+  background-color: #4CAF50; /* Header background color */
+  color: white; /* Header text color */
+}
+
+.make-reservation-button {
+  background-color: #00c542;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.make-reservation-button:hover {
+  background-color: #00742e;
+}
+
+.restaurants-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+=======
 /* MakeReservation.css */
 
 body {

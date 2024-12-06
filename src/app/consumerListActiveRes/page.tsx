@@ -26,8 +26,7 @@ const ActiveRestaurantsPage = () => {
       );
 
       if (response.status === 200) {
-        let restaurantData = response.data;
-        restaurantData = JSON.parse(restaurantData.body);
+        const restaurantData = JSON.parse(response.data.body);
         setRestaurantList(restaurantData);
       } else {
         throw new Error('Failed to load restaurants.');
@@ -65,15 +64,24 @@ const ActiveRestaurantsPage = () => {
               <th>Address</th>
               <th>Open Time</th>
               <th>Close Time</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {restaurantList.map((restaurant, index) => (
-              <tr key={index}> {/* Use index as the key */}
+              <tr key={index}>
                 <td>{restaurant.name}</td>
                 <td>{restaurant.address}</td>
                 <td>{restaurant.openTime}</td>
                 <td>{restaurant.closeTime}</td>
+                <td>
+                  <button
+                    className="make-reservation-button"
+                    onClick={() => alert(`Make reservation for ${restaurant.name}`)}
+                  >
+                    Make Reservation
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

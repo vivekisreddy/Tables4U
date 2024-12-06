@@ -17,7 +17,6 @@ export default function SearchResDateTime() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const time = searchParams.get('time');
-  const router = useRouter();
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -28,14 +27,17 @@ export default function SearchResDateTime() {
           { headers: { 'Content-Type': 'application/json' } }
         );
 
+        console.log('Raw Backend Response:', response.data);
+
+        // Parse the body of the backend response
         const parsedBody = JSON.parse(response.data.body);
 
         if (response.status === 200 && Array.isArray(parsedBody)) {
-          setRestaurants(parsedBody);
+          setRestaurants(parsedBody); // Successfully parse and set the restaurants
           setMessage('');
         } else if (parsedBody.message) {
           setRestaurants([]);
-          setMessage(parsedBody.message);
+          setMessage(parsedBody.message); // Show the backend message
         } else {
           setRestaurants([]);
           setMessage('No restaurants found for the selected date and time.');
@@ -56,35 +58,41 @@ export default function SearchResDateTime() {
     <div className="restaurants-container">
       <h1>Available Restaurants</h1>
       {message && <p className="message">{message}</p>}
-      
-      <div className="restaurants-list">
-        {restaurants.length > 0 ? (
-          restaurants.map((restaurant, index) => (
-            <div key={index} className="restaurant-card">
-              <h2>{restaurant.name}</h2>
-              <p>Address: {restaurant.address}</p>
-              <p>
-                Open Time: {restaurant.openTime} | Close Time: {restaurant.closeTime}
-              </p>
-              <p>Available Tables: {restaurant.availableTables.join(', ')}</p>
-
-              {/* Make Reservation Button */}
-              <button
-                className="make-reservation-button"
-                onClick={() =>
-                  router.push(
-                    `/makeReservation?name=${encodeURIComponent(restaurant.name)}`
-                  )
-                }
-              >
-                Make Reservation
-              </button>
-            </div>
-          ))
-        ) : (
-          !message && <p className="message">Loading restaurants...</p>
-        )}
-      </div>
+      {restaurants.length > 0 ? (
+        <table className="restaurant-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Open Time</th>
+              <th>Close Time</th>
+              <th>Available Tables</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {restaurants.map((restaurant, index) => (
+              <tr key={index}>
+                <td>{restaurant.name}</td>
+                <td>{restaurant.address}</td>
+                <td>{restaurant.openTime}</td>
+                <td>{restaurant.closeTime}</td>
+                <td>{restaurant.availableTables.join(', ')}</td>
+                <td>
+                  <button
+                    className="make-reservation-button"
+                    onClick={() => alert(`Make reservation for ${restaurant.name}`)}
+                  >
+                    Make Reservation
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        !message && <p className="message">Loading restaurants...</p>
+      )}
     </div>
   );
 }
