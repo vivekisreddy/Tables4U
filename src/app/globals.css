@@ -485,139 +485,46 @@
 
 /* This is all managerLogin Page stuff */ 
 /* Container for the manager login page */
+/* Box around Manager Log In section */
 .manager-login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh; /* Full-page height */
-  background-color: var(--background);
-  color: var(--foreground);
-  border: 10px solid #001694;
+  background-color: #f4f4f4; /* Light background for contrast */
+  padding: 30px; /* Space inside the box */
+  border: 2px solid #4f844d; /* Gray border */
+  border-radius: 10px; /* Rounded corners */
+  max-width: 500px; /* Limit width */
+  margin: 20px auto; /* Center the box horizontally */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-.handleActivateRestaurant {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
+/* Manager Log In title */
+.manager-login-container {
+  font-size: 2rem;
+  margin-bottom: 20px; /* Space below the title */
+  color: #333; /* Darker color for emphasis */
+}
+
+.title { 
   position: absolute;
-  left: 25px;
-  top: 500px;
+  right: 575px;
 }
 
-.handleFindDetails {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 75px;
-}
-
-.handleGenerate {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 50px;
-}
-
-.handleConfirm {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 75px;
-}
-
-.handleCreate {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 300px;
-}
-
-.handleDelete {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 150px;
-}
-
-.handleDeleteRestaurant {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 800px;
-}
-
-.handleDeleteReservation {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 750px;
-}
-
-.handleEditRestaurant {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 700px;
-}
-
-.handleFindDetails {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 25px;
-  top: 800px;
-  left: 25px;
-  top: 800px;
-}
-
-.handleLogIn {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 300px;
-}
-
-.handleSearch {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 300px;
-}
-
-/* Box to wrap input fields and login button */
+/* Inputs and buttons inside the box */
 .login-box {
-  background-color: #f8f8f8; /* Light background for the box */
+  background-color: #fff; /* White background for the inner box */
   padding: 20px;
   border-radius: 10px;
-  text-align: center;
-  width: 400px; /* Fixed width */
+  width: 100%; /* Full width within the container */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Inputs inside the box */
+/* Input fields */
 .input {
-  width: 100%;
+  width: 100%; /* Full width */
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
@@ -626,7 +533,7 @@
 
 /* Login button */
 .button-logIn {
-  width: 100%;
+  width: 100%; /* Full width */
   padding: 10px;
   background-color: #4caf50; /* Green */
   color: white;
@@ -643,13 +550,14 @@
 
 /* Create account button */
 .button-create-account {
-  margin-top: 20px;
-  padding: 10px 20px;
+  width: 100%; /* Full width */
+  padding: 10px;
   background-color: #2196f3; /* Blue */
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 1rem;
+  margin-top: 20px;
   cursor: pointer;
 }
 
@@ -657,13 +565,14 @@
   background-color: #0b7dda;
 }
 
-/* Message display */
+/* Error or success message */
 .message {
   margin-top: 15px;
   font-size: 1rem;
   color: #e74c3c; /* Red for errors */
   text-align: center;
 }
+
 
 /* This is CSS styling for create resturant stuff */ 
 
@@ -736,20 +645,25 @@
 }
 
 /* Container for the Admin Login form */
+/* Outer container for Admin Log In */
 .admin-logIn-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
 }
 
-/* The box around the login form */
+/* Form box for login */
 .login-form-box {
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 30px;
+  border: 2px solid #ccc;
   border-radius: 10px;
   width: 400px;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Style for the labels and inputs */
@@ -769,7 +683,7 @@
 
 
 .createAdminLogIn {
-  background-color: #2196F3;
+  background-color: #718b67;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -781,8 +695,21 @@
 }
 
 .createAdminLogIn:hover {
-  background-color: #0b7dda;
+  background-color: #007812;
 }
+
+
+/* Create Account Box */
+.create-account-box {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid #4CAF50; /* Green border */
+  border-radius: 10px;
+  background-color: #f8f8f8; /* Light background */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 
 /* Container for Create Account message */
 .create-account-container {
@@ -790,6 +717,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 15px;
+  
 }
 
 .account {
@@ -849,11 +777,10 @@
   background-color: #4CAF50; /* Green */
   color: white;
   padding: 10px 20px;
-  border: none;
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  width: 100%;
+  width: 107%;
   margin-top: 10px;
 }
 
