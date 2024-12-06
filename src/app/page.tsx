@@ -170,7 +170,6 @@ export default function Home() {
       {/* Reservation Confirmation Section */}
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
-        <p>Find your details here!</p>
         <button
           className="findReservationDetailsButton"
           onClick={handleFindReservationDetails} // Trigger navigation here
