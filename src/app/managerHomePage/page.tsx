@@ -98,41 +98,61 @@ export default function ActivateRestaurantPage() {
     }
 
     return (
-        <div className="manager-activate">
-            <h1 className="title">Ready to Activate Your Restaurant?</h1>
-
-            {/* Input */}
-            <div className="input-container">
-                <label htmlFor="restaurantID">Enter Restaurant ID:</label>
-                <input
-                    type="text"
-                    id="restaurantID"
-                    value={restaurantID}
-                    onChange={(e) => setRestaurantID(e.target.value)}
-                    placeholder="Enter Restaurant ID"
-                />
-            </div>
-
-            <div className="button-container">
-                <button onClick={handleActivateRestaurant} className="button-activateRes">
-                    Activate Restaurant
-                </button>
-            </div>
-
-            {message && <p className="message">{message}</p>} 
-
-            <button className="editRestaurantButton" onClick={() => editRestaurant()} >Edit Restaurant</button>
-            <button className="editRestaurantButton" onClick={() => viewAvailability()} >View Day Availability</button>
-            <button className="managerAccountButton" onClick={(e) => managerAccount()} >Account Information</button>
-
-            <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
-                <label className="label" htmlFor="resName">Restaurant Name:</label>
-                <input type="text" style={{ color: 'black' }} id="resName" name="resName" value={resName} onChange={(and) => setResName(and.target.value)}/>
-                <br></br>
-                <label className="label" htmlFor="resID">Restaurant ID:</label>
-                <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(and) => setResID(and.target.value)}/>
-                <button type="submit" className="deleteRestaurantButton">Delete Restaurant</button>
-            </form>
+      <div className="manager-home-container">
+        <h1 className="page-title">Manager Home Page</h1>
+    
+        {/* Account Information Section */}
+        <div className="account-info-section">
+          <h2>Account Information</h2>
+          <button className="managerAccountButton" onClick={() => managerAccount()}>
+            View Account Information
+          </button>
         </div>
-    );
+    
+        {/* Activate Restaurant Section */}
+        <div className="activate-restaurant-section">
+          <h2>Activate Your Restaurant</h2>
+          <div className="input-container">
+            <label htmlFor="restaurantID">Enter Restaurant ID:</label>
+            <input
+              type="text"
+              id="restaurantID"
+              value={restaurantID}
+              onChange={(e) => setRestaurantID(e.target.value)}
+              placeholder="Enter Restaurant ID"
+            />
+          </div>
+          <button onClick={handleActivateRestaurant} className="button-activateRes">
+            Activate Restaurant
+          </button>
+          {message && <p className="message">{message}</p>}
+        </div>
+    
+        {/* Delete Restaurant Section */}
+        <div className="delete-restaurant-section">
+          <h2>Delete Restaurant</h2>
+          <form className="delete-form" onSubmit={handleDeleteRestaurant}>
+            <label htmlFor="resName">Restaurant Name:</label>
+            <input
+              type="text"
+              id="resName"
+              name="resName"
+              value={resName}
+              onChange={(e) => setResName(e.target.value)}
+            />
+            <label htmlFor="resID">Restaurant ID:</label>
+            <input
+              type="text"
+              id="resID"
+              name="resID"
+              value={resID}
+              onChange={(e) => setResID(e.target.value)}
+            />
+            <button type="submit" className="deleteRestaurantButton">
+              Delete Restaurant
+            </button>
+          </form>
+        </div>
+      </div>
+    );    
 }
