@@ -157,8 +157,6 @@ export default function Home() {
         </div>
       </div>
 
-      
-
       {/* Reservation Confirmation Section */}
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
