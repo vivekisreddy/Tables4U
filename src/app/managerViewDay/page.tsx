@@ -3,12 +3,25 @@ import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
+interface Reservation {
+    restaurantID: string;
+    tableID: string;
+    reservationDate: Date;
+    reservationTime: number;
+    partySize: number;
+    consumerEmail: string;
+    confirmationCode:number
+}
+
 export default function Home() {
 
-    const [availability, setAvailability] = React.useState('')
+    const [availability, setAvailability] = React.useState<Reservation[]>([]);
+    const [tables, setTables] = React.useState<string[]>([]);
+    const [hours, setHours] = React.useState<number[]>([]);
     const [date, setDate] = React.useState('')
     const [ID, setID] = React.useState('')
     const [message, setMessage] = React.useState('');
+    const [loading, setLoading] = React.useState<boolean>(false); // For loading state
 
     const router = useRouter(); 
 
@@ -71,19 +84,38 @@ export default function Home() {
         }
     }
 
+    function createTable() {
+        const tableData: any[] = hours.map((hour) => {
+            const row = [hour];
+            tables.forEach((table) => {
+                const reservation = availability.find(
+                    (res) => res.reservationTime === hour
+                );
+                row.push(reservation ? reservation.consumerEmail : "");
+            });
+            return row;
+        });
+    
+        setAvailability(tableData);
+    }
+
     function viewAvailability() {
+        setLoading(true);
         if (date) {
-          instance.post('/managerViewDay', {"resID":ID, "date":date})
+          instance.post('/managerViewDayAvailability', {"resID":ID, "date":date})
           .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode
             let result = response.data.body
-    
+            
             console.log("response status:", status)
-            let availabilityInfo = result;
-    
+            
             if (status == 200) {
-                setAvailability(availabilityInfo)
+                setHours(JSON.parse(result.hours))
+                setTables(JSON.parse(result.tableNames))
+                let reservations = JSON.parse(result.reservations)
+                setAvailability(reservations)
+                // createTable()
                 console.log("response status:", status)
                 console.log("Showing Day Availability")
                 setMessage("Showing Day Availability")
@@ -95,6 +127,9 @@ export default function Home() {
           .catch(function (error) {
             console.log(error)
           })
+          .finally(() => {
+            setLoading(false); // Set loading to false after the request completes
+            });
         } else {
           setMessage("Please verify input information")
         }
@@ -115,14 +150,34 @@ export default function Home() {
         viewAvailability()
     }
 
-    const handleHome = async() => {
-        router.push('/managerHomePage')
-    }
-
   // below is where the GUI for the manager log in page is drawn
   return (
     <div className="container">
-      <h1 className="title">Manager Log In</h1>
+        <h1 className="title">View Day Availability</h1>
+
+        {!loading && hours.length > 0 && tables.length > 0 && availability.length > 0 ? (
+    <table className="restaurant-table">
+        <thead>
+            <tr>
+                <th>Times</th>
+                {tables.map((name, index) => (
+                    <th key={index}>{name}</th>
+                ))}
+            </tr>
+        </thead>
+        <tbody>
+            {availability.map((row) => (
+                <tr key={row.restaurantID}>
+                    <td>{row.restaurantID}</td>
+                    
+                </tr>
+            ))}
+        </tbody>
+    </table>
+    ) : !loading && hours.length === 0 ? (
+        <p>No availability found.</p>
+    ) : null}
+      
       <label className="label">
           Enter Date (format: YYYY-MM-DD):
           <input
@@ -132,11 +187,7 @@ export default function Home() {
               className="input"
           />
       </label>
-      <div className="button-container">
-        <button onClick={(e) => handleSetAvailability(e)} className={"button-logIn"}>
-            View Availability
-            </button>
-      </div>
+      
       <label className="label">
           Restaurant ID:
           <input
@@ -146,20 +197,18 @@ export default function Home() {
               className="input"
           />
       </label>
-      
+
+      <div className="button-container">
+        <button onClick={(e) => handleSetAvailability(e)} className={"button-logIn"}>
+            View Availability
+            </button>
+      </div>
       <div className="button-container">
           <button onClick={handleCloseDate} className="button-logIn">
               Close Date
           </button>
-      </div>
-      <div className="button-container">
           <button onClick={handleOpenDate} className="button-logIn">
               Open Date
-          </button>
-      </div>
-      <div className="button-container">
-          <button onClick={handleHome} className="button-logIn">
-              Back To Home Page
           </button>
       </div>
 
