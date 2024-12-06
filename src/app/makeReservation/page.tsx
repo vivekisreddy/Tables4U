@@ -9,6 +9,7 @@ export default function MakeReservation() {
   const [reservationTime, setReservationTime] = useState('');
   const [partySize, setPartySize] = useState(1);
   const [consumerEmail, setConsumerEmail] = useState('');
+  const [confirmationCode, setConfirmationCode] = useState('');  // State for confirmation code
   const searchParams = useSearchParams();
   const nameFromQuery = searchParams.get('name'); // Extract restaurant name from query params
 
@@ -22,18 +23,15 @@ export default function MakeReservation() {
     // Ensure date is in YYYY-MM-DD format manually entered by the user
     const formattedDate = new Date(reservationDate);
     const formattedDateString = formattedDate.toISOString().split('T')[0]; // Get YYYY-MM-DD
-  
+
     // Ensure time is in the format of a singular number (e.g., '3', '4', '5')
     const formattedTime = reservationTime.split(':')[0]; // Extract just the hour, e.g., '3', '4', '5'
-  
+
     if (partySize < 1 || partySize > 8) {
       alert('Party size must be between 1 and 8.');
       return; // Prevent submission if invalid party size
     }
 
-    
-
-  
     const reservationData = {
       restaurantName,
       reservationDate: formattedDateString,  // Pass formatted date
@@ -41,32 +39,36 @@ export default function MakeReservation() {
       partySize,
       consumerEmail,
     };
-  
+
     try {
       // Send the reservation data to the backend
-      console.log(reservationData); // Debugging
-  
       const response = await axios.post(
-        'https://YOUR_API_GATEWAY_URL_HERE',
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerMakeReservation',
         reservationData,
         { headers: { 'Content-Type': 'application/json' } }
       );
-  
-      const result = response.data;
-      if (response.status === 200) {
+
+      console.log(response.data);  // Log the backend response for debugging
+
+      // Extracting the confirmation code
+      const result = JSON.parse(response.data.body);
+      const confirmationCodeFromResponse = result.confirmationCode;
+
+      if (response.status === 200 && confirmationCodeFromResponse) {
+        // Set confirmation code after successful reservation
+        setConfirmationCode(confirmationCodeFromResponse);
         alert('Reservation successful!');
       } else {
         alert(result.error || 'Something went wrong.');
       }
-  
+
     } catch (error) {
       console.error('Error submitting reservation:', error);
       alert('Error submitting reservation.');
     }
   };
-  
 
-
+  // Display Confirmation Code if available
   return (
     <div className="reservation-container">
       <h1>Make Reservation for {restaurantName}</h1>
@@ -78,6 +80,7 @@ export default function MakeReservation() {
             type="text"
             value={restaurantName}
             readOnly
+            className="input-field"
           />
         </label>
 
@@ -88,6 +91,7 @@ export default function MakeReservation() {
             value={reservationDate}
             onChange={(e) => setReservationDate(e.target.value)}
             placeholder="Enter date as YYYY-MM-DD"
+            className="input-field"
           />
         </label>
 
@@ -98,6 +102,7 @@ export default function MakeReservation() {
             value={reservationTime}
             onChange={(e) => setReservationTime(e.target.value)}
             placeholder="Enter hour only (e.g., 3)"
+            className="input-field"
           />
         </label>
 
@@ -107,6 +112,7 @@ export default function MakeReservation() {
             type="number"
             value={partySize}
             onChange={(e) => setPartySize(Number(e.target.value))}
+            className="input-field"
           />
         </label>
 
@@ -116,10 +122,18 @@ export default function MakeReservation() {
             type="email"
             value={consumerEmail}
             onChange={(e) => setConsumerEmail(e.target.value)}
+            className="input-field"
           />
         </label>
 
-        <button onClick={handleSubmit}>Submit Reservation</button>
+        <button onClick={handleSubmit} className="submit-button">Submit Reservation</button>
+
+        {/* Display Confirmation Code if available */}
+        {confirmationCode && (
+          <div className="confirmation-code">
+            <h3>Confirmation Code: {confirmationCode}</h3>
+          </div>
+        )}
       </div>
     </div>
   );
