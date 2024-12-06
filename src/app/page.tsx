@@ -78,6 +78,11 @@ export default function Home() {
     router.push('/consumerViewReservation');
   };
 
+  // Redirect to the 'deleteReservation' page
+  const handleCancelReservation = () => {
+    router.push('/deleteReservation');
+  };
+
   return (
     <div className="main-container">
       {/* Header Rectangle */}
@@ -172,6 +177,33 @@ export default function Home() {
         >
           Find Reservation Details
         </button>
+      </div>
+
+      {/* Cancel Reservation Section */}
+      <div className="cancel-reservation-section">
+        <h3>Want to cancel your reservation?</h3>
+        <p>
+          Click{' '}
+          <button
+            className="cancel-reservation-button"
+            onClick={handleCancelReservation}
+            style={{
+              fontWeight: 'bold',
+              color: '#fff',
+              backgroundColor: '#3498db',
+              border: 'none',
+              borderRadius: '5px',
+              padding: '8px 15px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2980b9'}
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3498db'}
+          >
+            here
+          </button>{' '}
+          to delete your reservation.
+        </p>
       </div>
     </div>
   );

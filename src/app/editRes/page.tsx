@@ -1,8 +1,8 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
+'use client'                                             
 
 import axios from "axios";
 import React from "react";
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation'; 
 
 
 export default function Home() {

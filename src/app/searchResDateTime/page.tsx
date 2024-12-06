@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation'; // Use for query params
+import { useRouter, useSearchParams } from 'next/navigation'; 
 import axios from 'axios';
 
 interface Restaurant {
@@ -35,11 +35,11 @@ export default function SearchResDateTime() {
         const parsedBody = JSON.parse(response.data.body);
 
         if (response.status === 200 && Array.isArray(parsedBody)) {
-          setRestaurants(parsedBody); // Successfully parse and set the restaurants
+          setRestaurants(parsedBody); 
           setMessage('');
         } else if (parsedBody.message) {
           setRestaurants([]);
-          setMessage(parsedBody.message); // Show the backend message
+          setMessage(parsedBody.message); 
         } else {
           setRestaurants([]);
           setMessage('No restaurants found for the selected date and time.');

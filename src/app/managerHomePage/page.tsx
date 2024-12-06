@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation'; 
 import axios from "axios";
 
 export default function ActivateRestaurantPage() {
@@ -51,7 +51,6 @@ export default function ActivateRestaurantPage() {
     function deleteRestaurant() {
       if (resID && resName) {
         
-        // Access the REST-based API and in response (on a 200 or 400) process.
         instance.post('/managerDeleteRes', {"restaurantID":resID, "name":resName})
         .then(function (response) {
           console.log("raw response:", response)
@@ -102,7 +101,7 @@ export default function ActivateRestaurantPage() {
         <div className="manager-activate">
             <h1 className="title">Ready to Activate Your Restaurant?</h1>
 
-            {/* Input for restaurantID */}
+            {/* Input */}
             <div className="input-container">
                 <label htmlFor="restaurantID">Enter Restaurant ID:</label>
                 <input
@@ -120,7 +119,7 @@ export default function ActivateRestaurantPage() {
                 </button>
             </div>
 
-            {message && <p className="message">{message}</p>} {/* Display the message */}
+            {message && <p className="message">{message}</p>} 
 
             <button className="editRestaurantButton" onClick={() => editRestaurant()} >Edit Restaurant</button>
             <button className="editRestaurantButton" onClick={() => viewAvailability()} >View Day Availability</button>

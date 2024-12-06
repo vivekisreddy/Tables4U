@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation'; // To get query parameters
+import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
 export default function MakeReservation() {
@@ -9,22 +9,22 @@ export default function MakeReservation() {
   const [reservationTime, setReservationTime] = useState('');
   const [partySize, setPartySize] = useState(1);
   const [consumerEmail, setConsumerEmail] = useState('');
-  const [confirmationCode, setConfirmationCode] = useState('');  // State for confirmation code
+  const [confirmationCode, setConfirmationCode] = useState('');  
   const searchParams = useSearchParams();
-  const nameFromQuery = searchParams.get('name'); // Extract restaurant name from query params
+  const nameFromQuery = searchParams.get('name'); 
 
   useEffect(() => {
     if (nameFromQuery) {
-      setRestaurantName(nameFromQuery); // Pre-fill the restaurant name field
-      console.log("Restaurant Name set:", nameFromQuery);  // Debug log to confirm
+      setRestaurantName(nameFromQuery); 
+      console.log("Restaurant Name set:", nameFromQuery);  
     }
   }, [nameFromQuery]);
 
   const handleSubmit = async () => {
     const formattedDate = new Date(reservationDate);
-    const formattedDateString = formattedDate.toISOString().split('T')[0]; // Get YYYY-MM-DD
+    const formattedDateString = formattedDate.toISOString().split('T')[0]; 
 
-    const formattedTime = reservationTime.split(':')[0]; // Extract just the hour, e.g., '3', '4', '5'
+    const formattedTime = reservationTime.split(':')[0]; 
 
     if (partySize < 1 || partySize > 8) {
       alert('Party size must be between 1 and 8.');

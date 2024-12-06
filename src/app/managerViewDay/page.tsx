@@ -1,7 +1,7 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
+'use client'                                              
 import React from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation'; 
 
 export default function Home() {
 
@@ -119,7 +119,6 @@ export default function Home() {
         router.push('/managerHomePage')
     }
 
-  // below is where the GUI for the manager log in page is drawn
   return (
     <div className="container">
       <h1 className="title">Manager Log In</h1>

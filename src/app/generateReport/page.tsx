@@ -1,9 +1,8 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
+'use client'                                             
 import React, {useState} from 'react'
 import axios from 'axios'
 
 export default function Home() {
-    // initial instantiation for admin log in page
     const [redraw, forceRedraw] = React.useState(0)
 
     const currentDate = new Date();
@@ -17,14 +16,12 @@ export default function Home() {
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
 
-    // helper function that forces React app to redraw whenever this is called.
     function andRefreshDisplay() {
     forceRedraw(redraw + 1)
   }
 
   function generateReport() {
     if (restaurant && startString && endString) {
-        // Access the REST-based API and in response (on a 200 or 400) process.
         instance.post('/adminAvailabilityReport', { "resID":restaurant, "startDate":startString, "endDate": endString })
             .then(function (response) {
                 console.log("raw response:", response);
@@ -76,7 +73,6 @@ export default function Home() {
     }
   }
 
-  // below is where the GUI for the admin generate availability report is drawn
   return (
     <div>
       <label className="generateReportMessage">{"Generate Availability Report:"}</label>
