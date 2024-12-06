@@ -77,7 +77,7 @@ const ActiveRestaurantsPage = () => {
                 <td>
                   <button
                     className="make-reservation-button"
-                    onClick={() => alert(`Make reservation for ${restaurant.name}`)}
+                    onClick={() => router.push(`/makeReservation?name=${encodeURIComponent(restaurant.name)}`)}
                   >
                     Make Reservation
                   </button>
