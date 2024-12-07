@@ -21,17 +21,12 @@ interface Tables {
 }
 
 export default function Home() {
-
-    const [availability, setAvailability] = React.useState<Reservation[]>([]);
-    const [tableNames, setTables] = React.useState<string[]>([]);
-    const [tableInfo, setInfo] = React.useState<Tables[]>([]);
-    const [hours, setHours] = React.useState<number[]>([]);
     const [date, setDate] = React.useState('')
     const [ID, setID] = React.useState('')
     const [message, setMessage] = React.useState('');
-    const [loading, setLoading] = React.useState<boolean>(false); // For loading state
-    const [organizedInformation, setOrganized] = React.useState<any[]>([]);
-
+    let tableNames : string[] = [];
+    let hourList :number[] = [];
+    let organizedInformation: string[][] = [[]];
     const router = useRouter(); 
 
 
@@ -93,47 +88,50 @@ export default function Home() {
         }
     }
 
-    function createTable() {
-        const tableData: any[][]= [];
-        let row : string[] = [];
-        for (let hour = 0; hour < hours.length; hour ++) {
-            for (let table = 0; table < tableInfo.length; table ++) {
-                for (let res = 0; res < availability.length; hour ++) {
-                    if (hours[hour] == availability[res].reservationTime && tableInfo[table].tableID == availability[res].tableID) {
-                        row.push(availability[res].consumerEmail);
+    function createTable(hourList:any[], tableInfoList:any[], reservationList:any[]) {
+        let finished: Boolean = false;
+        let count: number = 1;
+        for (let hour = 0; hour < hourList.length; hour ++) {
+            let row : string[] = [];
+            for (let table = 0; table < tableInfoList.length; table ++) {
+                let number: number = 0;
+                for (let res = 0; res < reservationList.length; res ++) {
+                    if (hourList[hour] == reservationList[res].reservationTime && tableInfoList[table].tableID == reservationList[res].tableID) {
+                        finished = true;
+                        number = res;
                     }
-                    else {
-                        row.push("")
+                    if (finished) {
+                        break;
                     }
                 }
+                if (finished === true) {
+                    row.push(reservationList[number].consumerEmail);
+                    finished = false;
+                }else {
+                    row.push(" ")
+                }
             }
-            tableData.push(row);
+            organizedInformation.push(row);
+            count = count +1;
         }
-        setOrganized(tableData);
+        console.log("organizedInformation:", organizedInformation)
     }
 
     function viewAvailability() {
-        setLoading(true);
+        organizedInformation = [];
         if (date) {
           instance.post('/managerViewDayAvailability', {"resID":ID, "date":date})
           .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode
+            let result = JSON.parse(response.data.body);
+            tableNames = result.tables;
+            hourList = result.hours;
+            console.log("tableNames:", tableNames)
+            console.log("hourList:", hourList)
 
-            
-            
             if (status == 200) {
-                let result = JSON.parse(response.data.body);
-                console.log("response status:", result.hours)
-
-                setHours(result.hours)
-                setTables(result.tables)
-                setInfo(result.tableInformation)
-                let reservations = result.reservationsSorted
-                setAvailability(reservations)
-                createTable()
-                console.log("response status:", status)
-                console.log("Showing Day Availability")
+                createTable(result.hours, result.tableInformation, result.reservationsSorted)
                 setMessage("Showing Day Availability")
             } else {
                 setMessage("Invalid Information")
@@ -143,9 +141,6 @@ export default function Home() {
           .catch(function (error) {
             console.log(error)
           })
-          .finally(() => {
-            setLoading(false); // Set loading to false after the request completes
-            });
         } else {
           setMessage("Please verify input information")
         }
@@ -171,27 +166,30 @@ export default function Home() {
     <div className="container">
         <h1 className="title">View Day Availability</h1>
 
-        {!loading && hours.length > 0 && tableNames.length > 0 && availability.length > 0 ? (
-        <table className="restaurant-table">
+        {hourList.length > 0 ? (
+        <table className="report-table">
             <thead>
                 <tr>
-                    <th>Tables</th>
-                    {tableNames.map((name, index) => (
-                        <th key={index}>{name}</th>
+                    <th>Hour</th> {/* First column for row names */}
+                    {tableNames.map((tableName, index) => (
+                    <th key={index}>{tableName}</th>
                     ))}
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    {organizedInformation.map((row, index) => (
-                        <td>key={row}{index}</td>
-                    ))}
-                </tr>
+                {hourList.map((hour, rowIndex) => (
+                    <tr key={rowIndex}>
+                        <td>{hour}</td>  {/* Row name from hours */}
+                        {organizedInformation[rowIndex].map((cell, cellIndex) => (
+                            <td key={cellIndex}>{cell}</td>
+                        ))}
+                    </tr>
+                ))}
             </tbody>
         </table>
-    ) : !loading && hours.length === 0 ? (
+    ):(
         <p>No availability found.</p>
-    ) : null}
+    )}
       
       <label className="label">
           Enter Date (format: YYYY-MM-DD):
