@@ -13,15 +13,24 @@ interface Reservation {
     confirmationCode:number
 }
 
+interface Tables {
+    tableID: string;
+    seats: number; 
+    restaurantID: string;
+    tables: number
+}
+
 export default function Home() {
 
     const [availability, setAvailability] = React.useState<Reservation[]>([]);
-    const [tables, setTables] = React.useState<string[]>([]);
+    const [tableNames, setTables] = React.useState<string[]>([]);
+    const [tableInfo, setInfo] = React.useState<Tables[]>([]);
     const [hours, setHours] = React.useState<number[]>([]);
     const [date, setDate] = React.useState('')
     const [ID, setID] = React.useState('')
     const [message, setMessage] = React.useState('');
     const [loading, setLoading] = React.useState<boolean>(false); // For loading state
+    const [organizedInformation, setOrganized] = React.useState<any[]>([]);
 
     const router = useRouter(); 
 
@@ -85,18 +94,22 @@ export default function Home() {
     }
 
     function createTable() {
-        const tableData: any[] = hours.map((hour) => {
-            const row = [hour];
-            tables.forEach((table) => {
-                const reservation = availability.find(
-                    (res) => res.reservationTime === hour
-                );
-                row.push(reservation ? reservation.consumerEmail : "");
-            });
-            return row;
-        });
-    
-        setAvailability(tableData);
+        const tableData: any[][]= [];
+        let row : string[] = [];
+        for (let hour = 0; hour < hours.length; hour ++) {
+            for (let table = 0; table < tableInfo.length; table ++) {
+                for (let res = 0; res < availability.length; hour ++) {
+                    if (hours[hour] == availability[res].reservationTime && tableInfo[table].tableID == availability[res].tableID) {
+                        row.push(availability[res].consumerEmail);
+                    }
+                    else {
+                        row.push("")
+                    }
+                }
+            }
+            tableData.push(row);
+        }
+        setOrganized(tableData);
     }
 
     function viewAvailability() {
@@ -106,22 +119,25 @@ export default function Home() {
           .then(function (response) {
             console.log("raw response:", response)
             let status = response.data.statusCode
-            let result = response.data.body
+
             
-            console.log("response status:", status)
             
             if (status == 200) {
-                setHours(JSON.parse(result.hours))
-                setTables(JSON.parse(result.tableNames))
-                let reservations = JSON.parse(result.reservations)
+                let result = JSON.parse(response.data.body);
+                console.log("response status:", result.hours)
+
+                setHours(result.hours)
+                setTables(result.tables)
+                setInfo(result.tableInformation)
+                let reservations = result.reservationsSorted
                 setAvailability(reservations)
-                // createTable()
+                createTable()
                 console.log("response status:", status)
                 console.log("Showing Day Availability")
                 setMessage("Showing Day Availability")
             } else {
                 setMessage("Invalid Information")
-                console.log("Error Showing Availability:", result)
+                console.log("Error Showing Availability:", status)
             }
           })
           .catch(function (error) {
@@ -155,25 +171,24 @@ export default function Home() {
     <div className="container">
         <h1 className="title">View Day Availability</h1>
 
-        {!loading && hours.length > 0 && tables.length > 0 && availability.length > 0 ? (
-    <table className="restaurant-table">
-        <thead>
-            <tr>
-                <th>Times</th>
-                {tables.map((name, index) => (
-                    <th key={index}>{name}</th>
-                ))}
-            </tr>
-        </thead>
-        <tbody>
-            {availability.map((row) => (
-                <tr key={row.restaurantID}>
-                    <td>{row.restaurantID}</td>
-                    
+        {!loading && hours.length > 0 && tableNames.length > 0 && availability.length > 0 ? (
+        <table className="restaurant-table">
+            <thead>
+                <tr>
+                    <th>Tables</th>
+                    {tableNames.map((name, index) => (
+                        <th key={index}>{name}</th>
+                    ))}
                 </tr>
-            ))}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <tr>
+                    {organizedInformation.map((row, index) => (
+                        <td>key={row}{index}</td>
+                    ))}
+                </tr>
+            </tbody>
+        </table>
     ) : !loading && hours.length === 0 ? (
         <p>No availability found.</p>
     ) : null}
