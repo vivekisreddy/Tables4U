@@ -42,9 +42,11 @@ export default function AdminHomePage() {
                 let restaurantData = response.data;
                 // If the data is a string, parse it
                 restaurantData = JSON.parse(restaurantData.body);
+                console.log("restaurantData: ", restaurantData)
 
                 // Update the restaurant list state
                 setRestaurantList(restaurantData);
+                console.log("restaurantList: ", restaurantList)
                 setMessage('Restaurants loaded successfully!');
             } else {
                 console.log("Error listing restaurants:", result);

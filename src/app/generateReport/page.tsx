@@ -3,23 +3,20 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 
 interface Report {
-  date: string
-  time: number
-  utilization: number
-  availability: number
+  date: string;
+  time: number;
+  utilization: number;
+  availability: number;
 }
 
 const GenerateReportPage = () => {
-    // initial instantiation for admin log in page
-    const [redraw, forceRedraw] = React.useState(0)
+    //const currentDate = new Date();
+    //const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
 
-    const currentDate = new Date();
-    const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
-
-    const [restaurant, setRestaurant] = useState('')
-    const [startString, setStartString] = useState('')
-    const [endString, setEndString] = useState('')
-    const [reportList, setReportList] = useState<Report[]>([])
+    const [restaurant, setRestaurant] = useState('');
+    const [startString, setStartString] = useState('');
+    const [endString, setEndString] = useState('');
+    const [reportList, setReportList] = useState<Report[]>([]);
 
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
@@ -36,7 +33,9 @@ const GenerateReportPage = () => {
 
                 if (status === 200) {
                   let reportData = JSON.parse(result)
+                  console.log("reportData: ", reportData)
                   setReportList(reportData)
+                  console.log("reportList: ", reportList)
                 } else {
                     // console.log("Error generating availability report:", result);
                     alert("Error generating availability report: " + result);
