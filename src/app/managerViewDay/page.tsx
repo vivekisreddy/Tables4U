@@ -9,9 +9,67 @@ export default function ManagerViewDay() {
   const [availabilityTable, setAvailabilityTable] = useState<any[][]>([]); // Store availability as a 2D array
   const [tableNames, setTableNames] = useState<string[]>([]); // Store table names like T1, T2, etc.
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>('');
 
   const searchParams = useSearchParams();
   const nameFromQuery = searchParams.get('name');
+
+  const instance = axios.create({
+    baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
+  });
+
+  function closeDate() {
+    if (viewDate && restaurantID) {
+        instance.post('/managerCloseDate', {"resID":restaurantID, "dateToClose":viewDate})
+        .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
+
+            console.log("response status:", status)
+
+            if (status == 200) {
+                console.log("response status:", status)
+                console.log("Successfully closed Date")
+                setMessage("Successfully closed Date")
+            } else {
+                setMessage("Invalid Information")
+                console.log("Error closing date:", result)
+            }
+        }) .catch(function (error) {
+            console.log(error)
+        })
+    } else {
+        setMessage("Please verify input information")
+    }
+    }
+
+    function openDate() {
+        if (viewDate && restaurantID) {
+        instance.post('/managerOpenDate', {"resID":restaurantID, "dateToClose":viewDate})
+        .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
+
+            console.log("response status:", status)
+
+            if (status == 200) {
+            console.log("response status:", status)
+            console.log("Successfully opened Date")
+            setMessage("Successfully opened Date")
+            } else {
+            setMessage("Invalid Information")
+            console.log("Error opening date:", result)
+            }
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+        } else {
+        setMessage("Please verify input information")
+        }
+    }
 
   useEffect(() => {
     if (nameFromQuery) {
@@ -54,11 +112,21 @@ export default function ManagerViewDay() {
       console.error('Error fetching availability:', error);
       setError('Error fetching availability.');
     }
-  };  
+  };
+
+    const handleCloseDate = (and:any) => {
+        and.preventDefault()
+        closeDate()
+    }
+
+    const handleOpenDate = (and:any) => {
+        and.preventDefault()
+        openDate()
+    }
 
   return (
     <div className="manager-view-day-container">
-      <h1>Manager View for {restaurantID}</h1>
+      <h1 className="page-title">View Day Availability</h1>
 
       <div className="form-container">
         <label>
@@ -68,7 +136,6 @@ export default function ManagerViewDay() {
             value={restaurantID}
             onChange={(e) => setRestaurantID(e.target.value)}
             placeholder="Enter Restaurant ID"
-            className="input-field"
           />
         </label>
 
@@ -79,42 +146,53 @@ export default function ManagerViewDay() {
             value={viewDate}
             onChange={(e) => setViewDate(e.target.value)}
             placeholder="Enter date as YYYY-MM-DD"
-            className="input-field"
           />
         </label>
+        <div className="button-container">
+            <button onClick={handleSubmit} className="button-logIn" disabled={!restaurantID || !viewDate}>
+            Check Availability
+            </button>
+        </div>
+        <div className="button-container">
+          <button onClick={handleCloseDate} className="button-logIn">
+              Close Date
+          </button>
+          <button onClick={handleOpenDate} className="button-logIn">
+              Open Date
+          </button>
+        </div>
+        {message && <p className="message">{message}</p>}
 
-        <button onClick={handleSubmit} className="submit-button" disabled={!restaurantID || !viewDate}>
-          Check Availability
-        </button>
 
         {error && <div className="error-message">{error}</div>}
 
         {/* Conditionally render the table if availability data is available */}
+        
         {availabilityTable.length > 0 && tableNames.length > 0 && (
-  <div className="availability-table">
-    <h3>Availability for {viewDate}</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          {tableNames.map((table, index) => (
-            <th key={index}>{table}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {availabilityTable.slice(1).map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            <td>{row[0]}</td> {/* Time column */}
-            {row.slice(1).map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td> // Availability for each table
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-)}
+            <div className="availability-table">
+                <h3>Availability for {viewDate}</h3>
+                <table className="report-table">
+                <thead>
+                    <tr>
+                    <th>Time</th>
+                    {tableNames.map((table, index) => (
+                        <th key={index}>{table}</th>
+                    ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {availabilityTable.slice(1).map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                        <td>{row[0]}</td> {/* Time column */}
+                        {row.slice(1).map((cell, cellIndex) => (
+                            <td key={cellIndex}>{cell}</td> // Availability for each table
+                        ))}
+                    </tr>
+                    ))}
+                </tbody>
+                </table>
+            </div>
+            )}
       </div>
     </div>
   );
