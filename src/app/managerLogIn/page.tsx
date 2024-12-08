@@ -53,7 +53,7 @@ export default function ManagerLogin() {
 
     return (
         <div className="manager-login-container">
-            <h1 className="title">Manager Log In</h1>
+            <h1 className="manager-title">Manager Log In</h1>
             <div className="login-box">
                 <label className="label">
                     Restaurant Name:
