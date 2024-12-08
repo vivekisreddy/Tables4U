@@ -66,6 +66,7 @@ export default function ManagerLogin() {
                 </label>
                 <label className="label">
                     Restaurant ID:
+                    
                     <input
                         type="text"
                         value={ID}
