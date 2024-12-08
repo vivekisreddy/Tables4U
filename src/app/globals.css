@@ -87,8 +87,8 @@
 /* For canceling reservation for consumer */ 
 .cancel-reservation-section { 
   position: absolute;
-  bottom: 10px;
-  right: 775px;
+  top: 600px;
+  right: 500px;
 }
 
 /* Button container */
@@ -122,8 +122,8 @@
 /* Date and Time Input Section */
 .date-time-container {
   position: absolute;
-  top: 100px;
-  right: 1300px;
+  top: 150px;
+  right: 1350px;
   margin: 20px auto;
   padding: 20px;
   max-width: 700px;
@@ -159,7 +159,7 @@
   margin: 20px auto;
   position: absolute;
   top: 700px;
-  right: 750px;
+  right: 475px;
   padding: 20px;
   max-width: 600px;
   border-radius: 8px;
@@ -498,7 +498,14 @@
   min-height: 100vh; /* Full-page height */
   background-color: var(--background);
   color: var(--foreground);
-  border: 10px solid #001694;
+  border: 10px solid #3d974a;
+}
+
+.manager-title {
+  position: absolute;
+  top: 200px;
+  right: 775px;
+
 }
 
 .handleActivateRestaurant {
@@ -670,6 +677,11 @@
   text-align: center;
 }
 
+.container-create-res{
+  position: absolute ;
+  right: 625px;
+  top: 50px;
+}
 
 /* Centered Title */
 .title {
@@ -726,12 +738,10 @@
   width: 400px;
 }
 
-
-
 /* Admin Login Page Specific Styles */
 
 /* Center the title */
-.title {
+.admin-title {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
@@ -779,7 +789,6 @@
   font-size: 1rem;
   cursor: pointer;
   width: 100%;
-  margin-top: 10px;
 }
 
 .createAdminLogIn:hover {
@@ -803,6 +812,7 @@
 /* Admin Create Account Page Styles */
 
 /* Container for the whole page */
+
 .admin-container {
   display: flex;
   justify-content: center;
@@ -821,47 +831,60 @@
   border: 1px solid #ddd;
 }
 
-/* Admin Create Account title */
-.adminCreateAccountMessage {
-  position: absolute;
-  top: 250px;
-  font-size: 1.5rem;
-  color: #333;
+/* Admin Login Page Specific Styles */
+
+/* Center the title */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
-/* Label styles */
+/* Container for the Admin Login form */
+.admin-logIn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* The box around the login form */
+.login-form-box {
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+}
+
+/* Style for the labels and inputs */
 .label {
   font-size: 1rem;
   color: #555;
   margin-bottom: 5px;
 }
 
-/* Input styles */
 .input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-/* Create Account Button styles */
-.createAdminAccount {
-  background-color: #4CAF50; /* Green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
   border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.createAdminAccount:hover {
-  background-color: #45a049;
+/* Container for Create Account message */
+.create-account-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
 }
+
+.account {
+  font-size: 1rem;
+  color: #555;
+}
+
 
 /* Error message styling */
 .message {
