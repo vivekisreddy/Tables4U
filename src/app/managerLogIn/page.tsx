@@ -1,7 +1,7 @@
-'use client'; // directive to clarify client-side. Place at top of ALL .tsx files
+'use client'; 
 import React from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation'; 
 
 export default function ManagerLogin() {
     const [name, setName] = React.useState('');
@@ -66,6 +66,7 @@ export default function ManagerLogin() {
                 </label>
                 <label className="label">
                     Restaurant ID:
+                    
                     <input
                         type="text"
                         value={ID}

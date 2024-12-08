@@ -24,7 +24,6 @@ const GenerateReportPage = () => {
 
   function generateReport() {
     if (restaurant && startString && endString) {
-        // Access the REST-based API and in response (on a 200 or 400) process.
         instance.post('/adminAvailabilityReport', { "resID":restaurant, "startDate":startString, "endDate": endString })
             .then(function (response) {
                 console.log("raw response:", response);
@@ -76,7 +75,6 @@ const GenerateReportPage = () => {
     }
   }
 
-  // below is where the GUI for the admin generate availability report is drawn
   return (
     <div>
       <label className="generateReportMessage">{"Generate Availability Report:"}</label>

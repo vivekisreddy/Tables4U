@@ -53,39 +53,40 @@ export default function Home() {
     // below is where the GUI for the admin log in page is drawn
     return (
         <div className="admin-logIn-container">
-            <h1 className="title">Admin Log In</h1>
-            <div className="login-form-box">
-                <form className="handleLogIn" onSubmit={handleLogIn}>
-                    <label className="label" htmlFor="email">Email:</label>
-                    <input
-                        type="text"
-                        style={{ color: 'black' }}
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={(and) => setEmail(and.target.value)}
-                        className="input"
-                    />
-                    <br /><br />
-                    <label className="label" htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        style={{ color: 'black' }}
-                        id="password"
-                        name="password"
-                        value={password}
-                        onChange={(and) => setPassword(and.target.value)}
-                        className="input"
-                    />
-                    <br /><br />
-                    <button type="submit" className="adminLogInButton">Log In</button>
-                </form>
-
-                <div className="create-account-container">
-                    <label className="account">{"Don't have an account? Create one now!"}</label>
-                    <button className="createAdminLogIn" onClick={(e) => createAccount()}>Create Account</button>
-                </div>
+          <h1 className="title">Admin Log In</h1>
+          <div className="login-form-box">
+            <form className="handleLogIn" onSubmit={handleLogIn}>
+              <label className="label" htmlFor="email">Email:</label>
+              <input
+                type="text"
+                style={{ color: 'black' }}
+                id="email"
+                name="email"
+                value={email}
+                onChange={(and) => setEmail(and.target.value)}
+                className="input"
+              />
+              <br /><br />
+              <label className="label" htmlFor="password">Password:</label>
+              <input
+                type="password"
+                style={{ color: 'black' }}
+                id="password"
+                name="password"
+                value={password}
+                onChange={(and) => setPassword(and.target.value)}
+                className="input"
+              />
+              <br /><br />
+              <button type="submit" className="adminLogInButton">Log In</button>
+            </form>
+      
+            {/* Create Account Box */}
+            <div className="create-account-box">
+              <label className="account">{"Don't have an account? Create one now!"}</label>
+              <button className="createAdminLogIn" onClick={(e) => createAccount()}>Create Account</button>
             </div>
+          </div>
         </div>
-    )
+      );
 }

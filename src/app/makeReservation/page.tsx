@@ -1,120 +1,134 @@
 'use client';
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 export default function MakeReservation() {
-    const [restaurantID, setRestaurantID] = React.useState('');
-    const [partySize, setPartySize] = React.useState(0);
-    const [consumerEmail, setConsumerEmail] = React.useState('');
-    const [reservationDate, setReservationDate] = React.useState('');
-    const [reservationTime, setReservationTime] = React.useState('');
-    const [confirmationCode, setConfirmationCode] = React.useState('');
-    const [message, setMessage] = React.useState('');
+  const [restaurantName, setRestaurantName] = useState('');
+  const [reservationDate, setReservationDate] = useState('');
+  const [reservationTime, setReservationTime] = useState('');
+  const [partySize, setPartySize] = useState(1);
+  const [consumerEmail, setConsumerEmail] = useState('');
+  const [confirmationCode, setConfirmationCode] = useState('');  
+  const searchParams = useSearchParams();
+  const nameFromQuery = searchParams.get('name'); 
 
-    const handleMakeReservation = async () => {
-        const reservationData = {
-            restaurantID,
-            partySize,
-            consumerEmail,
-            reservationDate,
-            reservationTime,
-        };
-            
-        try {
-            const response = await axios.post(
-                'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerMakeReservation',
-                reservationData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    timeout: 5000,
-                }
-            );
+  useEffect(() => {
+    if (nameFromQuery) {
+      setRestaurantName(nameFromQuery); 
+      console.log("Restaurant Name set:", nameFromQuery);  
+    }
+  }, [nameFromQuery]);
 
-            if (response.status === 200) {
-                const responseBody = JSON.parse(response.data.body);
-                const { message, confirmationCode } = responseBody;
+  const handleSubmit = async () => {
+    const formattedDate = new Date(reservationDate);
+    const formattedDateString = formattedDate.toISOString().split('T')[0]; 
 
-                if (message && confirmationCode) {
-                    setMessage(`${message} (Confirmation Code: ${confirmationCode})`);
-                    setConfirmationCode(confirmationCode); // Set the confirmation code for display
-                } else {
-                    setMessage('Unexpected response format.');
-                }
-            } else {
-                throw new Error('Failed to make reservation.');
-            }
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                console.error('Axios error:', error.message);
-            } else if (error instanceof Error) {
-                console.error('Error making reservation:', error.message);
-            } else {
-                console.error('Unexpected error:', error);
-            }
-            setMessage('Error making reservation.');
-        }
+    const formattedTime = reservationTime.split(':')[0]; 
+
+    if (partySize < 1 || partySize > 8) {
+      alert('Party size must be between 1 and 8.');
+      return;
+    }
+
+    const reservationData = {
+      restaurantName,
+      reservationDate: formattedDateString, 
+      reservationTime: formattedTime,        
+      partySize,
+      consumerEmail,
     };
 
-    return (
-        <div className="container">
-            <h1 className="title">Make Reservation</h1>
-            <div className="rectangle-box">
-                <label className="label">
-                    Restaurant ID:
-                    <input
-                        type="text"
-                        value={restaurantID}
-                        onChange={(e) => setRestaurantID(e.target.value)}
-                        className="input"
-                    />
-                </label>
-                <label className="label">
-                    Party Size:
-                    <input
-                        type="number"
-                        value={partySize}
-                        onChange={(e) => setPartySize(Number(e.target.value))}
-                        className="input"
-                    />
-                </label>
-                <label className="label">
-                    Consumer Email:
-                    <input
-                        type="email"
-                        value={consumerEmail}
-                        onChange={(e) => setConsumerEmail(e.target.value)}
-                        className="input"
-                    />
-                </label>
-                <label className="label">
-                    Reservation Date (YYYY-MM-DD):
-                    <input
-                        type="date"
-                        value={reservationDate}
-                        onChange={(e) => setReservationDate(e.target.value)}
-                        className="input"
-                    />
-                </label>
-                <label className="label">
-                    Reservation Time (HH:MM):
-                    <input
-                        type="time"
-                        value={reservationTime}
-                        onChange={(e) => setReservationTime(e.target.value)}
-                        className="input"
-                    />
-                </label>
-            </div>
-            <div className="button-container">
-                <button onClick={handleMakeReservation} className="button-makeRes">
-                    Make Reservation
-                </button>
-            </div>
-            {message && <p className="message">{message}</p>}
-        </div>
-    );
+    try {
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerMakeReservation',
+        reservationData,
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      console.log(response.data);
+
+      const result = JSON.parse(response.data.body);
+      const confirmationCodeFromResponse = result.confirmationCode;
+
+      if (response.status === 200 && confirmationCodeFromResponse) {
+        setConfirmationCode(confirmationCodeFromResponse);
+        alert('Reservation successful!');
+      } else {
+        alert(result.error || 'Something went wrong.');
+      }
+
+    } catch (error) {
+      console.error('Error submitting reservation:', error);
+      alert('Error submitting reservation.');
+    }
+  };
+
+  return (
+    <div className="reservation-container">
+      <h1>Make Reservation for {restaurantName}</h1>
+
+      <div className="reservation-form">
+        <label>
+          Restaurant Name:
+          <input
+            type="text"
+            value={restaurantName}
+            readOnly
+            className="input-field"
+          />
+        </label>
+
+        <label>
+          Date (YYYY-MM-DD):
+          <input
+            type="text"
+            value={reservationDate}
+            onChange={(e) => setReservationDate(e.target.value)}
+            placeholder="Enter date as YYYY-MM-DD"
+            className="input-field"
+          />
+        </label>
+
+        <label>
+          Time (Hour only, e.g., 3 for 3:00):
+          <input
+            type="text"
+            value={reservationTime}
+            onChange={(e) => setReservationTime(e.target.value)}
+            placeholder="Enter hour only (e.g., 3)"
+            className="input-field"
+          />
+        </label>
+
+        <label>
+          Party Size:
+          <input
+            type="number"
+            value={partySize}
+            onChange={(e) => setPartySize(Number(e.target.value))}
+            className="input-field"
+          />
+        </label>
+
+        <label>
+          Your Email:
+          <input
+            type="email"
+            value={consumerEmail}
+            onChange={(e) => setConsumerEmail(e.target.value)}
+            className="input-field"
+          />
+        </label>
+
+        <button onClick={handleSubmit} className="submit-button">Submit Reservation</button>
+
+        {confirmationCode && (
+          <div className="confirmation-code">
+            <h3>Confirmation Code: {confirmationCode}</h3>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
