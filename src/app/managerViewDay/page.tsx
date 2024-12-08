@@ -26,6 +26,7 @@ export default function Home() {
     const [message, setMessage] = React.useState('');
     let tableNames : string[] = [];
     let hourList :number[] = [];
+    let hourNames : string[] = [];
     let organizedInformation: string[][] = [[]];
     const router = useRouter(); 
 
@@ -119,6 +120,7 @@ export default function Home() {
 
     function viewAvailability() {
         organizedInformation = [];
+        hourNames = [];
         if (date) {
           instance.post('/managerViewDayAvailability', {"resID":ID, "date":date})
           .then(function (response) {
@@ -130,7 +132,13 @@ export default function Home() {
             console.log("tableNames:", tableNames)
             console.log("hourList:", hourList)
 
+
             if (status == 200) {
+                for (let i = 0; i < hourList.length; i ++) {
+                    let formattedString = `${hourList[i]}:00`;
+                    hourNames.push(formattedString)
+                }
+                console.log("hourNames", hourNames)
                 createTable(result.hours, result.tableInformation, result.reservationsSorted)
                 setMessage("Showing Day Availability")
             } else {
@@ -164,33 +172,8 @@ export default function Home() {
   // below is where the GUI for the manager log in page is drawn
   return (
     <div className="container">
-        <h1 className="title">View Day Availability</h1>
-
-        {hourList.length > 0 ? (
-        <table className="report-table">
-            <thead>
-                <tr>
-                    <th>Hour</th> {/* First column for row names */}
-                    {tableNames.map((tableName, index) => (
-                    <th key={index}>{tableName}</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {hourList.map((hour, rowIndex) => (
-                    <tr key={rowIndex}>
-                        <td>{hour}</td>  {/* Row name from hours */}
-                        {organizedInformation[rowIndex].map((cell, cellIndex) => (
-                            <td key={cellIndex}>{cell}</td>
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    ):(
-        <p>No availability found.</p>
-    )}
-      
+      <h1 className="title">View Day Availability</h1>
+  
       <label className="label">
           Enter Date (format: YYYY-MM-DD):
           <input
@@ -226,6 +209,31 @@ export default function Home() {
       </div>
 
       {message && <p className="message">{message}</p>}
+
+        {hourList.length > 0 ? (
+            <table className="report-table">
+                <thead>
+                    <tr>
+                        <th>Hour</th> {/* First column for row names */}
+                        {tableNames.map((tableName, index) => (
+                        <th key={index}>{tableName}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {hourNames.map((hour, rowIndex) => (
+                        <tr key={rowIndex}>
+                            <td>{hour}</td>  {/* Row name from hours */}
+                            {organizedInformation[rowIndex].map((cell, cellIndex) => (
+                                <td key={cellIndex}>{cell}</td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        ):(
+            <p>No availability found.</p>
+        )}
 
     </div>
   )
