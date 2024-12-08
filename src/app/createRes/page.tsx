@@ -2,7 +2,7 @@
 
 import React from "react";
 import axios from "axios";
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation'; 
 
 export default function Home() {
     const [resName, setResName] = React.useState('');
@@ -104,8 +104,8 @@ export default function Home() {
     };
 
     return (
-        <div className="container">
-            <h1 className="title">Create Restaurant</h1>
+        <div className="container-create-res">
+            <h1 className="-create-res-title">Create Restaurant</h1>
             <div className="rectangle-box">
                 <label className="label">
                     Restaurant Name:

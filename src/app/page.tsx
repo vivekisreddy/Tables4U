@@ -27,7 +27,33 @@ export default function Home() {
       setMessage('Please enter a restaurant name to search.');
       return;
     }
-    // Existing name search logic
+
+    try {
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerSearchByRes',
+        { name: searchQuery },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      if (response.status === 200) {
+        const restaurantData = JSON.parse(response.data.body);
+        if (restaurantData && restaurantData.restaurant) {
+          // Redirect to the consumerSearchResDetails page with restaurant details
+          router.push(
+            `/consumerSearchResDetails?restaurantData=${encodeURIComponent(
+              JSON.stringify(restaurantData.restaurant)
+            )}`
+          );
+        } else {
+          setMessage('No active restaurants found with that name.');
+        }
+      } else {
+        setMessage('Failed to search for the restaurant.');
+      }
+    } catch (error) {
+      console.error('Error searching for the restaurant:', error);
+      setMessage('Error searching for the restaurant.');
+    }
   };
 
   const handleSearchByDateTime = (event: React.FormEvent) => {
@@ -36,10 +62,8 @@ export default function Home() {
       setMessage('Please enter both date and time to search.');
       return;
     }
-    // Navigating to the search results page with query parameters
     router.push(`/searchResDateTime?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`);
   };
-  
 
   function adminLogIn() {
     router.push('/adminLogIn');
@@ -48,6 +72,16 @@ export default function Home() {
   function managerLogIn() {
     router.push('/managerLogIn');
   }
+
+  // Redirect to the 'consumerViewReservation' page when 'Find Reservation Details' is clicked
+  const handleFindReservationDetails = () => {
+    router.push('/consumerViewReservation');
+  };
+
+  // Redirect to the 'deleteReservation' page
+  const handleCancelReservation = () => {
+    router.push('/deleteReservation');
+  };
 
   return (
     <div className="main-container">
@@ -71,7 +105,7 @@ export default function Home() {
         <form onSubmit={handleSearch} className="search-form">
           <input
             type="text"
-            placeholder="Search for a restaurant..."
+            placeholder="Search for an active restaurant..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
@@ -123,8 +157,6 @@ export default function Home() {
       {/* Consumer Dashboard Section */}
       <div className="consumer-dashboard">
         <h2 className="title">Consumer Dashboard</h2>
-
-        {/* Buttons for listing restaurants */}
         <div className="button-container">
           <button
             className="listRestaurantsButton"
@@ -138,10 +170,27 @@ export default function Home() {
       {/* Reservation Confirmation Section */}
       <div className="reservation-section">
         <h3>Already have a reservation?</h3>
-        <p>Find your details here!</p>
-        <button className="findReservationDetailsButton">
-          Find Restaurant Details
+        <button
+          className="findReservationDetailsButton"
+          onClick={handleFindReservationDetails} // Trigger navigation here
+        >
+          Find Reservation Details
         </button>
+      </div>
+
+     {/* Cancel Reservation Section */}
+      <div className="cancel-reservation-section">
+        <h3>Want to cancel your reservation?</h3>
+        <p>
+          Click{' '}
+          <button
+            className="cancel-reservation-button"
+            onClick={handleCancelReservation}
+          >
+            here
+          </button>{' '}
+          to delete your reservation.
+        </p>
       </div>
     </div>
   );
