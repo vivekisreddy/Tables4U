@@ -25,11 +25,6 @@ const GenerateReportPage = () => {
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
 
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-    forceRedraw(redraw + 1)
-  }
-
   function generateReport() {
     if (restaurant && startString && endString) {
         // Access the REST-based API and in response (on a 200 or 400) process.
@@ -42,7 +37,6 @@ const GenerateReportPage = () => {
                 if (status === 200) {
                   let reportData = JSON.parse(result)
                   setReportList(reportData)
-
                 } else {
                     // console.log("Error generating availability report:", result);
                     alert("Error generating availability report: " + result);
@@ -108,7 +102,6 @@ const GenerateReportPage = () => {
       {/* Display availability report */}
       {reportList.length > 0 ? (
         <table className='report-table'>
-        {/* <!-- headers --> */}
         <thead>
           <tr>
             <th>Date</th>
@@ -118,16 +111,14 @@ const GenerateReportPage = () => {
           </tr>
         </thead>
         <tbody>
-           {/* <!-- rows --> */}
-           {
-            reportList.map((report, index) =>
-              <tr key={index}>
-                <th>{report.date}</th>
-                <th>{report.time}</th>
-                <th>{report.utilization}</th>
-                <th>{report.availability}</th>
-              </tr>
-            )}
+           {reportList.map((report, index) => (
+            <tr key={index}>
+              <th>{report.date}</th>
+              <th>{report.time}</th>
+              <th>{report.utilization}</th>
+              <th>{report.availability}</th>
+            </tr>
+            ))}
         </tbody>
       </table>
       ) : (
@@ -137,4 +128,4 @@ const GenerateReportPage = () => {
       );
     };
 
-export default GenerateReportPage
+export default GenerateReportPage;
