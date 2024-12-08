@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'; // Ensure React is imported
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
-export default function ManagerViewDay() {
+export default function AdminViewAvailability() {
   const [restaurantID, setRestaurantID] = useState('');
   const [viewDate, setViewDate] = useState('');
   const [availabilityTable, setAvailabilityTable] = useState<any[][]>([]); // Store availability as a 2D array
@@ -31,7 +31,7 @@ export default function ManagerViewDay() {
     try {
       // Call the backend API to fetch availability
       const response = await axios.post(
-        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/managerViewDayAvailability',
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/',
         { restaurantID, viewDate },
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -57,8 +57,8 @@ export default function ManagerViewDay() {
   };  
 
   return (
-    <div className="manager-view-day-container">
-      <h1>Manager View for {restaurantID}</h1>
+    <div className="admin-view-day-container">
+      <h1>Admin View for {restaurantID}</h1>
 
       <div className="form-container">
         <label>
@@ -84,7 +84,7 @@ export default function ManagerViewDay() {
         </label>
 
         <button onClick={handleSubmit} className="submit-button" disabled={!restaurantID || !viewDate}>
-          Check Availability
+          View Availability
         </button>
 
         {error && <div className="error-message">{error}</div>}
