@@ -26,8 +26,7 @@ const ActiveRestaurantsPage = () => {
       );
 
       if (response.status === 200) {
-        let restaurantData = response.data;
-        restaurantData = JSON.parse(restaurantData.body);
+        const restaurantData = JSON.parse(response.data.body);
         setRestaurantList(restaurantData);
       } else {
         throw new Error('Failed to load restaurants.');
@@ -48,14 +47,14 @@ const ActiveRestaurantsPage = () => {
         <div className="header-left">
           <button onClick={() => router.push('/')}>Back to Home</button>
         </div>
-        <div className="header-center">
+        <div className="header-center-activate">
           <h1>Active Restaurants</h1>
         </div>
       </header>
-
+  
       {/* Display Message */}
       {message && <p className="message">{message}</p>}
-
+  
       {/* Display restaurants */}
       {restaurantList.length > 0 ? (
         <table className="restaurant-table">
@@ -65,15 +64,30 @@ const ActiveRestaurantsPage = () => {
               <th>Address</th>
               <th>Open Time</th>
               <th>Close Time</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {restaurantList.map((restaurant, index) => (
-              <tr key={index}> {/* Use index as the key */}
+              <tr key={index}>
                 <td>{restaurant.name}</td>
                 <td>{restaurant.address}</td>
                 <td>{restaurant.openTime}</td>
                 <td>{restaurant.closeTime}</td>
+                <td>
+                  <button
+                    className="make-reservation-button"
+                    onClick={() =>
+                      router.push(
+                        `/makeReservation?name=${encodeURIComponent(
+                          restaurant.name
+                        )}`
+                      )
+                    }
+                  >
+                    Make Reservation
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

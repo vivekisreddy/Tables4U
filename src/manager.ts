@@ -9,7 +9,7 @@ export class Manager {
     name: string;
    //email: string;
     restaurant: Restaurant;
-
+    //normal comment
     constructor(name: string, restaurant: Restaurant) {
         this.name = name;
         // this.email = email;

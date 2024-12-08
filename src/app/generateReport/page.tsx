@@ -1,30 +1,33 @@
 'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 
-export default function Home() {
-    // initial instantiation for admin log in page
-    const [redraw, forceRedraw] = React.useState(0)
+interface Report {
+  date: string
+  time: number
+  utilization: number
+  availability: number
+}
 
+const GenerateReportPage = () => {
+    // initial instantiation for admin log in page
+
+export default function Home() {
+  
     const currentDate = new Date();
     const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
 
     const [restaurant, setRestaurant] = useState('')
     const [startString, setStartString] = useState('')
     const [endString, setEndString] = useState('')
+    const [reportList, setReportList] = useState<Report[]>([])
 
     const instance = axios.create({
       baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
     });
 
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-    forceRedraw(redraw + 1)
-  }
-
   function generateReport() {
     if (restaurant && startString && endString) {
-        // Access the REST-based API and in response (on a 200 or 400) process.
         instance.post('/adminAvailabilityReport', { "resID":restaurant, "startDate":startString, "endDate": endString })
             .then(function (response) {
                 console.log("raw response:", response);
@@ -32,8 +35,8 @@ export default function Home() {
                 let result = response.data.body;
 
                 if (status === 200) {
-                  // TO DO: display report information
-                    andRefreshDisplay();
+                  let reportData = JSON.parse(result)
+                  setReportList(reportData)
                 } else {
                     // console.log("Error generating availability report:", result);
                     alert("Error generating availability report: " + result);
@@ -46,10 +49,14 @@ export default function Home() {
     }
 }
 
+  useEffect(() => {
+    generateReport();
+  }, []);
+
   const handleGenerate = (and:any) => {
     and.preventDefault();
 
-    const today = new Date(currentDateString)
+    //const today = new Date(currentDateString)
     const startDate = new Date(startString)
     const endDate = new Date(endString)
 
@@ -59,14 +66,8 @@ export default function Home() {
     if (startString == '') {
       alert("Please input a start date for the report.")
     }
-    if (startDate >= today) {
-      alert("Start date must be in the past.")
-    }
     if (endString == '') {
       alert("Please input an end date for the report.")
-    }
-    if (endDate >= today) {
-      alert("End date must be in the past.")
     }
     if (endDate < startDate) {
       alert("End date cannot be before the start date.")
@@ -76,7 +77,6 @@ export default function Home() {
     }
   }
 
-  // below is where the GUI for the admin generate availability report is drawn
   return (
     <div>
       <label className="generateReportMessage">{"Generate Availability Report:"}</label>
@@ -97,6 +97,34 @@ export default function Home() {
         <input type="text" style={{ color: 'black' }} id="end" name="end" value={endString} onChange={(and) => setEndString(and.target.value)}/>
         <button type="submit" className="generateReportButton">Generate</button>
       </form>
-    </div>
-  )
-}
+      
+      {/* Display availability report */}
+      {reportList.length > 0 ? (
+        <table className='report-table'>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Utilization(%)</th>
+            <th>Availability(%)</th>
+          </tr>
+        </thead>
+        <tbody>
+           {reportList.map((report, index) => (
+            <tr key={index}>
+              <th>{report.date}</th>
+              <th>{report.time}</th>
+              <th>{report.utilization}</th>
+              <th>{report.availability}</th>
+            </tr>
+            ))}
+        </tbody>
+      </table>
+      ) : (
+        <p>No availability report available.</p>
+      )}
+      </div>
+      );
+    };
+
+export default GenerateReportPage;

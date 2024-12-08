@@ -1,7 +1,7 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
+'use client'                                              
 import React from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation'; 
 
 interface Reservation {
     restaurantID: string;
@@ -170,6 +170,10 @@ export default function Home() {
     }
 
   // below is where the GUI for the manager log in page is drawn
+    const handleHome = async() => {
+        router.push('/managerHomePage')
+    }
+
   return (
     <div className="container">
       <h1 className="title">View Day Availability</h1>
