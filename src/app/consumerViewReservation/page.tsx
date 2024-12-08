@@ -1,116 +1,85 @@
-'use client'                                              // directive to clarify client-side. Place at top of ALL .tsx files
-import React, {useState} from 'react'
-import axios from 'axios'
+'use client';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-export default function Home() {
-    // initial instantiation for admin log in page
-    const [redraw, forceRedraw] = React.useState(0)
+// Define the type for reservation details
+interface ReservationDetails {
+  name: string;
+  reservationDate: string;  // 'YYYY-MM-DD' format
+  reservationTime: number;  // The hour of the reservation (2, 3, 4)
+  partySize: number;
+}
 
-    const [code, setCode] = useState('');
-    const [code1, setCode1] = useState('');
+export default function GetReservationDetails() {
+  const [confirmationCode, setConfirmationCode] = useState('');
+  const [reservationDetails, setReservationDetails] = useState<ReservationDetails | null>(null);
+  const [error, setError] = useState('');
 
-    const instance = axios.create({
-      baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
-    });
-
-    // helper function that forces React app to redraw whenever this is called.
-    function andRefreshDisplay() {
-    forceRedraw(redraw + 1)
-  }
-
-  function confirmRes() {
-    if (code) {
-      
-      // Access the REST-based API and in response (on a 200 or 400) process.
-      instance.post('/consumerViewReservation', {"confirmationCode":code})
-      .then(function (response) {
-        console.log("raw response:", response)
-        let status = response.data.statusCode
-        let result = response.data.body
-
-        console.log("response status:", status)
-
-        if (status == 200) {
-          // TO DO: show reservation details
-          andRefreshDisplay()
-        } else {
-          alert("Error confirming reservation: " + result)
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-        alert("An unexpected error occured. Please try again.")
-      })
+  const handleSubmit = async () => {
+    if (!confirmationCode) {
+      alert('Please enter a confirmation code');
+      return;
     }
-  }
-
-  function deleteRes() {
-    if (code1) {
-      
-      // Access the REST-based API and in response (on a 200 or 400) process.
-      instance.post('', {"reservationID":code1})
-      .then(function (response) {
-        console.log("raw response:", response)
-        let status = response.data.statusCode
-        let result = response.data.body
-
-        console.log("response status:", status)
-
-        if (status == 200) {
-          alert("Successfully deleted reservation.")
-          window.location.replace("/page")
-          andRefreshDisplay()
-        } else {
-          alert("Error deleting reservation: " + result)
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-        alert("An unexpected error occured. Please try again.")
-      })
+  
+    try {
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/consumerViewReservation',
+        { confirmationCode },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
+      if (response.status === 200) {
+        // Parse the 'body' string into a JavaScript object
+        const reservationData = JSON.parse(response.data.body);
+        
+        // Format the reservation date to 'YYYY-MM-DD'
+        const formattedDate = new Date(reservationData.reservationDate).toLocaleDateString();
+  
+        // Update the reservation data with the formatted date
+        reservationData.reservationDate = formattedDate;
+  
+        setReservationDetails(reservationData);  // Set the formatted reservation details
+      } else {
+        setError('No reservation found for this confirmation code.');
+        setReservationDetails(null);
+      }
+    } catch (error) {
+      console.error('Error fetching reservation:', error);
+      setError('An error occurred while fetching the reservation.');
+      setReservationDetails(null);
     }
-  }
-
-  const handleConfirm = (and:any) => {
-    and.preventDefault();
-    if (code == '') {
-      alert("Please enter your reservation's confirmation code.")
-    }
-    else {
-      confirmRes()
-    }
-    andRefreshDisplay()
-  }
-
-  const handleDelete = (and:any) => {
-    and.preventDefault();
-    if (code1 == '') {
-      alert("Please enter your confirmation code to delete your reservation.")
-    }
-    else {
-      deleteRes()
-    }
-    andRefreshDisplay()
-  }
-
-  // below is where the GUI for the consumer view reservation page is drawn
+  };
+  
   return (
-    <div>
-      <label className="confirmResMessage">{"Confirm your reservation below:"}</label>
+    <div className="reservation-container">
+      <h1>Get Reservation Details</h1>
 
-      <form className="handleConfirm" onSubmit={handleConfirm}>
-        <label className="label" htmlFor="code">Confirmation Code:</label>
-        <input type="text" style={{ color: 'black' }} id="code" name="code" value={code} onChange={(and) => setCode(and.target.value)}/>
-        <button type="submit" className="enter">Enter</button>
-      </form>
+      <div className="reservation-form">
+        <label>
+          Confirmation Code:
+          <input
+            type="text"
+            value={confirmationCode}
+            onChange={(e) => setConfirmationCode(e.target.value)}
+            placeholder="Enter your confirmation code"
+            className="input-field"
+          />
+        </label>
 
-      <label className="deleteResMessage">{"Or delete your reservation here:"}</label>
+        <button onClick={handleSubmit} className="submit-button">Get Reservation Details</button>
 
-      <form className="handleDelete" onSubmit={handleDelete}>
-        <label className="label" htmlFor="code1">Confirmation Code:</label>
-        <input type="text" style={{ color: 'black' }} id="code1" name="code1" value={code1} onChange={(and) => setCode1(and.target.value)}/>
-        <button type="submit" className="deleteResButton">Delete</button>
-      </form>
+        {reservationDetails && (
+          <div className="reservation-details">
+            <h2>Reservation Details</h2>
+            <p><strong>Restaurant:</strong> {reservationDetails.name}</p>
+            <p><strong>Date:</strong> {reservationDetails.reservationDate}</p>
+            <p><strong>Time:</strong> {reservationDetails.reservationTime}</p> 
+            <p><strong>Party Size:</strong> {reservationDetails.partySize}</p>
+          </div>
+        )}
+
+        {error && <p className="error-message">{error}</p>}
+      </div>
     </div>
-  )
+  );
 }
