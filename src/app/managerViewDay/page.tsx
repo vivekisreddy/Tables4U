@@ -21,13 +21,13 @@ export default function ManagerViewDay() {
 
   const handleSubmit = async () => {
     console.log('Button clicked'); // Debug log to ensure handleSubmit is called
-
+  
     // Validate inputs
     if (!restaurantID || !viewDate) {
       setError('Please provide both restaurant ID and date.');
       return;
     }
-
+  
     try {
       // Call the backend API to fetch availability
       const response = await axios.post(
@@ -35,14 +35,17 @@ export default function ManagerViewDay() {
         { restaurantID, viewDate },
         { headers: { 'Content-Type': 'application/json' } }
       );
-
+  
       console.log('API Response:', response.data); // Log response for debugging
-
+  
       const result = response.data;
-
+  
+      // Parse the body since it is stringified JSON
+      const parsedBody = JSON.parse(result.body); // Parse the stringified body
+  
       if (result.statusCode === 200) {
-        setAvailabilityTable(result.body.availabilityTable || []);
-        setTableNames(result.body.availabilityTable[0]?.slice(1) || []); // Extract table names from the first row
+        setAvailabilityTable(parsedBody.availabilityTable || []);
+        setTableNames(parsedBody.availabilityTable[0]?.slice(1) || []); // Extract table names from the first row
         setError(null); // Clear any previous errors
       } else {
         setError(result.error || 'Something went wrong.');
@@ -51,7 +54,7 @@ export default function ManagerViewDay() {
       console.error('Error fetching availability:', error);
       setError('Error fetching availability.');
     }
-  };
+  };  
 
   return (
     <div className="manager-view-day-container">
@@ -88,30 +91,30 @@ export default function ManagerViewDay() {
 
         {/* Conditionally render the table if availability data is available */}
         {availabilityTable.length > 0 && tableNames.length > 0 && (
-          <div className="availability-table">
-            <h3>Availability for {viewDate}</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Time</th>
-                  {tableNames.map((table, index) => (
-                    <th key={index}>{table}</th> // Render table names dynamically
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {availabilityTable.slice(1).map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <td>{row[0]}</td> {/* Time column */}
-                    {row.slice(1).map((cell, cellIndex) => (
-                      <td key={cellIndex}>{cell}</td> // Availability for each table
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+  <div className="availability-table">
+    <h3>Availability for {viewDate}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          {tableNames.map((table, index) => (
+            <th key={index}>{table}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {availabilityTable.slice(1).map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            <td>{row[0]}</td> {/* Time column */}
+            {row.slice(1).map((cell, cellIndex) => (
+              <td key={cellIndex}>{cell}</td> // Availability for each table
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
       </div>
     </div>
   );
