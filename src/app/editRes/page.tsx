@@ -72,7 +72,7 @@ export default function Home() {
 
     return (
         <div className="container">
-            <h1 className="title">Edit Restaurant</h1>
+            <h1 className="page-title">Edit Restaurant</h1>
             <label className="label">
                 Restaurant ID:
                 <input

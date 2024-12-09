@@ -5,55 +5,37 @@
   display: flex;
   justify-content: space-between; /* Align items to the edges */
   align-items: center;
-  background-color: #3489386f; /* Blue background */
+  background-color: #4eafff; /* Blue background */
   padding: 15px 20px;
   border-radius: 8px;
   color: rgb(0, 0, 0);
   margin-bottom: 20px; /* Space below header */
 }
 
-.header-center { 
-  position: absolute;
-  right: 700px; 
-  font-size: xx-large;
-  color: white;
-
-}
-
-/* Buttons inside the header */
 .header-left {
   display: flex;
-  gap: 10px; /* Space between the buttons */
+  gap: 10px; /* Spacing between buttons */
+}
+
+.header-center {
+  position: absolute;
+  right: 775px;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 /* Buttons inside the header */
-/* Button Styles */
-.adminLogInButton {
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
-  padding: 10px 20px;
-  border-radius: 5px;
+.header-left .adminLogInButton,
+.header-left .managerLogInButton {
+  background-color: white;
+  color: #2196F3;
+  padding: 10px 15px;
   font-size: 1rem;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.adminLogInButton:hover {
-  background-color: #2f8235;
-}
-
-.header-left .managerLogInButton { 
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
-  padding: 10px 20px;
   border-radius: 5px;
-  font-size: 1rem;
+  border: none;
   cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
 }
-
 
 .header-left .adminLogInButton:hover,
 .header-left .managerLogInButton:hover {
@@ -65,7 +47,9 @@
   margin: 20px auto;
   padding: 20px;
   max-width: 800px;
+  background-color: white;
   border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .consumer-dashboard {
@@ -73,9 +57,14 @@
   margin-bottom: 100px;
   color: #333;
   text-align: center;
+  
 }
 
 .title {
+  /* position: absolute; */
+  top: 0%;
+  vertical-align: middle;
+
   position: absolute;
   top: 100px;
   right: 650px;
@@ -101,20 +90,22 @@
 
 .listRestaurantsButton,
 .toggleRestaurantsButton {
-  background-color: #5f7b489b;
-  color: rgb(0, 0, 0);
+  background-color: #2196F3;
+  color: white;
   padding: 10px 15px;
   font-size: 1rem;
   position: absolute;
-  top: 400px;
-  right: 50px;
+  top: 190px;
+  left: 815px;
   border-radius: 5px;
+  border: none;
   cursor: pointer;
-  width: 1175px;
 }
 
 .listRestaurantsButton:hover,
 .toggleRestaurantsButton:hover {
+  background-color: #0b7dda;
+}
   background-color: #2f8235;
 }
 
@@ -158,11 +149,15 @@
 .reservation-section {
   margin: 20px auto;
   position: absolute;
+  top: 500px;
+  right: 750px;
   top: 700px;
   right: 475px;
   padding: 20px;
   max-width: 600px;
+  background-color: white;
   border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -255,7 +250,7 @@
 }
 
 .reservation-section form .enter:hover {
-  background-color: #2f8235;
+  background-color: #45a049;
 }
 
 /* Restaurants table */
@@ -277,36 +272,10 @@
 }
 
 .restaurant-table tr:hover {
-  background-color: #d3dcd3;
-}
-
-.restaurant-table td:first-child {
-  font-weight: bold;
-}
-
-/* Report table */
-.report-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  text-align: left;
-}
-
-.report-table th,
-.report-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-.report-table th {
-  background-color: #f2f2f2;
-}
-
-.report-table tr:hover {
   background-color: #f9f9f9;
 }
 
-.report-table td:first-child {
+.restaurant-table td:first-child {
   font-weight: bold;
 }
 
@@ -370,18 +339,15 @@
   top: -8px;
 }
 
-.managerAccountButton{
-  background-color: #5f7b489b
-}
-
 .deleteRestaurantButton {
   font-size: 1rem;
   color: #555;
-  background-color: #5f7b489b;
-  border-top: 1px solid #2f8235;
-  border-right: 1px solid #2f8235;
-  border-bottom: 1px solid #2f8235;
-  border-left: 1px solid #2f8235;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
   position: absolute;
   left: 295px;
   top: -8px;
@@ -416,25 +382,22 @@
   top: 2px;
 }
 
-/* consumer finding reservation details */ 
 .findReservationDetailsButton {
-
   font-size: 1rem;
-  background-color: #5f7b489b;
-  color: rgb(0, 0, 0);
-  border-radius: 8px;
-  cursor: pointer; 
+  color: #555;
+  background-color: #EEEEEE;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  position: absolute;
+  left: 650px;
+  top: 380px;
+.message.success {
+  color: #4CAF50; /* Green for success messages */
 }
-
-/* consumer deleting reservation details */ 
-.cancel-reservation-button { 
-  font-size: 1rem;
-  background-color: #9fdb6e;
-  color: rgb(0, 0, 0);
-  border-radius: 8px;
-  cursor: pointer;
 }
-
 
 .generateReportButton {
   background-color: #4CAF50; /* Green */
@@ -453,17 +416,17 @@
   color: #555;
   position: absolute;
   left: 25px;
-  top: 620px;
+  top: 25px;
 }
 
 /* Styling for the search section */
 .search-section {
   display: flex;
   position: absolute;
-  top: 250px;
-  right: 50px;
+  top: 225px;
+  right: 600px;
   justify-content: center;
-
+  margin: 2rem 0;
 }
 
 .search-form {
@@ -473,9 +436,10 @@
 }
 
 .search-input {
-  width: 1000px;
+  width: 400px;
   padding: 1rem;
   font-size: 1rem;
+  border: 1px solid #ccc;
   border-radius: 8px;
   outline: none;
   font-weight: 300; /* Lighter font */
@@ -488,14 +452,15 @@
 .search-button {
   padding: 1rem 2rem;
   font-size: 1rem;
-  background-color: #5f7b489b;
-  color: rgb(0, 0, 0);
+  background-color: #007bff;
+  color: white;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
 .search-button:hover {
-  background-color: #009018;
+  background-color: #0056b3;
 }
 
 /* For the restaurant details page */
@@ -512,20 +477,25 @@
 .restaurant-details p {
   margin-bottom: 0.5rem;
 }
+
 .make-reservation-button {
-  background-color: #2f8235;
-  color: white; /* Ensures text is visible on the green background */
-  border: none; /* Removes border */
-  padding: 10px 15px; /* Adds some spacing */
-  border-radius: 5px; /* Rounds the corners */
-  cursor: pointer; /* Adds a pointer cursor for better UX */
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.make-reservation-button:active {
-  background-color: #5f7b489b; /* Changes background color when clicked */
+.make-reservation-button:hover {
+  background-color: #218838;
 }
 
-
+/* Manager View Day page*/
+.availability-table {
+  width: 85%;
+}
 
 
 /* This is all managerLogin Page stuff */ 
@@ -572,7 +542,7 @@
   padding: 2px 6px 2px 6px;
   position: absolute;
   left: 25px;
-  top: 650px;
+  top: 50px;
 }
 
 .handleConfirm {
@@ -663,6 +633,7 @@
   background-color: #f8f8f8; /* Light background for the box */
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 400px; /* Fixed width */
 }
@@ -680,8 +651,8 @@
 .button-logIn {
   width: 100%;
   padding: 10px;
-  background-color: #5f7b489b; /* Green */
-  color: white;
+  background-color: #4caf50; /* Green */
+  color: rgb(0, 0, 0);
   border: none;
   border-radius: 5px;
   font-size: 1rem;
@@ -690,14 +661,14 @@
 }
 
 .button-logIn:hover {
-  background-color: #2f8235;
+  background-color: #45a049;
 }
 
 /* Create account button */
 .button-create-account {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #5f7b489b; /* Blue */
+  background-color: #2196f3; /* Blue */
   color: white;
   border: none;
   border-radius: 5px;
@@ -706,7 +677,7 @@
 }
 
 .button-create-account:hover {
-  background-color: #2f8235;
+  background-color: #0b7dda;
 }
 
 /* Message display */
@@ -722,6 +693,7 @@
   right: 625px;
   top: 50px;
 }
+/* This is CSS styling for create resturant stuff */ 
 
 /* Centered Title */
 .title {
@@ -739,11 +711,12 @@
   border-radius: 10px;
   width: 400px;
   background-color: #f8f8f8;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Buttons */
 .button-createRes {
-  background-color: #5f7b489b;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -753,11 +726,11 @@
 }
 
 .button-createRes:hover {
-  background-color: #2f8235;
+  background-color: #45a049;
 }
 
 .button-activateRes {
-  background-color: #5f7b489b;
+  background-color: #2196f3;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -767,7 +740,7 @@
 }
 
 .button-activateRes:hover {
-  background-color: #2f8235;
+  background-color: #0b7dda;
 }
 
 /* Button Container */
@@ -778,6 +751,10 @@
   width: 400px;
 }
 
+
+
+
+/* This is all the CSS stuff for the adminLogin pgae */ 
 /* Admin Login Page Specific Styles */
 
 /* Center the title */
@@ -802,6 +779,7 @@
   width: 400px;
   background-color: #f8f8f8;
   border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Style for the labels and inputs */
@@ -819,9 +797,25 @@
   margin-bottom: 10px;
 }
 
+/* Button Styles */
+.adminLogInButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.adminLogInButton:hover {
+  background-color: #45a049;
+}
 
 .createAdminLogIn {
-  background-color: #5f7b489b;
+  background-color: #2196F3;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -832,7 +826,7 @@
 }
 
 .createAdminLogIn:hover {
-  background-color: #2f8235;
+  background-color: #0b7dda;
 }
 
 /* Container for Create Account message */
@@ -864,11 +858,11 @@
 /* Form container styled as a rectangle box */
 .form-container {
   width: 100%;
-  max-width: 400px;
   padding: 40px;
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Admin Login Page Specific Styles */
@@ -933,10 +927,16 @@
   margin-top: 10px;
 }
 
+/* This is styling stuff for consumerListActiveRestaurant */
+.header-center { 
+  position: absolute;
+  right: 600px;
+}
+
 .restaurant-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin-top: 800px;
 }
 
 .restaurant-table th, .restaurant-table td {
@@ -946,34 +946,12 @@
 }
 
 .restaurant-table th {
-  background-color: #ffffff8e;
-  color: black; 
-  font-weight: bold;
+  background-color: #f2f2f2;
 }
 
 .restaurant-item {
   margin-bottom: 20px;
 }
-
-.make-reservation-button {
-  background-color: #25733a;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.make-reservation-button:hover {
-  background-color: #2f8235;
-}
-
-.active-restaurants-container {
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 1200px;
-}
-
 
 .deleteRestaurantButton {
   background-color: #4CAF50;
@@ -985,178 +963,20 @@
 }
 
 .deleteRestaurantButton:hover {
-  background-color: #2f8235;
+  background-color: rgb(31, 116, 91);
 }
 
 /* Manager View Day Availability Page section */
-.table {
-  display: flex;
-  flex-direction: column; /* Arrange rows vertically */
-  border: 1px solid #ccc;
-  width: 80%;
-  margin: auto;
-}
-
-/* Row styling */
-.table-row {
-  display: flex;
-  flex-direction: row; /* Arrange cells horizontally */
-  border-bottom: 1px solid #ccc;
-}
-
-/* Cell styling */
-.table-cell {
-  flex: 1; /* Cells take equal width */
-  padding: 10px;
-  text-align: center;
-  border-right: 1px solid #ccc;
-}
-
-/* Remove the last cell's border in each row */
-.table-cell:last-child {
-  border-right: none;
-}
-
-/* Header row styling */
-.table-header {
-  background-color: #f4f4f4;
-  font-weight: bold;
-}
-
-
-/* This is the CSS styling stuff for the searchResDateTime */
-
-.restaurant-table {
+.report-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.restaurant-table th, .restaurant-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  margin-top: 20px;
   text-align: left;
 }
 
-.restaurant-table th {
-  background-color: #5f7b489b; /* Header background color */
-  color: white; /* Header text color */
-}
-
-.make-reservation-button {
-  background-color: #5f7b489b;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.make-reservation-button:hover {
-  background-color: #2f8235;
-}
-
-.restaurants-container {
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 1200px;
-}
-/* MakeReservation.css */
-
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f7f7f7;
-  margin: 0;
-  padding: 0;
-}
- 
-.reservation-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #e1e4def3;
-  border-radius: 8px;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.reservation-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-size: 16px;
-  margin-bottom: 8px;
-  color: #333;
-}
-
-.input-field {
+.report-table th,
+.report-table tr,
+.report-table td {
   padding: 10px;
-  margin-bottom: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  outline: none;
-}
-
-.input-field:focus {
-  border-color: #000000;
-}
-
-button.submit-button {
-  padding: 12px;
-  background-color: #5f7b489b;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button.submit-button:hover {
-  background-color: #2f8235;
-}
-
-button.submit-button:active {
-  background-color: #5f7b489b;
-}
-
-.confirmation-code {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.confirmation-code h3 {
-  font-size: 18px;
-  color: #333;
-}
-
-
-/*cancel reservation button*/
-.cancel-reservation-button {
-  font-weight: bold;
-  color: #fff;
-  background-color: #5f7b489b; /* Matches submit-button's active color */
-  border: none;
-  border-radius: 5px; 
-  padding: 8px 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cancel-reservation-button:hover {
-  background-color: #2f8235; /* Matches submit-button's hover color */
-}
-
-.cancel-reservation-button:active {
-  background-color: #5f7b489b; /* Original Cancel Reservation color */
+  border: 1px solid #000000;
 }

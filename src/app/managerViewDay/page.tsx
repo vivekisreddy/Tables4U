@@ -9,6 +9,128 @@ export default function ManagerViewDay() {
   const [availabilityTable, setAvailabilityTable] = useState<any[][]>([]); // Store availability as a 2D array
   const [tableNames, setTableNames] = useState<string[]>([]); // Store table names like T1, T2, etc.
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>('');
+
+  const searchParams = useSearchParams();
+  const nameFromQuery = searchParams.get('name');
+
+  const instance = axios.create({
+    baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
+  });
+
+  function closeDate() {
+    if (viewDate && restaurantID) {
+        instance.post('/managerCloseDate', {"resID":restaurantID, "dateToClose":viewDate})
+        .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
+
+            console.log("response status:", status)
+
+            if (status == 200) {
+                console.log("response status:", status)
+                console.log("Successfully closed Date")
+                setMessage("Successfully closed Date")
+            } else {
+                setMessage("Invalid Information")
+                console.log("Error closing date:", result)
+            }
+        }) .catch(function (error) {
+            console.log(error)
+        })
+    } else {
+        setMessage("Please verify input information")
+    }
+    }
+
+    function openDate() {
+        if (viewDate && restaurantID) {
+        instance.post('/managerOpenDate', {"resID":restaurantID, "dateToClose":viewDate})
+        .then(function (response) {
+            console.log("raw response:", response)
+            let status = response.data.statusCode
+            let result = response.data.body
+
+            console.log("response status:", status)
+
+            if (status == 200) {
+            console.log("response status:", status)
+            console.log("Successfully opened Date")
+            setMessage("Successfully opened Date")
+            } else {
+            setMessage("Invalid Information")
+            console.log("Error opening date:", result)
+            }
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+        } else {
+        setMessage("Please verify input information")
+        }
+    }
+
+  useEffect(() => {
+    if (nameFromQuery) {
+      setRestaurantID(nameFromQuery); // Use the restaurant name from query params
+    }
+  }, [nameFromQuery]);
+
+  const handleSubmit = async () => {
+    console.log('Button clicked'); // Debug log to ensure handleSubmit is called
+  
+    // Validate inputs
+    if (!restaurantID || !viewDate) {
+      setError('Please provide both restaurant ID and date.');
+      return;
+    }
+  
+    try {
+      // Call the backend API to fetch availability
+      const response = await axios.post(
+        'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial/managerViewDayAvailability',
+        { restaurantID, viewDate },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
+      console.log('API Response:', response.data); // Log response for debugging
+  
+      const result = response.data;
+  
+      // Parse the body since it is stringified JSON
+      const parsedBody = JSON.parse(result.body); // Parse the stringified body
+  
+      if (result.statusCode === 200) {
+        setAvailabilityTable(parsedBody.availabilityTable || []);
+        setTableNames(parsedBody.availabilityTable[0]?.slice(1) || []); // Extract table names from the first row
+        setError(null); // Clear any previous errors
+      } else {
+        setError(result.error || 'Something went wrong.');
+      }
+    } catch (error) {
+      console.error('Error fetching availability:', error);
+      setError('Error fetching availability.');
+    }
+  };
+
+    const handleCloseDate = (and:any) => {
+        and.preventDefault()
+        closeDate()
+    }
+
+    const handleOpenDate = (and:any) => {
+        and.preventDefault()
+        openDate()
+    }
+
+
+export default function ManagerViewDay() {
+  const [restaurantID, setRestaurantID] = useState('');
+  const [viewDate, setViewDate] = useState('');
+  const [availabilityTable, setAvailabilityTable] = useState<any[][]>([]); // Store availability as a 2D array
+  const [tableNames, setTableNames] = useState<string[]>([]); // Store table names like T1, T2, etc.
+  const [error, setError] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const nameFromQuery = searchParams.get('name');
