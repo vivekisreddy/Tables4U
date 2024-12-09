@@ -127,6 +127,13 @@ export default function ActivateRestaurantPage() {
           </button>
           {message && <p className="message">{message}</p>}
         </div>
+
+        <div className="account-info-section">
+          <h2>View Day Availability</h2>
+          <button className="managerAccountButton" onClick={() => viewAvailability()}>
+            View Day Availability
+          </button>
+        </div>
     
         {/* Delete Restaurant Section */}
         <div className="delete-restaurant-section">
