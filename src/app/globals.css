@@ -498,7 +498,7 @@
 .restaurant-details p {
   margin-bottom: 0.5rem;
 }
-.make-reservation-button {
+.list-make-reservation-button {
   background-color: #2f8235;
   color: white; /* Ensures text is visible on the green background */
   border: none; /* Removes border */
@@ -507,7 +507,7 @@
   cursor: pointer; /* Adds a pointer cursor for better UX */
 }
 
-.make-reservation-button:active {
+.list-make-reservation-button:active {
   background-color: #5f7b489b; /* Changes background color when clicked */
 }
 
@@ -941,18 +941,7 @@
   margin-bottom: 20px;
 }
 
-.make-reservation-button {
-  background-color: #25733a;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-.make-reservation-button:hover {
-  background-color: #2f8235;
-}
 
 .active-restaurants-container {
   margin: 20px auto;
@@ -1027,6 +1016,19 @@
 .restaurant-table th {
   background-color: #5f7b489b; /* Header background color */
   color: white; /* Header text color */
+}
+
+.make-reservation-button {
+  background-color: #5f7b489b;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.make-reservation-button:hover {
+  background-color: #2f8235;
 }
 
 .make-reservation-button {

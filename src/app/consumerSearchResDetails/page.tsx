@@ -27,9 +27,6 @@ const ConsumerSearchResDetails = () => {
           <p>Open Time: {restaurant.openTime}</p>
           <p>Close Time: {restaurant.closeTime}</p>
 
-          <button className="make-reservation-button">Make Reservation</button>
-
-
           <button 
             className="make-reservation-button"
             onClick={() => 
