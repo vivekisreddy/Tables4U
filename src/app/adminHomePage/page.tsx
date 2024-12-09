@@ -144,6 +144,10 @@ export default function AdminHomePage() {
         router.push("/generateReport")
       }
 
+      function viewAvailability() {
+        router.push("/adminViewAvailability")
+      }
+
     return (
         <div className="admin-container">
             <h1 className="title">Admin Dashboard</h1>
@@ -193,6 +197,8 @@ export default function AdminHomePage() {
             {/* Delete restaurant form */}
             <button className="adminAccountButton" onClick={(e) => adminAccount()} >Account Information</button>
             <button className="availabilityReportButton" onClick={(e) => generateReport()} >Generate Availability Report</button>
+            <button className="adminAvailabilityButton" onClick={(e) => viewAvailability()} >View Availability</button>
+            
             <form className="handleDeleteRestaurant" onSubmit={handleDeleteRestaurant}>
                 <label className="label" htmlFor="resID">Restaurant ID:</label>
                 <input type="text" style={{ color: 'black' }} id="resID" name="resID" value={resID} onChange={(event) => setResID(event.target.value)} />

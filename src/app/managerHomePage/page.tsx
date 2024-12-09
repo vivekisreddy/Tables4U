@@ -108,6 +108,20 @@ export default function ActivateRestaurantPage() {
             View Account Information
           </button>
         </div>
+
+        <div className="account-info-section">
+          <h2>Edit Restaurant</h2>
+          <button className="managerAccountButton" onClick={() => editRestaurant()}>
+            Edit Restaurant Here
+          </button>
+        </div>
+
+        <div className="account-info-section">
+          <h2>View Day Availability</h2>
+          <button className="managerAccountButton" onClick={() => viewAvailability()}>
+            View Day Availability
+          </button>
+        </div>
     
         {/* Activate Restaurant Section */}
         <div className="activate-restaurant-section">
@@ -148,7 +162,7 @@ export default function ActivateRestaurantPage() {
               value={resID}
               onChange={(e) => setResID(e.target.value)}
             />
-            <button type="submit" className="deleteRestaurantButton">
+            <button type="submit" className="managerAccountButton">
               Delete Restaurant
             </button>
           </form>
