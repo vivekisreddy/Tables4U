@@ -53,8 +53,8 @@ export default function ManagerLogin() {
 
     return (
         <div className="manager-login-container">
-            <h1 className="manager-title">Manager Log In</h1>
-            <div className="login-box">
+            <h1 className="page-title">Manager Log In</h1>
+            <div className="input-container">
                 <label className="label">
                     Restaurant Name:
                     <input
@@ -74,14 +74,23 @@ export default function ManagerLogin() {
                         className="input"
                     />
                 </label>
-                <button onClick={handleLogIn} className="button-logIn">
+
+                <div className="input-container">
+                <button onClick={handleLogIn} className="button-info">
                     Log In
                 </button>
             </div>
+                
+            </div>
+            
+            <h3>Don't Have An Account? Create a Restaurant Now!</h3>
+            <div className="input-container">
+                <button className="button-info" onClick={() => createAccount()}>
+                    Create Restaurant
+                </button>
+            </div>
             {message && <p className="message">{message}</p>}
-            <button className="button-create-account" onClick={() => createAccount()}>
-                Create Restaurant
-            </button>
+
         </div>
     );
 }
