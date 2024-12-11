@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react'; // Ensure React is imported
-import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
 export default function ManagerViewDay() {
@@ -11,8 +10,6 @@ export default function ManagerViewDay() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string>('');
 
-  const searchParams = useSearchParams();
-  const nameFromQuery = searchParams.get('name');
 
   const instance = axios.create({
     baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial'
@@ -71,12 +68,6 @@ export default function ManagerViewDay() {
         }
     }
 
-  useEffect(() => {
-    if (nameFromQuery) {
-      setRestaurantID(nameFromQuery); // Use the restaurant name from query params
-    }
-  }, [nameFromQuery]);
-
   const handleSubmit = async () => {
     console.log('Button clicked'); // Debug log to ensure handleSubmit is called
   
@@ -125,65 +116,77 @@ export default function ManagerViewDay() {
     }
 
     return (
-      <div className="manager-view-day-container">
-        <h1>Manager View for {restaurantID}</h1>
-  
-        <div className="form-container">
-          <label>
-            Restaurant ID:
-            <input
-              type="text"
-              value={restaurantID}
-              onChange={(e) => setRestaurantID(e.target.value)}
-              placeholder="Enter Restaurant ID"
-              className="input-field"
-            />
-          </label>
-  
-          <label>
-            Date (YYYY-MM-DD):
-            <input
-              type="text"
-              value={viewDate}
-              onChange={(e) => setViewDate(e.target.value)}
-              placeholder="Enter date as YYYY-MM-DD"
-              className="input-field"
-            />
-          </label>
-  
-          <button onClick={handleSubmit} className="submit-button" disabled={!restaurantID || !viewDate}>
+      <div className="container">
+      <h1 className="admin-title">View Day Availability</h1>
+      <div className="button-container">
+      <div className="input-container">
+      <label className="label">
+          Restaurant ID:
+          <input
+            type="text"
+            value={restaurantID}
+            onChange={(e) => setRestaurantID(e.target.value)}
+            className="input-field"
+          />
+        </label>
+      </div>
+      </div>
+      <div className="button-container">
+      <div className="input-container">
+        <label className="label">
+          Date (YYYY-MM-DD):
+          <input
+            type="text"
+            value={viewDate}
+            onChange={(e) => setViewDate(e.target.value)}
+            className="input-field"
+          />
+        </label>
+      </div>
+      </div>
+      <div className="button-container">
+      <div className="button-container">
+          <button onClick={handleSubmit} className="button-info" disabled={!restaurantID || !viewDate}>
             Check Availability
+            </button>
+        </div>
+        <div className="button-container">
+          <button onClick={handleCloseDate} className="button-info">
+              Close Date
           </button>
-  
-          {error && <div className="error-message">{error}</div>}
-  
-          {/* Conditionally render the table if availability data is available */}
-          {availabilityTable.length > 0 && tableNames.length > 0 && (
-    <div className="availability-table">
-      <h3>Availability for {viewDate}</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            {tableNames.map((table, index) => (
-              <th key={index}>{table}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {availabilityTable.slice(1).map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              <td>{row[0]}</td> {/* Time column */}
-              {row.slice(1).map((cell, cellIndex) => (
-                <td key={cellIndex}>{cell}</td> // Availability for each table
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )}
+          <button onClick={handleOpenDate} className="button-info">
+              Open Date
+          </button>
         </div>
       </div>
-    );
-  }
+        
+      {message && <p className="message">{message}</p>}
+      {error && <div className="error-message">{error}</div>}
+
+        {/* Conditionally render the table if availability data is available */}
+        {availabilityTable.length > 0 && tableNames.length > 0 && (
+          <div className="availability-table">
+            <table className="report-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  {tableNames.map((table, index) => (
+                    <th key={index}>{table}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {availabilityTable.slice(1).map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>{row[0]}</td> {/* Time column */}
+                    {row.slice(1).map((cell, cellIndex) => (
+                      <td key={cellIndex}>{cell}</td> // Availability for each table
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+)}
+    </div>
+  ) }
