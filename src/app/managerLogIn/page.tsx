@@ -7,17 +7,17 @@ export default function ManagerLogin() {
     const [name, setName] = React.useState('');
     const [ID, setID] = React.useState('');
     const [message, setMessage] = React.useState('');
+    const router = useRouter(); 
 
     const instance = axios.create({
         baseURL: 'https://cy11llfdh5.execute-api.us-east-1.amazonaws.com/Initial',
     });
 
-    const router = useRouter(); 
 
     function managerLogIn() {
         if (name && ID) {
             instance
-                .post('/managerLogIn', { resName: name, resID: ID })
+                .post('/managerLogIn', { "resName": name, "resID": ID }) ////hgy
                 .then(function (response) {
                     console.log('raw response:', response);
                     let status = response.data.statusCode;
@@ -30,16 +30,17 @@ export default function ManagerLogin() {
                         setMessage('Successfully logging in');
                         router.push('/managerHomePage');
                     } else {
-                        setMessage('Incorrect Log In Information');
-                        console.log('Error logging in:', result);
+                        //setMessage('Incorrect Log In Information');
+                        alert('Error logging in:' + result);
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-        } else {
-            setMessage('Please complete all fields');
-        }
+            }
+        // } else {
+        //     setMessage('Please complete all fields');
+        // }
     }
 
     const handleLogIn = (and: any) => {
@@ -48,7 +49,7 @@ export default function ManagerLogin() {
     };
 
     function createAccount() {
-        router.push('/createRes');
+        router.push('/createRes')
     }
 
     return (

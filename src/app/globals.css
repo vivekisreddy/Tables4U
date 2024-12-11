@@ -436,25 +436,20 @@
 .restaurant-details p {
   margin-bottom: 0.5rem;
 }
-
-.make-reservation-button {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.list-make-reservation-button {
+  background-color: #2f8235;
+  color: white; /* Ensures text is visible on the green background */
+  border: none; /* Removes border */
+  padding: 10px 15px; /* Adds some spacing */
+  border-radius: 5px; /* Rounds the corners */
+  cursor: pointer; /* Adds a pointer cursor for better UX */
 }
 
-.make-reservation-button:hover {
-  background-color: #218838;
+.list-make-reservation-button:active {
+  background-color: #5f7b489b; /* Changes background color when clicked */
 }
 
-/* Manager View Day page*/
-.availability-table {
-  width: 85%;
-}
+
 
 
 /* This is all managerLogin Page stuff */ 
@@ -948,6 +943,15 @@
   margin-bottom: 20px;
 }
 
+
+
+.active-restaurants-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
+
 .deleteRestaurantButton {
   background-color: #2196F3;
   color: white;
@@ -962,8 +966,52 @@
   background-color: rgb(31, 116, 91);
 }
 
-.deleteReservationButton {
-  background-color: #2196F3;
+/* Remove the last cell's border in each row */
+.table-cell:last-child {
+  border-right: none;
+}
+
+/* Header row styling */
+.table-header {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+
+/* This is the CSS styling stuff for the searchResDateTime */
+
+.restaurant-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.restaurant-table th, .restaurant-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.restaurant-table th {
+  background-color: #5f7b489b; /* Header background color */
+  color: white; /* Header text color */
+}
+
+.make-reservation-button {
+  background-color: #5f7b489b;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.make-reservation-button:hover {
+  background-color: #2f8235;
+}
+
+.make-reservation-button {
+  background-color: #5f7b489b;
   color: white;
   padding: 10px 20px;
   border: none;

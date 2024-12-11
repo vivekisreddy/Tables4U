@@ -1,9 +1,7 @@
-import mysql from 'mysql';
+ import mysql from 'mysql';
 
 export const handler = async (event) => {
     let resID = event.restaurantID;
-    let resName = event.name
-    console.log(resName)
 
     // Create a connection pool to interact with the MySQL database
     const pool = mysql.createPool({
@@ -46,7 +44,6 @@ export const handler = async (event) => {
     try {
         // Check if the restaurant exists in the database
         const restaurant = await findRestaurant(resID);
-        console.log(restaurant.name)
 
         // If restaurant not found, return an error response
         if (!restaurant) {
@@ -54,8 +51,7 @@ export const handler = async (event) => {
                 statusCode: 400,
                 body: JSON.stringify({ success: false, message: "Restaurant not found." }),
             };
-        }
-       else if (restaurant.name == resName) {
+        } else {
             // Delete the restaurant if it exists
             await deleteRestaurant(resID);
 
