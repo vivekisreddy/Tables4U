@@ -273,10 +273,10 @@
 }
 
 .dateFormat {
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #555;
   position: absolute;
-  left: 25px;
+  left: 0px;
   top: 25px;
 }
 
@@ -369,11 +369,13 @@
 }
 
 .generateReportMessage {
-  font-size: 1rem;
-  color: #555;
+  /* position: absolute; */
+  top: 0%;
+  vertical-align: middle;
+
   position: absolute;
+  top: 50px;
   left: 25px;
-  top: 25px;
 }
 
 /* Styling for the search section */
@@ -499,7 +501,7 @@
   padding: 2px 6px 2px 6px;
   position: absolute;
   left: 25px;
-  top: 50px;
+  top: 75px;
 }
 
 .handleConfirm {
@@ -963,7 +965,9 @@
 .report-table {
   width: 100%;
   border-collapse: collapse;
+  max-width: 1000px;
   margin-top: 20px;
+  margin-left: 400px;
   text-align: left;
 }
 

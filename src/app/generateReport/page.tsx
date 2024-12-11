@@ -63,14 +63,8 @@ const GenerateReportPage = () => {
     e.preventDefault();
     const startDate = new Date(startString);
     const endDate = new Date(endString);
-
-    if (restaurant === '') {
-      alert('Please enter the restaurant ID.');
-    } else if (startString === '') {
-      alert('Please input a start date for the report.');
-    } else if (endString === '') {
-      alert('Please input an end date for the report.');
-    } else if (endDate < startDate) {
+    
+    if (endDate < startDate) {
       alert('End date cannot be before the start date.');
     } else {
       generateReport();
@@ -90,6 +84,8 @@ const GenerateReportPage = () => {
           id="restaurant"
           name="restaurant"
           value={restaurant}
+          placeholder="Enter restaurant ID"
+          required
           onChange={(e) => setRestaurant(e.target.value)}
         />
         <br />
@@ -108,6 +104,8 @@ const GenerateReportPage = () => {
           id="start"
           name="start"
           value={startString}
+          placeholder="Enter start date"
+          required
           onChange={(e) => setStartString(e.target.value)}
         />
         <br />
@@ -121,6 +119,8 @@ const GenerateReportPage = () => {
           id="end"
           name="end"
           value={endString}
+          placeholder="Enter end date"
+          required
           onChange={(e) => setEndString(e.target.value)}
         />
         <button type="submit" className="generateReportButton">
