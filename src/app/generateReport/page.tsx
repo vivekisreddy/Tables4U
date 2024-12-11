@@ -130,7 +130,7 @@ const GenerateReportPage = () => {
 
       {/* Display availability report */}
       {reportList.length > 0 ? (
-        <table className="report-table">
+        <table className="availability-report-table">
           <thead>
             <tr>
               <th>Date</th>

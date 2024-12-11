@@ -291,6 +291,22 @@
   font-weight: bold;
 }
 
+.availability-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  max-width: 1000px;
+  margin-top: 20px;
+  margin-left: 400px;
+  text-align: left;
+}
+
+.availability-report-table th,
+.availability-report-table tr,
+.availability-report-table td {
+  padding: 10px;
+  border: 1px solid #000000;
+}
+
 /* Report table */
 .report-table {
   width: 100%;
@@ -431,7 +447,7 @@
 
 
 .generateReportButton {
-  background-color: #4CAF50; /* Green */
+  background-color: #5f7b489b; /* Green */
   color: white;
   padding: 10px 20px;
   border: none;
@@ -443,11 +459,13 @@
 }
 
 .generateReportMessage {
-  font-size: 1rem;
-  color: #555;
+  /* position: absolute; */
+  top: 0%;
+  vertical-align: middle;
+
   position: absolute;
+  top: 50px;
   left: 25px;
-  top: 620px;
 }
 
 /* Styling for the search section */
@@ -566,7 +584,7 @@
   padding: 2px 6px 2px 6px;
   position: absolute;
   left: 25px;
-  top: 650px;
+  top: 75px;
 }
 
 .handleConfirm {
