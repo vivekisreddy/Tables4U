@@ -18,11 +18,6 @@ export default function ActivateRestaurantPage() {
 
     // Function to activate the restaurant
     const handleActivateRestaurant = async () => {
-        // if (!restaurantID) {
-        //     setMessage('Please provide a restaurant ID!');
-        //     return;
-        // }
-
         try {
             const activationData = { restaurantID };  
             const response = await axios.post(
@@ -50,7 +45,6 @@ export default function ActivateRestaurantPage() {
 
     function deleteRestaurant() {
       if (resID && resName) {
-        
         instance.post('/managerDeleteRes', {"restaurantID":resID, "name":resName})
         .then(function (response) {
           console.log("raw response:", response)
@@ -78,13 +72,13 @@ export default function ActivateRestaurantPage() {
       // log out button
     }
   
-  function editRestaurant() {
+    function editRestaurant() {
       router.push('/editRes')
     }
 
-  function viewAvailability() {
-    router.push('/managerViewDay')
-  }
+    function viewAvailability() {
+      router.push('/managerViewDay')
+    }
 
     const handleDeleteRestaurant = (and:any) => {
       and.preventDefault()
@@ -97,6 +91,14 @@ export default function ActivateRestaurantPage() {
       deleteRestaurant()
     }
 
+    // Navigate to viewRestaurantDetails page with the restaurant ID
+    const handleViewRestaurantDetails = () => {
+        router.push(`/viewRestaurantDetails?resID=${restaurantID}`);
+    };
+
+
+
+
     return (
       <div className="manager-home-container">
         <h1 className="page-title">Manager Home Page</h1>
@@ -106,6 +108,20 @@ export default function ActivateRestaurantPage() {
           <h2>Account Information</h2>
           <button className="managerAccountButton" onClick={() => managerAccount()}>
             View Account Information
+          </button>
+        </div>
+
+        <div className="account-info-section">
+          <h2>Edit Restaurant</h2>
+          <button className="managerAccountButton" onClick={() => editRestaurant()}>
+            Edit Restaurant Here
+          </button>
+        </div>
+
+        <div className="account-info-section">
+          <h2>View Day Availability</h2>
+          <button className="managerAccountButton" onClick={() => viewAvailability()}>
+            View Day Availability
           </button>
         </div>
     
@@ -126,6 +142,14 @@ export default function ActivateRestaurantPage() {
             Activate Restaurant
           </button>
           {message && <p className="message">{message}</p>}
+        </div>
+
+        {/* Navigate to View Restaurant Details */}
+        <div className="view-restaurant-section">
+          <h2>View Restaurant Details</h2>
+          <button onClick={handleViewRestaurantDetails} className="button-viewDetails">
+            View Restaurant Details
+          </button>
         </div>
     
         {/* Delete Restaurant Section */}
@@ -148,7 +172,7 @@ export default function ActivateRestaurantPage() {
               value={resID}
               onChange={(e) => setResID(e.target.value)}
             />
-            <button type="submit" className="deleteRestaurantButton">
+            <button type="submit" className="managerAccountButton">
               Delete Restaurant
             </button>
           </form>
