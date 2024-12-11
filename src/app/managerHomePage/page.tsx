@@ -100,14 +100,6 @@ export default function ActivateRestaurantPage() {
     return (
       <div className="manager-home-container">
         <h1 className="page-title">Manager Home Page</h1>
-    
-        {/* Account Information Section */}
-        <div className="account-info-section">
-          <h2>Account Information</h2>
-          <button className="managerAccountButton" onClick={() => managerAccount()}>
-            View Account Information
-          </button>
-        </div>
 
         <div className="account-info-section">
           <h2>Edit Restaurant</h2>
