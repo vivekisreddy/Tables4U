@@ -1,6 +1,7 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';  // Import useParams
 import axios from 'axios';
 
 export default function MakeReservation() {
@@ -10,15 +11,18 @@ export default function MakeReservation() {
   const [partySize, setPartySize] = useState(1);
   const [consumerEmail, setConsumerEmail] = useState('');
   const [confirmationCode, setConfirmationCode] = useState('');  
-  const searchParams = useSearchParams();
-  const nameFromQuery = searchParams.get('name'); 
+
+  // Use useParams to get dynamic route parameters
+  const { name } = useParams();  // Destructure the restaurant name from the route parameters
 
   useEffect(() => {
-    if (nameFromQuery) {
-      setRestaurantName(nameFromQuery); 
-      console.log("Restaurant Name set:", nameFromQuery);  
+    if (name) {
+      // Ensure name is a string (it could be an array, so we pick the first element)
+      const restaurantNameString = Array.isArray(name) ? name[0] : name;
+      setRestaurantName(restaurantNameString); 
+      console.log("Restaurant Name set:", restaurantNameString);  
     }
-  }, [nameFromQuery]);
+  }, [name]);
 
   const handleSubmit = async () => {
     const formattedDate = new Date(reservationDate);

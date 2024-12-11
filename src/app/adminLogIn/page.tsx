@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'; // Import useRouter from next/route
 export default function Home() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
-    const [message, setMessage] = React.useState('')
 
     const router = useRouter(); 
 
@@ -52,11 +51,11 @@ export default function Home() {
 
     // below is where the GUI for the admin log in page is drawn
     return (
-        <div className="admin-logIn-container">
+        <div>
           <h1 className="admin-title">Admin Log In</h1>
       
           {/* Login Form */}
-          <div className="login-form-box">
+          <div>
             <form className="handleLogIn" onSubmit={handleLogIn}>
               <label className="label" htmlFor="email">Email:</label>
               <input
@@ -67,6 +66,8 @@ export default function Home() {
                 value={email}
                 onChange={(and) => setEmail(and.target.value)}
                 className="input"
+                placeholder="Enter email address"
+                required
               />
               <br /><br />
               <label className="label" htmlFor="password">Password:</label>
@@ -78,14 +79,16 @@ export default function Home() {
                 value={password}
                 onChange={(and) => setPassword(and.target.value)}
                 className="input"
+                placeholder="Enter password"
+                required
               />
-              <br /><br />
+              <br/><br/>
               <button type="submit" className="adminLogInButton">Log In</button>
             </form>
           </div>
       
           {/* Create Account Section */}
-          <div className="create-account-box">
+          <div className="admin-create-account">
             <label className="account">{"Don't have an account? Create one now!"}</label>
             <button className="createAdminLogIn" onClick={(e) => createAccount()}>Create Account</button>
           </div>

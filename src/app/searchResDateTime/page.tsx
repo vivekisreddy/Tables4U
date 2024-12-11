@@ -1,6 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation'; 
+
+import React, { useEffect, useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
 interface Restaurant {
@@ -11,7 +12,7 @@ interface Restaurant {
   availableTables: number[];
 }
 
-export default function SearchResDateTime() {
+function SearchResDateTimeContent() {
   const router = useRouter();
 
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -35,11 +36,11 @@ export default function SearchResDateTime() {
         const parsedBody = JSON.parse(response.data.body);
 
         if (response.status === 200 && Array.isArray(parsedBody)) {
-          setRestaurants(parsedBody); 
+          setRestaurants(parsedBody);
           setMessage('');
         } else if (parsedBody.message) {
           setRestaurants([]);
-          setMessage(parsedBody.message); 
+          setMessage(parsedBody.message);
         } else {
           setRestaurants([]);
           setMessage('No restaurants found for the selected date and time.');
@@ -85,7 +86,9 @@ export default function SearchResDateTime() {
                     className="make-reservation-button"
                     onClick={() =>
                       router.push(
-                        `/makeReservation?name=${encodeURIComponent(restaurant.name)}`
+                        `/makeReservation?name=${encodeURIComponent(
+                          restaurant.name
+                        )}`
                       )
                     }
                   >
@@ -100,5 +103,13 @@ export default function SearchResDateTime() {
         !message && <p className="message">Loading restaurants...</p>
       )}
     </div>
+  );
+}
+
+export default function SearchResDateTime() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchResDateTimeContent />
+    </Suspense>
   );
 }
