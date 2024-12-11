@@ -115,12 +115,7 @@ export default function AdminHomePage() {
   
   const handleDeleteRestaurant = (and:any) => {
     and.preventDefault()
-    if (resID == '') {
-      alert("Please enter the restaurant ID to delete a restaurant.")
-    }
-    else {
       deleteRestaurant()
-    }
   }
 
   const handleDeleteReservation = (and:any) => {
@@ -137,7 +132,7 @@ export default function AdminHomePage() {
         <h1 className="admin-title-home">Admin Dashboard</h1>
 
         <div className="button-container">
-            <button className="listRestaurantsButton" onClick={listRestaurants}>
+            <button className="listRestaurantsButtonAdmin" onClick={listRestaurants}>
                 List Restaurants
             </button>
         </div>
