@@ -95,8 +95,8 @@
   padding: 10px 15px;
   font-size: 1rem;
   position: absolute;
-  top: 190px;
-  left: 815px;
+  top: 90px;
+  left: 50px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
@@ -198,20 +198,6 @@
   position: absolute;
   left: 460px;
   top: 200px;
-}
-
-.availabilityReportButton {
-  font-size: 0.8rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 25px;
-  top: 65px;
 }
 
 .confirmMessage {
@@ -322,34 +308,6 @@
   position: absolute;
   left: 25px;
   top: 125px;
-}
-
-.deleteReservationButton {
-  font-size: 1rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 325px;
-  top: -8px;
-}
-
-.deleteRestaurantButton {
-  font-size: 1rem;
-  color: #555;
-  background-color: #EEEEEE;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  position: absolute;
-  left: 295px;
-  top: -8px;
 }
 
 .editRestaurantButton {
@@ -576,8 +534,8 @@
   color: #f9f9f9;
   padding: 2px 6px 2px 6px;
   position: absolute;
-  left: 25px;
-  top: 800px;
+  left:50px;
+  top: 225px;
 }
 
 .handleDeleteReservation {
@@ -585,8 +543,8 @@
   color: #f9f9f9;
   padding: 2px 6px 2px 6px;
   position: absolute;
-  left: 25px;
-  top: 750px;
+  left: 50px;
+  top: 325px;
 }
 
 .handleEditRestaurant {
@@ -767,6 +725,29 @@
   margin-bottom: 0px;
 }
 
+.admin-title-home {
+  /* position: absolute; */
+  top: 0%;
+  vertical-align: middle;
+
+  position: absolute;
+  top: 0px;
+  left: 50px;
+}
+
+.availabilityReportButton {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 15px;
+  font-size: 1rem;
+  position: absolute;
+  top: 140px;
+  left: 50px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
 /* Container for the Admin Login form */
 .admin-logIn-container {
   display: flex;
@@ -867,6 +848,8 @@
   background-color: #f8f8f8;
 }
 
+
+
 /* Form container styled as a rectangle box */
 .form-container {
   width: 100%;
@@ -955,9 +938,24 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 50px;
 }
 
 .deleteRestaurantButton:hover {
+  background-color: rgb(31, 116, 91);
+}
+
+.deleteReservationButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
+.deleteReservationButton:hover {
   background-color: rgb(31, 116, 91);
 }
 
