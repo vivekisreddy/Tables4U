@@ -105,7 +105,6 @@
 .listRestaurantsButton:hover,
 .toggleRestaurantsButton:hover {
   background-color: #0b7dda;
-}
   background-color: #2f8235;
 }
 
@@ -610,15 +609,6 @@
   top: 800px;
 }
 
-.handleLogIn {
-  font: bold 11px Arial;
-  color: #f9f9f9;
-  padding: 2px 6px 2px 6px;
-  position: absolute;
-  left: 460px;
-  top: 300px;
-}
-
 .handleSearch {
   font: bold 11px Arial;
   color: #f9f9f9;
@@ -754,14 +744,27 @@
 
 
 
-/* This is all the CSS stuff for the adminLogin pgae */ 
+/* This is all the CSS stuff for the adminLogIn page */ 
 /* Admin Login Page Specific Styles */
+
+/* The box around the create account form */
+.admin-create-account {
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 350px;
+  margin-left: 475px;
+  align-items: center;
+}
 
 /* Center the title */
 .admin-title {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 /* Container for the Admin Login form */
@@ -769,7 +772,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 100px;
+}
+
+.handleLogIn {
+  font: bold 11px Arial;
+  color: #f9f9f9;
+  padding: 2px 6px 2px 6px;
+  position: absolute;
+  left: 500px;
+  top: 100px;
 }
 
 /* The box around the login form */
@@ -872,23 +884,6 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
-}
-
-/* Container for the Admin Login form */
-.admin-logIn-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-}
-
-/* The box around the login form */
-.login-form-box {
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
 }
 
 /* Style for the labels and inputs */
