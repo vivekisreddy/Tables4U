@@ -737,6 +737,16 @@
   left: 50px;
 }
 
+.adminCreateAccountMessage {
+  /* position: absolute; */
+  top: 0%;
+  vertical-align: middle;
+
+  position: absolute;
+  top: 250px;
+  left: 450px;
+}
+
 .availabilityReportButton {
   background-color: #2196F3;
   color: white;
@@ -963,6 +973,20 @@
 }
 
 .deleteReservationButton:hover {
+  background-color: rgb(31, 116, 91);
+}
+
+.createAdminAccount {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 100px;
+}
+
+.createAdminAccount:hover {
   background-color: rgb(31, 116, 91);
 }
 

@@ -39,12 +39,6 @@ export default function Home() {
 
     const handleCreate = (and: any) => {
         and.preventDefault();
-        if (email === '') {
-            alert("Please enter an email address");
-        }
-        if (password === '') {
-            alert("Please create a password");
-        }
         adminCreateAccount();
     }
 
@@ -54,11 +48,11 @@ export default function Home() {
             <label className="adminCreateAccountMessage">{"Create an Admin Account:"}</label>
                 <form className="handleCreate" onSubmit={handleCreate}>
                     <label className="label" htmlFor="email">Email:</label>
-                    <input type="text" style={{ color: 'black' }} id="email" name="email" value={email} onChange={(and) => setEmail(and.target.value)} className="input" />
+                    <input type="text" style={{ color: 'black' }} id="email" name="email" value={email} placeholder="Enter an email address" required onChange={(and) => setEmail(and.target.value)} className="input" />
                     <br />
                     <br />
                     <label className="label" htmlFor="password">Password:</label>
-                    <input type="text" style={{ color: 'black' }} id="password" name="password" value={password} onChange={(and) => setPassword(and.target.value)} className="input" />
+                    <input type="password" style={{ color: 'black' }} id="password" name="password" value={password} placeholder="Create a password" required onChange={(and) => setPassword(and.target.value)} className="input" />
                     <br />
                     <button type="submit" className="createAdminAccount">Create</button>
                 </form>
