@@ -951,6 +951,16 @@
   max-width: 1200px;
 }
 
+.deleteReservationButton {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
 
 .deleteRestaurantButton {
   background-color: #2196F3;
