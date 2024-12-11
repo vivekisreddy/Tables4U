@@ -307,6 +307,30 @@
   border: 1px solid #000000;
 }
 
+.adminCreateAccountMessage {
+  /* position: absolute; */
+  top: 0%;
+  vertical-align: middle;
+
+  position: absolute;
+  top: 250px;
+  left: 450px;
+}
+
+.createAdminAccount {
+  background-color: #5f7b489b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 100px;
+}
+
+.createAdminAccount:hover {
+  background-color: rgb(31, 116, 91);
+}
+
 /* Report table */
 .report-table {
   width: 100%;
@@ -855,7 +879,7 @@
 }
 
 .createAdminLogIn:hover {
-  background-color: #2f8235;
+  background-color: #5f7b489b;
 }
 
 /* Container for Create Account message */
