@@ -750,6 +750,11 @@
   cursor: pointer;
 }
 
+.availabilityReportButton:hover,
+.toggleRestaurantsButton:hover {
+  background-color: #2f8235;
+}
+
 /* Container for the Admin Login form */
 .admin-logIn-container {
   display: flex;
@@ -934,7 +939,7 @@
 }
 
 .deleteRestaurantButton {
-  background-color: #4CAF50;
+  background-color: #2196F3;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -948,7 +953,7 @@
 }
 
 .deleteReservationButton {
-  background-color: #4CAF50;
+  background-color: #2196F3;
   color: white;
   padding: 10px 20px;
   border: none;
