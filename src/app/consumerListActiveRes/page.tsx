@@ -7,9 +7,10 @@ import { useRouter } from 'next/navigation'; // To handle navigation
 interface Restaurant {
   name: string;
   address: string;
-  openTime: number;
-  closeTime: number;
-  isActive: number;
+  openTime: number; // Assuming it's an integer representing hours (1, 2, 3, etc.)
+  closeTime: number; // Assuming it's an integer representing hours (1, 2, 3, etc.)
+  availableTables: number[]; // Array of available table IDs or counts
+  isActive: number; // Assuming 1 for active, 0 for inactive
 }
 
 const ActiveRestaurantsPage = () => {
@@ -48,10 +49,10 @@ const ActiveRestaurantsPage = () => {
           <h1>Active Restaurants</h1>
         </div>
       </header>
-  
+
       {/* Display Message */}
       {message && <p className="message">{message}</p>}
-  
+
       {/* Display restaurants */}
       {restaurantList.length > 0 ? (
         <table className="restaurant-table">
@@ -61,6 +62,7 @@ const ActiveRestaurantsPage = () => {
               <th>Address</th>
               <th>Open Time</th>
               <th>Close Time</th>
+              <th>Available Tables</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -69,8 +71,9 @@ const ActiveRestaurantsPage = () => {
               <tr key={index}>
                 <td>{restaurant.name}</td>
                 <td>{restaurant.address}</td>
-                <td>{restaurant.openTime}</td>
-                <td>{restaurant.closeTime}</td>
+                <td>{restaurant.openTime}</td> {/* Display open time as a simple number */}
+                <td>{restaurant.closeTime}</td> {/* Display close time as a simple number */}
+                <td>{restaurant.availableTables.join(', ')}</td>
                 <td>
                   <button
                     className="make-reservation-button"
