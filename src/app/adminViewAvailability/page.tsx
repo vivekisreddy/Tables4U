@@ -1,9 +1,11 @@
-'use client';
+'use client'; // Ensuring it's a client-side component
 import React, { useEffect, useState } from 'react'; // Ensure React is imported
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
-export default function AdminViewAvailability() {
+import { Suspense } from 'react';
+
+const AdminViewAvailability = () => {
   const [restaurantID, setRestaurantID] = useState('');
   const [viewDate, setViewDate] = useState('');
   const [availabilityTable, setAvailabilityTable] = useState<any[][]>([]); // Store availability as a 2D array
@@ -91,31 +93,39 @@ export default function AdminViewAvailability() {
 
         {/* Conditionally render the table if availability data is available */}
         {availabilityTable.length > 0 && tableNames.length > 0 && (
-  <div className="availability-table">
-    <h3>Availability for {viewDate}</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          {tableNames.map((table, index) => (
-            <th key={index}>{table}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {availabilityTable.slice(1).map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            <td>{row[0]}</td> {/* Time column */}
-            {row.slice(1).map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td> // Availability for each table
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-)}
+          <div className="availability-table">
+            <h3>Availability for {viewDate}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  {tableNames.map((table, index) => (
+                    <th key={index}>{table}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {availabilityTable.slice(1).map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td>{row[0]}</td> {/* Time column */}
+                    {row.slice(1).map((cell, cellIndex) => (
+                      <td key={cellIndex}>{cell}</td> // Availability for each table
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
+  );
+};
+
+export default function AdminViewAvailabilityWithSuspense() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AdminViewAvailability />
+    </Suspense>
   );
 }

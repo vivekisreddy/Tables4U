@@ -70,7 +70,6 @@ export default function Home() {
         <div className="container">
 
             <h1 className="page-title">Edit Restaurant</h1>
-
             <label className="label">
                 Restaurant ID:
                 <input
