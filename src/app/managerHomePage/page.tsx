@@ -18,11 +18,6 @@ export default function ActivateRestaurantPage() {
 
     // Function to activate the restaurant
     const handleActivateRestaurant = async () => {
-        // if (!restaurantID) {
-        //     setMessage('Please provide a restaurant ID!');
-        //     return;
-        // }
-
         try {
             const activationData = { restaurantID };  
             const response = await axios.post(
@@ -50,7 +45,6 @@ export default function ActivateRestaurantPage() {
 
     function deleteRestaurant() {
       if (resID && resName) {
-        
         instance.post('/managerDeleteRes', {"restaurantID":resID, "name":resName})
         .then(function (response) {
           console.log("raw response:", response)
@@ -78,13 +72,13 @@ export default function ActivateRestaurantPage() {
       // log out button
     }
   
-  function editRestaurant() {
+    function editRestaurant() {
       router.push('/editRes')
     }
 
-  function viewAvailability() {
-    router.push('/managerViewDay')
-  }
+    function viewAvailability() {
+      router.push('/managerViewDay')
+    }
 
     const handleDeleteRestaurant = (and:any) => {
       and.preventDefault()
@@ -96,6 +90,14 @@ export default function ActivateRestaurantPage() {
       }
       deleteRestaurant()
     }
+
+    // Navigate to viewRestaurantDetails page with the restaurant ID
+    const handleViewRestaurantDetails = () => {
+        router.push(`/viewRestaurantDetails?resID=${restaurantID}`);
+    };
+
+
+
 
     return (
       <div className="manager-login-container">
@@ -124,6 +126,15 @@ export default function ActivateRestaurantPage() {
             />
           </div>
         </div>
+
+        {/* Navigate to View Restaurant Details */}
+        <div className="view-restaurant-section">
+          <h2>View Restaurant Details</h2>
+          <button onClick={handleViewRestaurantDetails} className="button-viewDetails">
+            View Restaurant Details
+          </button>
+        </div>
+
         <button onClick={handleActivateRestaurant} className="button-info">
           Activate Restaurant
         </button>

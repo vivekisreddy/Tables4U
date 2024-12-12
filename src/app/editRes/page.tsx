@@ -66,13 +66,13 @@ export default function Home() {
         editRes()
     }
 
-    const handleHome = async() => {
-        router.push('/managerHomePage')
-    }
-
     return (
         <div className="container">
+<<<<<<< HEAD
             <h1 className="page-title">Edit Restaurant</h1>
+=======
+            <h1 className="admin-title">Edit Restaurant</h1>
+>>>>>>> 05b6b38 (updated and took out useSearchParams)
             <label className="label">
                 Restaurant ID:
                 <input
@@ -142,17 +142,10 @@ export default function Home() {
                 </div>
             ))}
 
-            {/* Container for the buttons */}
-            <div className="button-container">
-                <button onClick={handleEditRes} className="button-editRes">
-                    Confirm Edits
-                </button>
-            </div>
-            <div className="button-container">
-                <button onClick={handleHome} className="button-editRes">
-                    Back to Home
-                </button>
-            </div>
+            <button onClick={handleEditRes} className="button-info">
+                Confirm Edits
+            </button>
+
             {message && <p className="message">{message}</p>}
         </div>
     );

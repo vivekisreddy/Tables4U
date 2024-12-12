@@ -44,9 +44,6 @@ const ActiveRestaurantsPage = () => {
   return (
     <div className="active-restaurants-container">
       <header className="header">
-        <div className="header-left">
-          <button onClick={() => router.push('/')}>Back to Home</button>
-        </div>
         <div className="header-center-activate">
           <h1>Active Restaurants</h1>
         </div>
