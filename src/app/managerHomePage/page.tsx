@@ -137,11 +137,6 @@ export default function ActivateRestaurantPage() {
             View Restaurant Details
           </button>
         </div>
-
-        <button onClick={handleActivateRestaurant} className="button-info">
-          Activate Restaurant
-        </button>
-    
         {/* Delete Restaurant Section */}
         <h2>Delete Restaurant</h2>
         <div className="button-container">
