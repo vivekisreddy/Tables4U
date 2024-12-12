@@ -68,7 +68,15 @@ export default function Home() {
 
     return (
         <div className="container">
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <h1 className="page-title">Edit Restaurant</h1>
+=======
             <h1 className="admin-title">Edit Restaurant</h1>
+>>>>>>> 05b6b38 (updated and took out useSearchParams)
+=======
+            <h1 className="admin-title">Edit Restaurant</h1>
+>>>>>>> 05b6b38 (updated and took out useSearchParams)
             <label className="label">
                 Restaurant ID:
                 <input

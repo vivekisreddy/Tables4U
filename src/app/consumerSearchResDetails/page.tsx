@@ -1,21 +1,30 @@
 'use client';
 
-import React, { useEffect, useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 
 const ConsumerSearchResDetails = () => {
   const [restaurant, setRestaurant] = useState<any>(null);
-  const searchParams = useSearchParams();  // Get the searchParams from the URL
-  const router = useRouter();  // Correctly use the router
+  const params = useParams(); // Use useParams to access dynamic route parameters
 
+  const router = useRouter();  // Correcting the typo here
+  
   useEffect(() => {
-    // Retrieve the 'restaurantData' from the URL's query params
-    const restaurantData = searchParams.get('restaurantData');
+    // Access the restaurant data passed in the dynamic route params
+    const restaurantData = params.restaurantData;
+    
     if (restaurantData) {
-      const parsedData = JSON.parse(restaurantData);  // Parse the JSON data
-      setRestaurant(parsedData);  // Set the restaurant data to state
+      // Ensure that restaurantData is a string, and pick the first element if it's an array
+      const dataToParse = Array.isArray(restaurantData) ? restaurantData[0] : restaurantData;
+      
+      try {
+        const parsedData = JSON.parse(dataToParse);
+        setRestaurant(parsedData); // Set the restaurant data to state
+      } catch (error) {
+        console.error("Error parsing restaurant data:", error);
+      }
     }
-  }, [searchParams]);
+  }, [params]);
 
   return (
     <div className="restaurant-details-container">
@@ -25,7 +34,9 @@ const ConsumerSearchResDetails = () => {
           <p>Address: {restaurant.address}</p>
           <p>Open Time: {restaurant.openTime}</p>
           <p>Close Time: {restaurant.closeTime}</p>
-          
+
+          <button className="make-reservation-button">Make Reservation</button>
+
           <button 
             className="make-reservation-button"
             onClick={() => 
@@ -42,11 +53,4 @@ const ConsumerSearchResDetails = () => {
   );
 };
 
-// Wrap your component in Suspense for async handling
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ConsumerSearchResDetails />
-    </Suspense>
-  );
-}
+export default ConsumerSearchResDetails;

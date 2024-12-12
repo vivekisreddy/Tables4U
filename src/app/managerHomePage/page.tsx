@@ -100,34 +100,21 @@ export default function ActivateRestaurantPage() {
 
 
     return (
-      <div className="manager-home-container">
+      <div className="manager-login-container">
         <h1 className="page-title">Manager Home Page</h1>
-    
-        {/* Account Information Section */}
-        <div className="account-info-section">
-          <h2>Account Information</h2>
-          <button className="managerAccountButton" onClick={() => managerAccount()}>
-            View Account Information
-          </button>
-        </div>
 
-        <div className="account-info-section">
-          <h2>Edit Restaurant</h2>
-          <button className="managerAccountButton" onClick={() => editRestaurant()}>
+        <div className="button-container">
+          <button className="button-info" onClick={() => editRestaurant()}>
             Edit Restaurant Here
           </button>
-        </div>
-
-        <div className="account-info-section">
-          <h2>View Day Availability</h2>
-          <button className="managerAccountButton" onClick={() => viewAvailability()}>
+          <button className="button-info" onClick={() => viewAvailability()}>
             View Day Availability
           </button>
         </div>
     
         {/* Activate Restaurant Section */}
-        <div className="activate-restaurant-section">
-          <h2>Activate Your Restaurant</h2>
+        <h2>Activate Your Restaurant</h2>
+        <div className="button-container">
           <div className="input-container">
             <label htmlFor="restaurantID">Enter Restaurant ID:</label>
             <input
@@ -138,10 +125,9 @@ export default function ActivateRestaurantPage() {
               placeholder="Enter Restaurant ID"
             />
           </div>
-          <button onClick={handleActivateRestaurant} className="button-activateRes">
-            Activate Restaurant
-          </button>
-          {message && <p className="message">{message}</p>}
+          <button onClick={handleActivateRestaurant} className="button-info">
+          Activate Restaurant
+        </button>
         </div>
 
         {/* Navigate to View Restaurant Details */}
@@ -153,9 +139,9 @@ export default function ActivateRestaurantPage() {
         </div>
     
         {/* Delete Restaurant Section */}
-        <div className="delete-restaurant-section">
-          <h2>Delete Restaurant</h2>
-          <form className="delete-form" onSubmit={handleDeleteRestaurant}>
+        <h2>Delete Restaurant</h2>
+        <div className="button-container">
+          <div className="input-container">
             <label htmlFor="resName">Restaurant Name:</label>
             <input
               type="text"
@@ -164,6 +150,10 @@ export default function ActivateRestaurantPage() {
               value={resName}
               onChange={(e) => setResName(e.target.value)}
             />
+          </div>
+          </div>
+          <div className="button-container">
+          <div className="input-container">
             <label htmlFor="resID">Restaurant ID:</label>
             <input
               type="text"
@@ -172,11 +162,14 @@ export default function ActivateRestaurantPage() {
               value={resID}
               onChange={(e) => setResID(e.target.value)}
             />
-            <button type="submit" className="managerAccountButton">
-              Delete Restaurant
-            </button>
-          </form>
+          </div>
         </div>
+        <button onClick={handleDeleteRestaurant} className="button-info">
+          Delete Restaurant
+        </button>
+
+        {message && <p className="message">{message}</p>}
+
       </div>
     );    
 }
