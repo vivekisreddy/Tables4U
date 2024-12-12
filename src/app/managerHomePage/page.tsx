@@ -125,6 +125,9 @@ export default function ActivateRestaurantPage() {
               placeholder="Enter Restaurant ID"
             />
           </div>
+          <button onClick={handleActivateRestaurant} className="button-info">
+          Activate Restaurant
+        </button>
         </div>
 
         {/* Navigate to View Restaurant Details */}
